@@ -46,7 +46,9 @@ execute 'tomcat_env_var' do
 	command 'echo "export CATALINA_HOME=/opt/tomcat_cmpt470/"> /home/vagrant/.profile'
 end
 
+
 execute 'link_project_foler' do
+  command 'sudo rm -rf /opt/tomcat_cmpt470/webapps/project'
 	command 'ln -s /vagrant/Deploy /opt/tomcat_cmpt470/webapps/project'
 end
 
