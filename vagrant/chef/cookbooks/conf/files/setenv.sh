@@ -1,0 +1,1 @@
+CLASSPATH=$CATALINA_HOME/lib/postgresql-42.2.2.jar
