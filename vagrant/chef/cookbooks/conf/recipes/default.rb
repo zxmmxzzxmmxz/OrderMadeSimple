@@ -26,6 +26,10 @@ execute 'project_home_env_var' do
   command 'echo "export PROJECT_HOME=/vagrant"> /home/vagrant/.profile'
 end
 
+execute 'psql_pw_env_var' do
+  command 'echo "export PGPASSWORD=password"> /home/vagrant/.profile'
+end
+
 cookbook_file "ntp.conf" do
   path "/etc/ntp.conf"
 end
@@ -58,6 +62,8 @@ execute 'postgresql_create' do
 	command 'echo "CREATE USER projectuser PASSWORD \'password\'; CREATE DATABASE projectDB; GRANT ALL PRIVILEGES ON DATABASE projectDB TO projectuser;" | sudo -u postgres psql'
   ignore_failure true
 end
+
+include_recipe 'conf::dbscripts'
 
 execute 'link_project_foler' do
     command 'sudo rm -r /opt/tomcat_cmpt470/webapps/project'
