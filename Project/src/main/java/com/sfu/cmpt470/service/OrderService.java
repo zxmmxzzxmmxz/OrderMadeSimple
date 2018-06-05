@@ -8,6 +8,6 @@ import java.util.List;
  * Created by Administrator on 6/4/2018.
  */
 public interface OrderService {
-    String SendOrder() throws IllegalArgumentException;
+    String getAllOrders() throws IllegalArgumentException;
 
 }

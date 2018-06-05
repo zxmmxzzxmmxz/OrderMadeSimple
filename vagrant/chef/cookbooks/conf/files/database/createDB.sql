@@ -1,3 +1,8 @@
+CREATE TABLE restaurant (
+	restaurant_id SERIAL UNIQUE PRIMARY KEY,
+	restaurant_name varchar(40) NOT NULL
+);
+
 CREATE TABLE dish (
 	dish_id	SERIAL UNIQUE PRIMARY KEY,
 	dish_name varchar(30) NOT NULL,
@@ -7,7 +12,16 @@ CREATE TABLE dish (
 	menu_flag varchar(30)
 );
 
-CREATE TABLE restaurant (
-	restaurant_id SERIAL UNIQUE PRIMARY KEY,
-	restaurant_name varchar(40) NOT NULL
+CREATE TABLE order_order(
+	order_id SERIAL UNIQUE PRIMARY KEY,
+	restaurant_id SERIAL REFERENCES restaurant(restaurant_id),
+	time timestamp
+);
+
+CREATE TABLE order_details(
+	order_id SERIAL REFERENCES order_order(order_id),
+	dish_id SERIAL REFERENCES dish(dish_id),
+	dish_name varchar(30) NOT NULL,
+	status varchar(30) NOT NULL,
+	PRIMARY KEY (order_id, dish_id)
 );
