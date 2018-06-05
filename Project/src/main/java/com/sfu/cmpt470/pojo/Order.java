@@ -3,6 +3,7 @@ package com.sfu.cmpt470.pojo;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,14 @@ public class Order {
     public Order(int order_id, int restaurant_id, OffsetDateTime time) {
         _order_id = order_id;
         _restaurant_id = restaurant_id;
-        _time = time.toString();
+        _time = time.format(DateTimeFormatter.RFC_1123_DATE_TIME);
         _orderDetails = new ArrayList<>();
     }
 
     public Order(int order_id, int restaurant_id, OffsetDateTime time, List<OrderDetail> orderDetails) {
         _order_id = order_id;
         _restaurant_id = restaurant_id;
-        _time = time.toString();
+        _time = time.format(DateTimeFormatter.RFC_1123_DATE_TIME    );
         _orderDetails = orderDetails;
     }
 
