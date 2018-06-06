@@ -21,6 +21,11 @@ public class Order {
     private Order(){
     }
 
+    public Order(int _order_id, int _restaurant_id) {
+        this._order_id = _order_id;
+        this._restaurant_id = _restaurant_id;
+    }
+
     public Order(int order_id, int restaurant_id, OffsetDateTime time) {
         _order_id = order_id;
         _restaurant_id = restaurant_id;
@@ -35,8 +40,16 @@ public class Order {
         _orderDetails = orderDetails;
     }
 
+    public void set_time(String _time) {
+        this._time = _time;
+    }
+
     public int getOrderId() {
         return _order_id;
+    }
+
+    public int get_restaurant_id() {
+        return _restaurant_id;
     }
 
     public OffsetDateTime getTime() {

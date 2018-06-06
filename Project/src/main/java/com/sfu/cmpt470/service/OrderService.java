@@ -9,5 +9,6 @@ import java.util.List;
  */
 public interface OrderService {
     String getAllOrders() throws IllegalArgumentException;
+    void addOrder(String order);
 
 }
