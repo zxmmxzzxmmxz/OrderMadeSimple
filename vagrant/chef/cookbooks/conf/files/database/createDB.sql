@@ -6,8 +6,8 @@ CREATE TABLE restaurant (
 CREATE TABLE dish (
 	dish_id	SERIAL UNIQUE PRIMARY KEY,
 	dish_name varchar(30) NOT NULL,
-	description varchar(200),
-	restaurant_id serial,
+	description varchar(200) ,
+	restaurant_id serial REFERENCES restaurant(restaurant_id),
 	price real NOT NULL,
 	menu_flag varchar(30)
 );
@@ -19,9 +19,9 @@ CREATE TABLE order_order(
 );
 
 CREATE TABLE order_details(
+	order_details_id SERIAL UNIQUE PRIMARY KEY,
 	order_id SERIAL REFERENCES order_order(order_id),
 	dish_id SERIAL REFERENCES dish(dish_id),
 	dish_name varchar(30) NOT NULL,
-	status varchar(30) NOT NULL,
-	PRIMARY KEY (order_id, dish_id)
+	status varchar(30) NOT NULL
 );

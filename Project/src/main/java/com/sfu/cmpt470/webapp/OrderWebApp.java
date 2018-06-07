@@ -9,41 +9,46 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by Administrator on 6/4/2018.
- */
 @Path("/orders")
 public class OrderWebApp {
     @Path("/allOrders")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllOrders(@Context HttpServletResponse response){
-        try{
+    public String getAllOrders(@Context HttpServletResponse response) {
+        try {
             OrderService orderService = new OrderServiceImpl();
             response.setHeader("Access-Control-Allow-Origin", "*");
             return orderService.getAllOrders();
-        }catch(Exception e){
+        } catch (Exception e) {
             return e.getMessage();
         }
+    }
 
+    @Path("/findOrder/{order_id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String findOrder(@Context HttpServletResponse response,
+                            @PathParam("order_id") long orderID) {
+        try {
+            OrderService orderService = new OrderServiceImpl();
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            return orderService.findOrder(orderID);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
     @Path("/add")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addOrder(String order) throws Exception{
-        try{
+    public Response addOrder(String order) {
+        try {
             OrderService orders = new OrderServiceImpl();
-            if(orders != null){
-                orders.addOrder(order);
-                return Response.ok().build();
-            }else{
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
-        }catch (Exception e){
+            orders.addOrder(order);
+            return Response.ok().entity("[{\"status\":\"success\"}]").build();
+        } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(500).entity("Server can not process the request").build();
         }
-
-
     }
 }

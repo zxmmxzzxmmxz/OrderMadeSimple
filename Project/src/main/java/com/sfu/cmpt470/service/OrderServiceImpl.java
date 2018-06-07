@@ -3,41 +3,49 @@ package com.sfu.cmpt470.service;
 import com.google.gson.Gson;
 import com.sfu.cmpt470.DAO.OrderDAO;
 
+import com.sfu.cmpt470.pojo.Error;
 import com.sfu.cmpt470.pojo.Order;
 
 
-
+import java.sql.SQLException;
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class OrderServiceImpl implements OrderService{
-    public String getAllOrders() throws IllegalArgumentException {
-
-        /*OrderDAO dao = new OrderDAO();
-        dao.getAllOrders();*/
-
-
-        List<Order> orders = new ArrayList<Order>();
-        OffsetDateTime current = OffsetDateTime.now();
-
-        Order first = new Order(100, 1);
-        first.set_time(current.format(DateTimeFormatter.RFC_1123_DATE_TIME));
-        orders.add(first);
-
-        Order second = new Order(101, 2);
-        second.set_time(current.format(DateTimeFormatter.RFC_1123_DATE_TIME));
-        orders.add(second);
-
-        String json = new Gson().toJson(orders);
-        return json;
+    private OrderDAO _dao;
+    private Gson _gson = new Gson();
+    public OrderServiceImpl() throws SQLException, ClassNotFoundException {
+        _dao = new OrderDAO();
     }
 
-    public void addOrder(String order) {
-        Gson gson = new Gson();
-        Order current = gson.fromJson(order, Order.class);
-        System.out.println("Add new order: " + "order id: " + current.getOrderId() + " restaurant id: " + current.get_restaurant_id());
+    public String getAllOrders() throws IllegalArgumentException {
+        List<Order> orders;
+        try {
+            orders = _dao.getAllOrders();
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
+
+        return _gson.toJson(orders);
+    }
+
+    public String findOrder(long order_id){
+        try {
+            return _gson.toJson(_dao.findOrder(order_id));
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
+    }
+
+    public String addOrder(String order) {
+        Order newOrder = _gson.fromJson(order, Order.class);
+        newOrder.setTime(OffsetDateTime.now());
+        try {
+            _dao.addOrder(newOrder);
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
+        return "";
     }
 }

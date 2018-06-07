@@ -1,6 +1,7 @@
 package com.sfu.cmpt470.pojo;
 
 import com.google.gson.annotations.SerializedName;
+import com.sfu.cmpt470.Util.StringUtil;
 
 public enum  OrderDetailStatusTypeCode {
     @SerializedName(value = "new")
@@ -22,6 +23,9 @@ public enum  OrderDetailStatusTypeCode {
     }
 
     public static OrderDetailStatusTypeCode of(String str){
+        if(StringUtil.isNullOrEmpty(str)){
+            return null;
+        }
         switch (str){
             case "new":
                 return NEW;
