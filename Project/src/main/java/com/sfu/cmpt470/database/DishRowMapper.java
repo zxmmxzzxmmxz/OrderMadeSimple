@@ -11,7 +11,7 @@ public class DishRowMapper implements RowMapper<Dish> {
         Dish.DishBuilder dishBuilder = new Dish.DishBuilder();
         return dishBuilder.setDishID(rs.getLong("dish_id"))
                 .setDishName(rs.getString("dish_name"))
-                .setRestaurant(rs.getLong("restaurant_id"))
+                .setRestaurant(rs.getString("restaurant_name"))
                 .setDescription(rs.getString("description"))
                 .setPrice(rs.getFloat("price"))
                 .setMenuFlag(rs.getString("menu_flag"))

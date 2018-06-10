@@ -29,10 +29,9 @@ load_order = function (){
 
 loadDishes = function(){
 	$("#dish_pick").html("");
-	var restaurant_id = $('#restaurant').val();
 	$.ajax({
 		type: 'GET',
-		url: '/rest/dish/allDishes/'+restaurant_id,
+		url: '/rest/dish/allDishesForRestaurantName/'+sessionStorage.restaurant_name,
 		crossDomain: true,
         headers: {
             'Authorization':'cmpt470 '+ sessionStorage.token
@@ -62,7 +61,9 @@ $(load_order);
 
 $(function (){
 	$('#refresh_status').on('click',load_order);
-	$('#add_more_dish').on('click',create_dish_row)
+    loadDishes();
+    $('#restaurant_name').html(sessionStorage.restaurant_name);
+	$('#add_more_dish').on('click',create_dish_row);
 });
 
 $(function(){
@@ -99,7 +100,8 @@ $(function(){
 	});
 });
 
-$(function(){
+
+/*$(function(){
 	$.ajax({
 		type: 'GET',
 		url: '/rest/restaurant/allRestaurants',
@@ -119,3 +121,4 @@ $(function(){
 		}
 	});
 });
+*/

@@ -45,7 +45,6 @@ public class OrderWebApp {
     }
 
     @Path("/add")
-    @Secured
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addOrder(String order) {

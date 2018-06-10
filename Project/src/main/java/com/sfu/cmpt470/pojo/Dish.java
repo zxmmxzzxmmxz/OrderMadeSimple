@@ -9,8 +9,8 @@ public class Dish {
     private String _dishName;
     @SerializedName(value="description")
     private String _description;
-    @SerializedName(value="restaurant_id")
-    private long _restaurantID;
+    @SerializedName(value="restaurant_name")
+    private String _restaurantName;
     @SerializedName(value="price")
     private float _price;
     @SerializedName(value="menu_flag")
@@ -20,11 +20,11 @@ public class Dish {
 
     }
 
-    private Dish(long dishID, String dishName, String description, long restaurantID, float price, String menuFlag){
+    private Dish(long dishID, String dishName, String description, String restaurantName, float price, String menuFlag){
         _dishID = dishID;
         _dishName = dishName;
         _description = description;
-        _restaurantID = restaurantID;
+        _restaurantName = restaurantName;
         _price = price;
         _menuFlag = menuFlag;
     }
@@ -41,8 +41,8 @@ public class Dish {
         return _description;
     }
 
-    public long getRestaurantID(){
-        return _restaurantID;
+    public String getRestaurantName(){
+        return _restaurantName;
     }
 
     public float getPrice(){
@@ -58,7 +58,7 @@ public class Dish {
         dishBuilder.setDishID(this.getDishID());
         dishBuilder.setDishName(this.getDishName());
         dishBuilder.setDescription(this.getDescription());
-        dishBuilder.setRestaurant(this.getRestaurantID());
+        dishBuilder.setRestaurant(this.getRestaurantName());
         dishBuilder.setDescription(this.getDescription());
         dishBuilder.setPrice(this.getPrice());
         dishBuilder.setMenuFlag(this.getMenuFlag());
@@ -70,12 +70,11 @@ public class Dish {
         private long _dishID;
         private String _dishName;
         private String _description;
-        private long _restaurantID;
+        private String _restaurantName;
         private float _price;
         private String _menuFlag;
         public DishBuilder(){
             _dishID = -1;
-            _restaurantID = -1;
             _price = -1;
         }
         public DishBuilder setDishID(long dishID){
@@ -90,8 +89,8 @@ public class Dish {
             _description = description;
             return this;
         }
-        public DishBuilder setRestaurant(long restaurantID){
-            _restaurantID = restaurantID;
+        public DishBuilder setRestaurant(String restaurantName){
+            _restaurantName = restaurantName;
             return this;
         }
         public DishBuilder setPrice(float price){
@@ -103,7 +102,7 @@ public class Dish {
             return this;
         }
         public Dish build(){
-            return new Dish(_dishID,_dishName,_description,_restaurantID,_price,_menuFlag);
+            return new Dish(_dishID,_dishName,_description,_restaurantName,_price,_menuFlag);
         }
     }
 }

@@ -20,4 +20,13 @@ public class DishDAO extends BaseDAO {
         _db.setLong(restaurantID, 1);
         return _db.queryList(new DishRowMapper());
     }
+
+    public ArrayList<Dish> findDishesForRestaurant(String restaurantName) throws SQLException {
+        _db.supplyQuery("SELECT dish.dish_id, dish.dish_name, dish.description, dish.restaurant_name, dish.price, dish.menu_flag \n" +
+                "FROM dish\n" +
+                "WHERE dish.restaurant_name = ?");
+
+        _db.setString(restaurantName, 1);
+        return _db.queryList(new DishRowMapper());
+    }
 }
