@@ -1,5 +1,6 @@
 package com.sfu.cmpt470.webapp;
 
+import com.sfu.cmpt470.annotation.Secured;
 import com.sfu.cmpt470.service.RestaurantService;
 import com.sfu.cmpt470.service.RestaurantServiceImpl;
 
@@ -15,6 +16,7 @@ public class RestaurantWebAPI {
 
     @Path("/allRestaurants")
     @GET
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllRestaurants(@Context HttpServletResponse response) {
         try {

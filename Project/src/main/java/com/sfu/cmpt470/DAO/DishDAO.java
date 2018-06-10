@@ -5,9 +5,8 @@ import com.sfu.cmpt470.pojo.Dish;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class DishDAO extends BaseDAO<Dish>{
+public class DishDAO extends BaseDAO {
 
     public DishDAO() throws SQLException, ClassNotFoundException {
         super();

@@ -6,7 +6,7 @@ import com.sfu.cmpt470.pojo.Restaurant;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class RestaurantDAO extends BaseDAO<Restaurant> {
+public class RestaurantDAO extends BaseDAO {
     public RestaurantDAO() throws SQLException, ClassNotFoundException {
         super();
     }

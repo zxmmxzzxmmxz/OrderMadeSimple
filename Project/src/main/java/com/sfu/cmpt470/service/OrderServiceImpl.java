@@ -38,14 +38,13 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    public String addOrder(String order) {
+    public void addOrder(String order) {
         Order newOrder = _gson.fromJson(order, Order.class);
         newOrder.setTime(OffsetDateTime.now());
         try {
             _dao.addOrder(newOrder);
         } catch (SQLException e) {
-            return _gson.toJson(new Error(e.toString()));
+            _gson.toJson(new Error(e.toString()));
         }
-        return "";
     }
 }

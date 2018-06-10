@@ -1,5 +1,7 @@
 package com.sfu.cmpt470.Util;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.security.SecureRandom;
 import java.util.Locale;
 
@@ -18,8 +20,9 @@ public class Random {
         SecureRandom random = new SecureRandom();
         char[] buf = new char[LENGTH];
         char[] symbols = ALPHANUM.toCharArray();
-        for (int idx = 0; idx < buf.length; ++idx)
+        for (int idx = 0; idx < buf.length; ++idx) {
             buf[idx] = symbols[random.nextInt(symbols.length)];
+        }
         return new String(buf);
     }
 }

@@ -1,5 +1,6 @@
 package com.sfu.cmpt470.webapp;
 
+import com.sfu.cmpt470.annotation.Secured;
 import com.sfu.cmpt470.service.OrderService;
 import com.sfu.cmpt470.service.OrderServiceImpl;
 
@@ -11,9 +12,12 @@ import javax.ws.rs.core.Response;
 
 @Path("/orders")
 public class OrderWebApp {
+
+    @Secured
     @Path("/allOrders")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String getAllOrders(@Context HttpServletResponse response) {
         try {
             OrderService orderService = new OrderServiceImpl();
@@ -25,8 +29,10 @@ public class OrderWebApp {
     }
 
     @Path("/findOrder/{order_id}")
+    @Secured
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String findOrder(@Context HttpServletResponse response,
                             @PathParam("order_id") long orderID) {
         try {
@@ -39,6 +45,7 @@ public class OrderWebApp {
     }
 
     @Path("/add")
+    @Secured
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addOrder(String order) {

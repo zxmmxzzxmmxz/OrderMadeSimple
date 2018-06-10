@@ -7,6 +7,9 @@ load_order = function (){
 		type: 'GET',
 		url: '/rest/orders/allOrders',
 		crossDomain: true,
+        headers: {
+            'Authorization':'cmpt470 '+ sessionStorage.token
+        },
 		success: function(orders){
 			$.each(orders, function(i, order){
 				var anOrder = "";
@@ -17,12 +20,12 @@ load_order = function (){
 					anOrder += orderPiece.status;
 					anOrder += '</li>';
 				});
-				anOrder += '</ul>'
+				anOrder += '</ul>';
 				$orders.append(anOrder);
 			});
 		}
 	});
-}
+};
 
 loadDishes = function(){
 	$("#dish_pick").html("");
@@ -31,6 +34,9 @@ loadDishes = function(){
 		type: 'GET',
 		url: '/rest/dish/allDishes/'+restaurant_id,
 		crossDomain: true,
+        headers: {
+            'Authorization':'cmpt470 '+ sessionStorage.token
+        },
 		success: function(allDishes){
 			dishes = allDishes;
 			var selectList = "Pick Dish: <select class='dish'>";
@@ -41,7 +47,7 @@ loadDishes = function(){
 			$('#dish_pick').html(selectList);
 		}
 	});
-}
+};
 
 create_dish_row = function() {
 	var selectList = "Pick Dish: <select class='dish'>";
@@ -50,14 +56,14 @@ create_dish_row = function() {
 			});
 			selectList += "</select><br>";
 			$('#dish_pick').append(selectList);
-}
+};
 
 $(load_order);
 
 $(function (){
 	$('#refresh_status').on('click',load_order);
 	$('#add_more_dish').on('click',create_dish_row)
-})
+});
 
 $(function(){
 	$('#submit').on('click', function(){
@@ -75,7 +81,8 @@ $(function(){
 			dataType: 'json',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+                'Authorization':'cmpt470 '+ sessionStorage.token
 			},
 			data: JSON.stringify({
                            	"restaurant_id": restaurant,
@@ -90,13 +97,16 @@ $(function(){
 			}
 		});
 	});
-})
+});
 
 $(function(){
 	$.ajax({
 		type: 'GET',
 		url: '/rest/restaurant/allRestaurants',
 		crossDomain: true,
+        headers: {
+            'Authorization':'cmpt470 '+ sessionStorage.token
+        },
 		success: function(restaurants){
 			var selectList = "Pick Restaurant: <select name='restaurants' id='restaurant'>";
 			$.each(restaurants, function(i, restaurant){
@@ -108,4 +118,4 @@ $(function(){
 			loadDishes();
 		}
 	});
-})
+});
