@@ -1,0 +1,12 @@
+Backend:
+1.insert tokens to database, and expire them when needed;
+2.be able to update order status with valid token, need to check user, restaurant
+3.be able to update order_detail status with valid token, need to check user, restaurant, order 
+4.don't include done orders
+5.
+
+Frontend:
+1.provide buttons for user to make an order_detail to be done
+2.provide buttons for user to move an order to be done
+3.make dishes cubes so that we don't need to select but tap the cube to add dish to a new order
+4.MAKE IT PRETTY

@@ -4,7 +4,7 @@ import com.sfu.cmpt470.database.DatabaseConnector;
 
 import java.sql.SQLException;
 
-class BaseDAO<T> {
+class BaseDAO {
     DatabaseConnector _db;
 
     BaseDAO() throws SQLException, ClassNotFoundException {

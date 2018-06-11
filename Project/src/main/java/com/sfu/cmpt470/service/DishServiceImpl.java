@@ -20,4 +20,13 @@ public class DishServiceImpl implements DishService{
             return _gson.toJson(new Error(e.toString()));
         }
     }
+
+    @Override
+    public String getDishesFor(String restaurantName) {
+        try {
+            return _gson.toJson(_dao.findDishesForRestaurant(restaurantName));
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
+    }
 }

@@ -4,6 +4,6 @@ import com.sfu.cmpt470.pojo.Restaurant;
 
 import java.util.ArrayList;
 
-public interface RestaurantService {
-       public String getAllRestaurants();
+public interface RestaurantService{
+       String getAllRestaurants();
 }
