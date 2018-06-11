@@ -15,8 +15,8 @@ INSERT INTO dish (dish_name, description, restaurant_name, price, menu_flag)
 	SELECT 'noodle','hand pulled',restaurant_name,5.99,'lunch special' from restaurant where restaurant_name = 'joojak';
 
 --orders
-INSERT INTO order_order (time,restaurant_id,status) values(TIMESTAMP '2004-10-19 10:23:54+02',1,'new');
-INSERT INTO order_order (time,restaurant_id,status) values(TIMESTAMP '2018-11-12 10:23:54+02',2,'new');
+INSERT INTO order_order (time,restaurant_name,status) values(TIMESTAMP '2004-10-19 10:23:54+02','joojak','new');
+INSERT INTO order_order (time,restaurant_name,status) values(TIMESTAMP '2018-11-12 10:23:54+02','joojak','new');
 
 --order order_details
 INSERT INTO order_details (order_id, dish_id, dish_name, status) values(1,1,'steamed fish','new');

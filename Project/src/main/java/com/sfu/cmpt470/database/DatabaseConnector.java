@@ -5,6 +5,7 @@ import com.sfu.cmpt470.properties.Database;
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class DatabaseConnector {
     private Connection _connection;
@@ -38,6 +39,11 @@ public class DatabaseConnector {
 
     public void setString(String string, int index) throws SQLException {
         _pStatement.setString(index, string);
+    }
+
+    public void setArray(Object[] array, int index, String typeName) throws SQLException {
+        Array temp = _connection.createArrayOf(typeName, array);
+        _pStatement.setArray(index, temp);
     }
 
 

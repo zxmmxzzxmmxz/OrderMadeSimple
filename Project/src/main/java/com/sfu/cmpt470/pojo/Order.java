@@ -10,27 +10,30 @@ import java.util.List;
 public class Order {
     @SerializedName("order_id")
     private long _order_id;
-    @SerializedName("restaurant_id")
-    private long _restaurant_id;
+    @SerializedName("restaurant_name")
+    private String _restaurantName;
     @SerializedName("time")
     private String _time;
     @SerializedName("orderDetails")
     private List<OrderDetail> _orderDetails;
+    @SerializedName("order_status")
+    private String _orderStatus;
 
     //so no one can create empty order
     private Order(){
     }
 
-    public Order(int order_id, int restaurant_id, OffsetDateTime time) {
+    public Order(int order_id, String restaurantName, OffsetDateTime time, String orderStatus) {
+        _orderStatus = orderStatus;
         _order_id = order_id;
-        _restaurant_id = restaurant_id;
+        _restaurantName = restaurantName;
         _time = time.format(DateTimeFormatter.RFC_1123_DATE_TIME);
         _orderDetails = new ArrayList<>();
     }
 
-    public Order(int order_id, int restaurant_id, OffsetDateTime time, List<OrderDetail> orderDetails) {
+    public Order(int order_id, String restaurantName, OffsetDateTime time, List<OrderDetail> orderDetails) {
         _order_id = order_id;
-        _restaurant_id = restaurant_id;
+        _restaurantName = restaurantName;
         _time = time.format(DateTimeFormatter.RFC_1123_DATE_TIME);
         _orderDetails = orderDetails;
     }
@@ -43,8 +46,8 @@ public class Order {
         return _order_id;
     }
 
-    public long getRestaurantId() {
-        return _restaurant_id;
+    public String getRestaurantName() {
+        return _restaurantName;
     }
 
     public OffsetDateTime getTime() {
@@ -69,5 +72,13 @@ public class Order {
             orderDetail.setOrderID(orderId);
         }
 
+    }
+
+    public String getOrderStatus() {
+        return _orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this._orderStatus = orderStatus;
     }
 }

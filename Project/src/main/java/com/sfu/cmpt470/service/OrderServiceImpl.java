@@ -10,6 +10,7 @@ import com.sfu.cmpt470.pojo.Order;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class OrderServiceImpl implements OrderService{
@@ -19,15 +20,20 @@ public class OrderServiceImpl implements OrderService{
         _dao = new OrderDAO();
     }
 
-    public String getAllOrders() throws IllegalArgumentException {
+    public String getAllOpenOrders(String restaurantName) throws IllegalArgumentException {
+        //in progress or new
         List<Order> orders;
         try {
-            orders = _dao.getAllOrders();
+            orders = getAllOrders(restaurantName).stream().filter(order -> !order.getOrderStatus().equals("done")).collect(Collectors.toList());
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
 
         return _gson.toJson(orders);
+    }
+
+    private List<Order> getAllOrders(String restaurantName) throws SQLException {
+        return _dao.getAllOrders(restaurantName);
     }
 
     public String findOrder(long order_id){
@@ -38,13 +44,25 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    public void addOrder(String order) {
+    @Override
+    public String updateOrder(String order) {
+        Order newOrder = _gson.fromJson(order, Order.class);
+        try {
+            _dao.updateOrder(newOrder);
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
+        return _gson.toJson();
+    }
+
+    public String addOrder(String order) {
         Order newOrder = _gson.fromJson(order, Order.class);
         newOrder.setTime(OffsetDateTime.now());
         try {
             _dao.addOrder(newOrder);
         } catch (SQLException e) {
-            _gson.toJson(new Error(e.toString()));
+            return _gson.toJson(new Error(e.toString()));
         }
+        return "";
     }
 }

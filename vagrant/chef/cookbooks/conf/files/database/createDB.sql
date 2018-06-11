@@ -14,7 +14,7 @@ CREATE TABLE dish (
 
 CREATE TABLE order_order(
 	order_id SERIAL UNIQUE PRIMARY KEY,
-	restaurant_id SERIAL REFERENCES restaurant(restaurant_id),
+	restaurant_name varchar(40) REFERENCES restaurant(restaurant_name),
 	time timestamp,
 	status varchar(30) NOT NULL
 );
