@@ -2,9 +2,9 @@ server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
-	root /vagrant/WebRoot/;
+	root /vagrant/WebRoot/html/;
 
-	index index.html;
+	index login.html;
 
 	server_name _;
 
