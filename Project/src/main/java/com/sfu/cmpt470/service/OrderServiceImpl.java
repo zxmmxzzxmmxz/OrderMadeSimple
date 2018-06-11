@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService{
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
-        return _gson.toJson();
+        return "";
     }
 
     public String addOrder(String order) {
