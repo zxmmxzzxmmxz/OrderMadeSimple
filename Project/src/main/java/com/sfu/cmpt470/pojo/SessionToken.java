@@ -17,7 +17,7 @@ public class SessionToken {
     }
 
     public void setToken(String token) {
-        this._token = _token;
+        this._token = token;
     }
 
     public String getUserName() {
@@ -25,6 +25,6 @@ public class SessionToken {
     }
 
     public void setUserName(String userName) {
-        this._userName = _userName;
+        this._userName = userName;
     }
 }
