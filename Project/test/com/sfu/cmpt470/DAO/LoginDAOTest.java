@@ -78,4 +78,14 @@ public class LoginDAOTest {
         assert(token.getToken() != null);
         assert (token.getUserName().equals(userName));
     }
+
+    @Test
+    public void login_sqlProblem_shouldThrowException() throws SQLException, LoginException {
+        doThrow(new SQLException("")).when(_loginDAO._db).supplyQuery(any(String.class));
+
+        _exception.expect(LoginException.class);
+        _exception.expectMessage("password or username is incorrect!");
+
+        _loginDAO.login("aaa", "ha");
+    }
 }
