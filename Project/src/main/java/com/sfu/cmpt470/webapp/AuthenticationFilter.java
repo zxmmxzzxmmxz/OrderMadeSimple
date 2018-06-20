@@ -44,7 +44,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         try {
             // Validate the token
-            validateToken(token,requestContext);
+            validateToken(token);
         } catch (Exception e) {
             abortWithUnauthorized(requestContext);
         }
@@ -70,8 +70,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                         .build());
     }
 
-    private void validateToken(String token, ContainerRequestContext requestContext) throws JWTVerificationException, SQLException, ClassNotFoundException, UnsupportedEncodingException {
-        long restaurantID = new LoginDAO().validateToken(token);
-        requestContext.getHeaders().add("restaurant_id",String.valueOf(restaurantID));
+    private void validateToken(String token) throws JWTVerificationException, SQLException, ClassNotFoundException, UnsupportedEncodingException {
+        new LoginDAO().validateToken(token);
     }
 }

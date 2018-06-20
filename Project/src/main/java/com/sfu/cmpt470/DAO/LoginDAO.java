@@ -47,7 +47,7 @@ public class LoginDAO extends BaseDAO{
         return sessionToken;
     }
 
-    public long validateToken(String sessionToken) throws JWTVerificationException, UnsupportedEncodingException, SQLException {
+    public void validateToken(String sessionToken) throws JWTVerificationException, UnsupportedEncodingException, SQLException {
         //validate to the db to see if token is a valid one
             Algorithm algorithm = Algorithm.HMAC256("orderit");
             JWTVerifier verifier = JWT.require(algorithm)
@@ -57,7 +57,7 @@ public class LoginDAO extends BaseDAO{
         String username = jwt.getClaim("username").as(String.class);
         _db.supplyQuery("SELECT restaurant_id FROM user_user WHERE username = ?");
         _db.setString(username,1);
-        return _db.queryOneRecord((rs, rowNum) -> rs.getLong("restaurant_id"));
+        _db.queryOneRecord((rs, rowNum) -> rs.getLong("restaurant_id"));
     }
 
     public static void main(String[] args){

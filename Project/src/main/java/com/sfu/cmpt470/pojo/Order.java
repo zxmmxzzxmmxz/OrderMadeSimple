@@ -19,8 +19,9 @@ public class Order {
     @SerializedName("order_status")
     private String _orderStatus;
 
-    //so no one can create empty order
-    private Order(){
+    public Order(){
+        _orderDetails = new ArrayList<>();
+        _orderStatus = "new";
     }
 
     public Order(int order_id, String restaurantName, OffsetDateTime time, String orderStatus) {

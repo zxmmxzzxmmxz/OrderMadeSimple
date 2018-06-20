@@ -11,6 +11,7 @@ import jersey.repackaged.com.google.common.collect.Iterables;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -50,8 +51,8 @@ public class OrderDAO extends BaseDAO {
 
 
     public void addOrder(Order newOrder) throws SQLException {
-        String verificationError = verifyNewOrder(newOrder);
-        if(StringUtil.isNullOrEmpty(verificationError)){
+        ArrayList<String> verificationError = verifyNewOrder(newOrder);
+        if(verificationError.isEmpty()){
             _db.supplyQuery(Query.insertOrder());
             _db.setTime(newOrder.getTime(),1);
             _db.setString(newOrder.getRestaurantName(),2);
@@ -62,7 +63,7 @@ public class OrderDAO extends BaseDAO {
             createOrderDetails(newOrder);
         }
         else{
-            throw new SQLException(verificationError);
+            throw new SQLException(verificationError.toString());
         }
     }
 
@@ -78,26 +79,28 @@ public class OrderDAO extends BaseDAO {
         }
     }
 
-    private String verifyNewOrder(Order order){
-        StringBuilder error = new StringBuilder();
+    ArrayList<String> verifyNewOrder(Order order){
+        ArrayList<String> error = new ArrayList<>();
         if(StringUtil.isNullOrEmpty(order.getRestaurantName())){
-            error.append("message:restaurant name must exist\n");
+            error.add("message:restaurant name must exist\n");
+            return error;
         }
         if(order.getTime().isAfter(OffsetDateTime.now())){
-            error.append("message:order cannot be in future\n");
+            error.add("message:order cannot be in future\n");
+            return error;
         }
         try {
             _db.supplyQuery("SELECT dish.restaurant_name FROM dish JOIN restaurant ON dish.restaurant_name = restaurant.restaurant_name where dish.dish_id = ANY(?)");
             _db.setArray(order.getOrderDetails().stream().map(OrderDetail::getDishId).toArray(), 1,"integer");
             String restaurantName = _db.queryOneRecord((rs, rowNum) -> rs.getString("restaurant_name"));
             if(!order.getRestaurantName().equals(restaurantName)){
-                error.append("message:restaurant name must match through the order");
+                error.add("message:restaurant name must match through the order");
             }
         } catch (SQLException e) {
-                error.append(e.getMessage());
+                error.add(e.getMessage());
         }
 
-        return error.toString();
+        return error;
     }
 
     public void updateOrder(Order newOrder) throws SQLException {
