@@ -42,7 +42,9 @@ public class LoginDAO extends BaseDAO{
         } catch (SQLException e) {
             throw new LoginException("password or username is incorrect!");
         }
-        return new SessionToken(token);
+        SessionToken sessionToken = new SessionToken(token);
+        sessionToken.setUserName(userName);
+        return sessionToken;
     }
 
     public long validateToken(String sessionToken) throws JWTVerificationException, UnsupportedEncodingException, SQLException {
