@@ -5,7 +5,6 @@ import com.sfu.cmpt470.properties.Database;
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class DatabaseConnector {
     private Connection _connection;
@@ -74,7 +73,7 @@ public class DatabaseConnector {
         if(rs.next()){
             return rowMapper.mapRow(rs,rs.getRow());
         }
-        throw new SQLException(String.format("shouldn't have more than one result to be returned"));
+        throw new SQLException("shouldn't have more than one result to be returned");
     }
 
 }

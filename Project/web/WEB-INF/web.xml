@@ -8,8 +8,6 @@
             <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 
             <init-param>
-                <!--<param-name>jersey.config.server.provider.packages</param-name>
-                <param-value>com.sfu.cmpt470</param-value>-->
                 <param-name>javax.ws.rs.Application</param-name>
                 <param-value>com.sfu.cmpt470.webapp.Config</param-value>
             </init-param>

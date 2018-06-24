@@ -22,8 +22,7 @@ import static org.mockito.Mockito.*;
 @RunWith(JUnitParamsRunner.class)
 public class LoginDAOTest {
     @Spy
-    private
-    LoginDAO _loginDAO;
+    private LoginDAO _loginDAO;
     @Rule
     public final ExpectedException _exception = ExpectedException.none();
 
