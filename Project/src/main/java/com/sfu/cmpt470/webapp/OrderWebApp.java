@@ -61,6 +61,7 @@ public class OrderWebApp {
 
     @Path("/updateOrder")
     @POST
+    @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateOrder(String order) {
         try {

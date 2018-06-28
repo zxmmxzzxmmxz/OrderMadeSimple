@@ -42,6 +42,7 @@ public class LoginDAO extends BaseDAO{
         } catch (SQLException e) {
             throw new LoginException("password or username is incorrect!");
         }
+
         SessionToken sessionToken = new SessionToken(token);
         sessionToken.setUserName(userName);
         return sessionToken;
@@ -58,6 +59,7 @@ public class LoginDAO extends BaseDAO{
         _db.supplyQuery("SELECT restaurant_id FROM user_user WHERE username = ?");
         _db.setString(username,1);
         _db.queryOneRecord((rs, rowNum) -> rs.getLong("restaurant_id"));
+
     }
 
     public static void main(String[] args){

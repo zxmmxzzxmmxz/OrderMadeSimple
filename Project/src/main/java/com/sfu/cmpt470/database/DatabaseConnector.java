@@ -87,7 +87,7 @@ public class DatabaseConnector {
         if(rs.next()){
             return rowMapper.mapRow(rs,rs.getRow());
         }
-        throw new SQLException("shouldn't have more than one result to be returned");
+        throw new SQLException("no record found!");
     }
 
 }

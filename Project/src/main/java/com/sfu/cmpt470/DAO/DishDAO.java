@@ -18,7 +18,8 @@ public class DishDAO extends BaseDAO {
                 "WHERE restaurant_id = ?");
 
         _db.setLong(restaurantID, 1);
-        return _db.queryList(new DishRowMapper());
+        ArrayList<Dish> result = _db.queryList(new DishRowMapper());
+        return result;
     }
 
     public ArrayList<Dish> findDishesForRestaurant(String restaurantName) throws SQLException {
@@ -27,6 +28,7 @@ public class DishDAO extends BaseDAO {
                 "WHERE dish.restaurant_name = ?");
 
         _db.setString(restaurantName, 1);
-        return _db.queryList(new DishRowMapper());
+        ArrayList<Dish> result = _db.queryList(new DishRowMapper());
+        return result;
     }
 }

@@ -22,7 +22,6 @@ public class OrderDAO extends BaseDAO {
     }
     public List<Order> getAllOrders(String restaurantName) throws IllegalArgumentException, SQLException {
         List<Order> orders;
-        try {
             _db.supplyQuery(Query.getAllOrder());
             _db.setString(restaurantName,1);
             orders = _db.queryList(new OrderRowMapper());
@@ -33,9 +32,6 @@ public class OrderDAO extends BaseDAO {
                 order.setOrderDetails(orderDetails);
             }
             return orders;
-        } finally{
-            disconnect();
-        }
     }
 
     public Order findOrder(long orderID) throws SQLException {

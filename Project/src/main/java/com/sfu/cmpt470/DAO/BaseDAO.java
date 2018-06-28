@@ -11,7 +11,7 @@ class BaseDAO {
         _db = new DatabaseConnector();
     }
 
-    void disconnect() throws SQLException {
+    void disconnect1() throws SQLException {
         if(_db != null){
             _db.disconnect();
         }
