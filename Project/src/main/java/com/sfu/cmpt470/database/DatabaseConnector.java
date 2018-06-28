@@ -12,6 +12,20 @@ public class DatabaseConnector {
     public DatabaseConnector() throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         _connection = DriverManager.getConnection(Database.CONNECTION_URL, Database.getDBProperties());
+        //_connection = getRemoteConnection();
+    }
+
+    private static Connection getRemoteConnection() throws SQLException, ClassNotFoundException {
+                Class.forName("org.postgresql.Driver");
+                String dbName = "projectdb";
+                String userName = "ximinz";
+                String password = "zxmzxm1234";
+                String hostname = "ximinz.cz2nzv8gyvee.us-east-2.rds.amazonaws.com";
+                String port = "5432";
+                String jdbcUrl = "jdbc:postgresql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+                //logger.trace("Getting remote connection with connection string from environment variables.");
+                //logger.info("Remote connection successful.");
+                return DriverManager.getConnection(jdbcUrl);
     }
 
     public void supplyQuery(String sql) throws SQLException {
