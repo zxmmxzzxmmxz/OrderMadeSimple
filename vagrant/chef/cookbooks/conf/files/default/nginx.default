@@ -4,7 +4,7 @@ server {
 
 	root /vagrant/WebRoot/;
 
-	index index.html;
+	index login.html;
 
 	server_name _;
 
