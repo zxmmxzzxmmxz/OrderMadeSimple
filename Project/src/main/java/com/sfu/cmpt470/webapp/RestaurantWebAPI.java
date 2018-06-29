@@ -1,6 +1,7 @@
 package com.sfu.cmpt470.webapp;
 
 import com.sfu.cmpt470.annotation.Secured;
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.service.RestaurantService;
 import com.sfu.cmpt470.service.RestaurantServiceImpl;
 
@@ -20,9 +21,12 @@ public class RestaurantWebAPI {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllRestaurants(@Context HttpServletResponse response) {
         try {
-            RestaurantService restaurantService = new RestaurantServiceImpl();
+            DatabaseConnector con = new DatabaseConnector();
+            RestaurantService restaurantService = new RestaurantServiceImpl(con);
             response.setHeader("Access-Control-Allow-Origin", "*");
-            return restaurantService.getAllRestaurants();
+            String result = restaurantService.getAllRestaurants();
+            con.disconnect();
+            return result;
         } catch (Exception e) {
             return e.getMessage();
         }

@@ -1,6 +1,7 @@
 package com.sfu.cmpt470.webapp;
 
 import com.sfu.cmpt470.annotation.Secured;
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.service.OrderService;
 import com.sfu.cmpt470.service.OrderServiceImpl;
 
@@ -21,9 +22,13 @@ public class OrderWebApp {
     public String getAllOrders(@Context HttpServletResponse response,
                                @PathParam("restaurantName")String restaurantName) {
         try {
-            OrderService orderService = new OrderServiceImpl();
+            DatabaseConnector con = new DatabaseConnector();
+            OrderService orderService = new OrderServiceImpl(con);
             response.setHeader("Access-Control-Allow-Origin", "*");
-            return orderService.getAllOpenOrders(restaurantName);
+
+            String result = orderService.getAllOpenOrders(restaurantName);
+            con.disconnect();
+            return result;
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -37,9 +42,12 @@ public class OrderWebApp {
     public String findOrder(@Context HttpServletResponse response,
                             @PathParam("order_id") long orderID) {
         try {
-            OrderService orderService = new OrderServiceImpl();
+            DatabaseConnector con = new DatabaseConnector();
+            OrderService orderService = new OrderServiceImpl(con);
             response.setHeader("Access-Control-Allow-Origin", "*");
-            return orderService.findOrder(orderID);
+            String result = orderService.findOrder(orderID);
+            con.disconnect();
+            return result;
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -50,8 +58,10 @@ public class OrderWebApp {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addOrder(String order) {
         try {
-            OrderService orders = new OrderServiceImpl();
+            DatabaseConnector con = new DatabaseConnector();
+            OrderService orders = new OrderServiceImpl(con);
             String result = orders.addOrder(order);
+            con.disconnect();
             return Response.ok().entity(result).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,8 +75,10 @@ public class OrderWebApp {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateOrder(String order) {
         try {
-            OrderService orders = new OrderServiceImpl();
+            DatabaseConnector con = new DatabaseConnector();
+            OrderService orders = new OrderServiceImpl(con);
             String result = orders.updateOrder(order);
+            con.disconnect();
             return Response.ok().entity(result).build();
         } catch (Exception e) {
             e.printStackTrace();

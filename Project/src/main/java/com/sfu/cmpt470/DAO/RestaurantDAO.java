@@ -1,5 +1,6 @@
 package com.sfu.cmpt470.DAO;
 
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.database.RestaurantRowMapper;
 import com.sfu.cmpt470.pojo.Restaurant;
 
@@ -7,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RestaurantDAO extends BaseDAO {
-    public RestaurantDAO() throws SQLException, ClassNotFoundException {
-        super();
+    public RestaurantDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
+        super(connector);
     }
 
     public ArrayList<Restaurant> findAllRestaurant() throws SQLException {

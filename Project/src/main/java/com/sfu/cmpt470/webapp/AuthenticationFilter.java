@@ -3,6 +3,7 @@ package com.sfu.cmpt470.webapp;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.sfu.cmpt470.DAO.LoginDAO;
 import com.sfu.cmpt470.annotation.Secured;
+import com.sfu.cmpt470.database.DatabaseConnector;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -71,6 +72,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     }
 
     private void validateToken(String token) throws JWTVerificationException, SQLException, ClassNotFoundException, UnsupportedEncodingException {
-        new LoginDAO().validateToken(token);
+        DatabaseConnector con = new DatabaseConnector();
+        new LoginDAO(con).validateToken(token);
+        con.disconnect();
     }
 }

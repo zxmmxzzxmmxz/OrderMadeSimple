@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.sfu.cmpt470.Util.LoginException;
 import com.sfu.cmpt470.Util.StringUtil;
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.database.RowMapper;
 import com.sfu.cmpt470.pojo.SessionToken;
 
@@ -17,8 +18,8 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginDAO extends BaseDAO{
-    public LoginDAO() throws SQLException, ClassNotFoundException {
-        super();
+    public LoginDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
+        super(connector);
     }
 
     public SessionToken login(String userName, String hashedPassword) throws LoginException {

@@ -1,5 +1,6 @@
 package com.sfu.cmpt470.DAO;
 
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.database.DishRowMapper;
 import com.sfu.cmpt470.pojo.Dish;
 
@@ -8,8 +9,8 @@ import java.util.ArrayList;
 
 public class DishDAO extends BaseDAO {
 
-    public DishDAO() throws SQLException, ClassNotFoundException {
-        super();
+    public DishDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
+        super(connector);
     }
 
     public ArrayList<Dish> findDishesForRestaurant(long restaurantID) throws SQLException {

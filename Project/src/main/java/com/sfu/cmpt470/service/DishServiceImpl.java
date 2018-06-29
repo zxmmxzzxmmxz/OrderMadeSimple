@@ -2,6 +2,7 @@ package com.sfu.cmpt470.service;
 
 import com.google.gson.Gson;
 import com.sfu.cmpt470.DAO.DishDAO;
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.pojo.Error;
 
 import java.sql.SQLException;
@@ -9,8 +10,8 @@ import java.sql.SQLException;
 public class DishServiceImpl implements DishService{
     private DishDAO _dao;
     private Gson _gson = new Gson();
-    public DishServiceImpl() throws SQLException, ClassNotFoundException {
-        _dao = new DishDAO();
+    public DishServiceImpl(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
+        _dao = new DishDAO(connector);
     }
     @Override
     public String getDishesFor(long restaurantID) {

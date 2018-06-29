@@ -3,6 +3,7 @@ package com.sfu.cmpt470.service;
 import com.google.gson.Gson;
 import com.sfu.cmpt470.DAO.OrderDAO;
 
+import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.pojo.Error;
 import com.sfu.cmpt470.pojo.Order;
 
@@ -16,8 +17,8 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService{
     private OrderDAO _dao;
     private Gson _gson = new Gson();
-    public OrderServiceImpl() throws SQLException, ClassNotFoundException {
-        _dao = new OrderDAO();
+    public OrderServiceImpl(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
+        _dao = new OrderDAO(connector);
     }
 
     public String getAllOpenOrders(String restaurantName) throws IllegalArgumentException {
