@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/dish")
 public class DishWebAPI {
@@ -48,4 +49,41 @@ public class DishWebAPI {
             return e.getMessage();
         }
     }
+
+    @Path("/findDish/{dishID}")
+    @GET
+    //@Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String findDish(@Context HttpServletResponse response,
+                                    @PathParam("dishID") long dishID ) {
+        try {
+            DatabaseConnector con = new DatabaseConnector();
+            DishService dishService = new DishServiceImpl(con);
+            String result = dishService.getDish(dishID);
+            con.disconnect();
+            return result;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    @Path("/updateDish")
+    @POST
+    //@Secured
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response updateDish(String dish){
+        try {
+            DatabaseConnector con = new DatabaseConnector();
+            DishServiceImpl service = new DishServiceImpl(con);
+            String result = service.updateDish(dish);
+            con.disconnect();
+            return Response.ok().entity(result).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity("Server can not process the request").build();
+        }
+    }
+
+
 }

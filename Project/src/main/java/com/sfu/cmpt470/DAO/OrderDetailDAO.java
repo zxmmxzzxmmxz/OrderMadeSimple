@@ -10,6 +10,11 @@ import com.sfu.cmpt470.pojo.OrderDetailStatusTypeCode;
 import java.sql.SQLException;
 
 public class OrderDetailDAO extends BaseDAO {
+
+    public OrderDetailDAO(){
+        super();
+    }
+
     public OrderDetailDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
         super(connector);
     }
@@ -28,12 +33,12 @@ public class OrderDetailDAO extends BaseDAO {
                 _db.setLong(orderDetail.getOrderId(), 2);
                 _db.executeUpdate();
             }
-            return "";
+            return "Order Detail Updated";
         }
         return error;
     }
 
-    public String verifyOrderDetail(OrderDetail orderDetail) throws SQLException {
+    String verifyOrderDetail(OrderDetail orderDetail) throws SQLException {
         _db.supplyQuery("SELECT * FROM order_details WHERE order_details_id = ?");
         _db.setLong(orderDetail.getOrderDetailID(), 1);
         try {

@@ -90,4 +90,7 @@ public class DatabaseConnector {
         throw new SQLException("no record found!");
     }
 
+    public void setFloat(float number, int index) throws SQLException {
+        _pStatement.setFloat(index, number);
+    }
 }

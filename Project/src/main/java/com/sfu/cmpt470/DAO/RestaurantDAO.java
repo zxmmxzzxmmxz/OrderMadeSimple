@@ -8,6 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RestaurantDAO extends BaseDAO {
+
+    public RestaurantDAO(){
+        super();
+    }
+
     public RestaurantDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
         super(connector);
     }

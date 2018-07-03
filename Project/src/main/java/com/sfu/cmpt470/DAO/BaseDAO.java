@@ -7,6 +7,10 @@ import java.sql.SQLException;
 class BaseDAO {
     DatabaseConnector _db;
 
+    BaseDAO(){
+        _db = null;
+    }
+
     BaseDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
         _db = connector;
     }

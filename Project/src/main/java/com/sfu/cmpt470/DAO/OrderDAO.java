@@ -18,6 +18,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OrderDAO extends BaseDAO {
+
+    public OrderDAO(){
+        super();
+    }
     public OrderDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
         super(connector);
     }

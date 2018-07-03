@@ -18,6 +18,11 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginDAO extends BaseDAO{
+
+    public LoginDAO(){
+        super();
+    }
+
     public LoginDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
         super(connector);
     }
