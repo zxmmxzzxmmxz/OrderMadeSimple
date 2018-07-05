@@ -1,7 +1,7 @@
 package com.sfu.cmpt470.DAO;
 
 import com.sfu.cmpt470.database.DatabaseConnector;
-import com.sfu.cmpt470.database.RestaurantRowMapper;
+import com.sfu.cmpt470.database.RowMapper.RestaurantRowMapper;
 import com.sfu.cmpt470.pojo.Restaurant;
 
 import java.sql.SQLException;

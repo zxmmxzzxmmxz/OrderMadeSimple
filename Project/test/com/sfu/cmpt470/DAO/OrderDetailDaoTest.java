@@ -1,15 +1,9 @@
 package com.sfu.cmpt470.DAO;
 
-import com.sfu.cmpt470.Util.StringUtil;
 import com.sfu.cmpt470.database.DatabaseConnector;
-import com.sfu.cmpt470.database.DishRowMapper;
-import com.sfu.cmpt470.database.OrderDetailRowMapper;
-import com.sfu.cmpt470.database.OrderRowMapper;
-import com.sfu.cmpt470.pojo.Dish;
-import com.sfu.cmpt470.pojo.Order;
+import com.sfu.cmpt470.database.RowMapper.OrderDetailRowMapper;
 import com.sfu.cmpt470.pojo.OrderDetail;
 import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

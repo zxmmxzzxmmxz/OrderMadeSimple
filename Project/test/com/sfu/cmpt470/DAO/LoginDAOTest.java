@@ -3,7 +3,7 @@ package com.sfu.cmpt470.DAO;
 import com.sfu.cmpt470.Util.LoginException;
 import com.sfu.cmpt470.Util.StringUtil;
 import com.sfu.cmpt470.database.DatabaseConnector;
-import com.sfu.cmpt470.database.RowMapper;
+import com.sfu.cmpt470.database.RowMapper.RowMapper;
 import com.sfu.cmpt470.pojo.SessionToken;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;

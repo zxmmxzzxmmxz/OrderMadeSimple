@@ -5,6 +5,18 @@ CREATE TABLE restaurant (
 
 CREATE TABLE dish (
 	dish_id	SERIAL UNIQUE PRIMARY KEY,
+	dish_ver_id SERIAL,
+	dish_name varchar(30) NOT NULL,
+	description varchar(200) ,
+	price real NOT NULL,
+	deleted boolean DEFAULT FALSE
+);
+
+
+CREATE TABLE dish_ver(
+	dish_ver_id SERIAL UNIQUE PRIMARY KEY,
+	version_number int NOT NULL,
+	dish_id SERIAL NOT NULL REFERENCES dish(dish_id),
 	dish_name varchar(30) NOT NULL,
 	description varchar(200) ,
 	restaurant_name varchar(40) NOT NULL REFERENCES restaurant(restaurant_name),

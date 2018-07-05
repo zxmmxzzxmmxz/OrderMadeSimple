@@ -1,5 +1,6 @@
 package com.sfu.cmpt470.database;
 
+import com.sfu.cmpt470.database.RowMapper.RowMapper;
 import com.sfu.cmpt470.properties.Database;
 
 import java.sql.*;

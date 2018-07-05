@@ -1,4 +1,4 @@
-package com.sfu.cmpt470.database;
+package com.sfu.cmpt470.database.RowMapper;
 
 import com.sfu.cmpt470.pojo.Restaurant;
 

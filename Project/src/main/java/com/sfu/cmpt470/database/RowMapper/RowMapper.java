@@ -1,4 +1,4 @@
-package com.sfu.cmpt470.database;
+package com.sfu.cmpt470.database.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
