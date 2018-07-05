@@ -3,6 +3,7 @@ package com.sfu.cmpt470.DAO;
 import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.database.RowMapper.RestaurantRowMapper;
 import com.sfu.cmpt470.pojo.Restaurant;
+import jersey.repackaged.com.google.common.collect.Iterables;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,5 +29,21 @@ public class RestaurantDAO extends BaseDAO {
         _db.setString(username,1);
         String restaurantName = _db.queryOneRecord(new RestaurantRowMapper()).getRestaurantName();
         return restaurantName;
+    }
+
+    public Long create(Restaurant newRestaurant) throws SQLException {
+        _db.supplyQuery("INSERT INTO restaurant " +
+                "(restaurant_name) " +
+                "VALUES(?)");
+        _db.setString(newRestaurant.getRestaurantName(), 1);
+        _db.executeUpdate();
+        return Iterables.getOnlyElement(_db.getInsertedKeys());
+    }
+
+    public Restaurant findRestaurantBy(long restaurantID) throws SQLException {
+        _db.supplyQuery("SELECT restaurant_id, restaurant_name FROM restaurant " +
+                "WHERE restaurant_id = ?");
+        _db.setFloat(restaurantID, 1);
+        return _db.queryOneRecord(new RestaurantRowMapper());
     }
 }

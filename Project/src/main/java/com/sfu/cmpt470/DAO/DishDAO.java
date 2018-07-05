@@ -22,26 +22,6 @@ public class DishDAO extends BaseDAO {
         super(connector);
     }
 
-    public ArrayList<Dish> findDishesForRestaurant(long restaurantID) throws SQLException {
-        _db.supplyQuery("SELECT dish_id, dish_name, description, restaurant_id, price, menu_flag \n" +
-                "FROM dish\n" +
-                "WHERE restaurant_id = ?");
-
-        _db.setLong(restaurantID, 1);
-        ArrayList<Dish> result = _db.queryList(new DishRowMapper());
-        return result;
-    }
-
-    public ArrayList<Dish> findDishesForRestaurant(String restaurantName) throws SQLException {
-        _db.supplyQuery("SELECT dish.dish_id, dish.dish_name, dish.description, dish.restaurant_name, dish.price, dish.menu_flag \n" +
-                "FROM dish\n" +
-                "WHERE dish.restaurant_name = ?");
-
-        _db.setString(restaurantName, 1);
-        ArrayList<Dish> result = _db.queryList(new DishRowMapper());
-        return result;
-    }
-
     public Dish findDish(long dishID) throws SQLException {
         _db.supplyQuery("SELECT dish.dish_id, dish.dish_name, dish.description, dish.restaurant_name, dish.price, dish.menu_flag \n" +
                 "FROM dish\n" +
@@ -68,11 +48,11 @@ public class DishDAO extends BaseDAO {
     }
 
     public ImmutableList<Long> getDishIDsFor(String restaurantName) throws SQLException{
-        _db.supplyQuery("SELECT dish_id " +
+        _db.supplyQuery("SELECT dish.dish_id as dish_id " +
                 "FROM dish " +
                 "JOIN dish_ver ON dish.dish_ver_id = dish_ver.dish_ver_id " +
                 "JOIN restaurant ON restaurant.restaurant_name = dish_ver.restaurant_name " +
-                "WHERE restaurant_name = ?");
+                "WHERE dish_ver.restaurant_name = ?");
         _db.setString(restaurantName, 1);
         ArrayList<Long> IDs = _db.queryList((rs, rowNum) -> rs.getLong("dish_id"));
         return ImmutableList.copyOf(IDs);
@@ -99,9 +79,17 @@ public class DishDAO extends BaseDAO {
         _db.setFloat(newDish.getPrice(), 5);
         _db.setString(newDish.getMenuFlag(), 6);
         _db.executeUpdate();
+        Long dishVerID = Iterables.getOnlyElement(_db.getInsertedKeys());
+        //set verID in master table
+        _db.supplyQuery("UPDATE dish SET dish_ver_id = ? WHERE dish_id = ?");
+        _db.setLong(dishVerID, 1);
+        _db.setLong(dishID, 2);
+        _db.executeUpdate();
+
         return dishID;
     }
 
+    //TODO: update this method so that everytime when u update a dish, a new ver val is created and master record is updated with the new one
     public void updateDish(Dish dish) throws SQLException {
         _db.supplyQuery("UPDATE dish SET dish_name = ?, description = ?, restaurant_name = ?, price = ?, menu_flag = ? WHERE dish_id = ?");
         _db.setString(dish.getDishName(),1);
