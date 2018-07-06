@@ -6,9 +6,6 @@ CREATE TABLE restaurant (
 CREATE TABLE dish (
 	dish_id	SERIAL UNIQUE PRIMARY KEY,
 	dish_ver_id SERIAL,
-	dish_name varchar(30) NOT NULL,
-	description varchar(200) ,
-	price real NOT NULL,
 	deleted boolean DEFAULT FALSE
 );
 
@@ -17,11 +14,11 @@ CREATE TABLE dish_ver(
 	dish_ver_id SERIAL UNIQUE PRIMARY KEY,
 	version_number int NOT NULL,
 	dish_id SERIAL NOT NULL REFERENCES dish(dish_id),
-	dish_name varchar(30) NOT NULL,
+	dish_name varchar(200) NOT NULL,
 	description varchar(200) ,
 	restaurant_name varchar(40) NOT NULL REFERENCES restaurant(restaurant_name),
 	price real NOT NULL,
-	menu_flag varchar(30)
+	menu_flag varchar(200)
 );
 
 CREATE TABLE order_order(
@@ -34,8 +31,7 @@ CREATE TABLE order_order(
 CREATE TABLE order_details(
 	order_details_id SERIAL UNIQUE PRIMARY KEY,
 	order_id SERIAL REFERENCES order_order(order_id),
-	dish_id SERIAL REFERENCES dish(dish_id),
-	dish_name varchar(30) NOT NULL,
+	dish_ver_id SERIAL REFERENCES dish_ver(dish_ver_id),
 	status varchar(30) NOT NULL
 );
 

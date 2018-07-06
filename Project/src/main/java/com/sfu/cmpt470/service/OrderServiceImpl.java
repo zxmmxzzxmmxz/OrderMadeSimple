@@ -34,12 +34,12 @@ public class OrderServiceImpl implements OrderService{
     }
 
     private List<Order> getAllOrders(String restaurantName) throws SQLException {
-        return _dao.getAllOrders(restaurantName);
+        return _dao.getAllOrdersByRestaurantName(restaurantName);
     }
 
     public String findOrder(long order_id){
         try {
-            return _gson.toJson(_dao.findOrder(order_id));
+            return _gson.toJson(_dao.getOrder(order_id));
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService{
         Order newOrder = _gson.fromJson(order, Order.class);
         newOrder.setTime(OffsetDateTime.now());
         try {
-            _dao.addOrder(newOrder);
+            _dao.createOrder(newOrder);
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }

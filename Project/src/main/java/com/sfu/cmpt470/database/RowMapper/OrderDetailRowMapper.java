@@ -8,17 +8,15 @@ import java.sql.SQLException;
 
 public class OrderDetailRowMapper implements RowMapper<OrderDetail> {
     private static final String ORDER_ID = "order_id";
-    private static final String DISH_ID = "dish_id";
     private static final String STATUS = "status";
-    private static final String DISH_NAME = "dish_name";
 
 
     public OrderDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new OrderDetail(
-                rs.getLong("order_details_id"),
-                rs.getInt(ORDER_ID),
-                rs.getInt(DISH_ID),
-                rs.getString(DISH_NAME),
-                OrderDetailStatusTypeCode.of(rs.getString(STATUS)));
+        OrderDetail.OrderDetailBuilder builder = OrderDetail.newBuilder();
+        builder.setOrderID(rs.getLong(ORDER_ID))
+                .setOrderDetailID(rs.getLong("order_details_id"))
+                .setDishVerID(rs.getLong("dish_ver_id"))
+                .setStatus(OrderDetailStatusTypeCode.of(rs.getString(STATUS)));
+        return builder.build();
     }
 }

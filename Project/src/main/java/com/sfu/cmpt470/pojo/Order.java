@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
     @SerializedName("order_id")
@@ -41,6 +42,10 @@ public class Order {
 
     public void setTime(OffsetDateTime _time) {
         this._time = _time.format(DateTimeFormatter.RFC_1123_DATE_TIME);
+    }
+
+    public void setRestaurantName(String _restaurantName) {
+        this._restaurantName = _restaurantName;
     }
 
     public long getOrderId() {
@@ -81,5 +86,23 @@ public class Order {
 
     public void setOrderStatus(String orderStatus) {
         this._orderStatus = orderStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return _order_id == order._order_id &&
+                Objects.equals(_restaurantName, order._restaurantName) &&
+                Objects.equals(_time, order._time) &&
+                Objects.equals(_orderDetails, order._orderDetails) &&
+                Objects.equals(_orderStatus, order._orderStatus);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(_order_id, _restaurantName, _time, _orderDetails, _orderStatus);
     }
 }

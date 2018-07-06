@@ -34,7 +34,7 @@ public class OrderWebApp {
         }
     }
 
-    @Path("/findOrder/{order_id}")
+    @Path("/getOrder/{order_id}")
     @Secured
     @GET
     @Produces(MediaType.APPLICATION_JSON)

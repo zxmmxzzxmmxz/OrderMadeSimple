@@ -85,10 +85,21 @@ public class DatabaseConnector {
 
     public <T> T queryOneRecord(RowMapper<T> rowMapper) throws SQLException {
         ResultSet rs = _pStatement.executeQuery();
-        if(rs.next()){
-            return rowMapper.mapRow(rs,rs.getRow());
+        T result = null;
+        boolean found = false;
+        while(rs.next()){
+            if(found){
+                throw new SQLException("only expecting one record to be returned");
+            }
+            found = true;
+            result =  rowMapper.mapRow(rs,rs.getRow());
         }
-        throw new SQLException("no record found!");
+        if(result != null){
+            return result;
+        }
+        else{
+            throw new SQLException("no record found!");
+        }
     }
 
     public void setFloat(float number, int index) throws SQLException {

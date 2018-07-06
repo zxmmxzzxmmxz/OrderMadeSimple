@@ -20,7 +20,7 @@ public class DishServiceImpl implements DishService{
     @Override
     public String getDishesFor(long restaurantID) {
         try {
-            return _gson.toJson(_dao.findDishesBy(_restaurantDao.findRestaurantBy(restaurantID).getRestaurantName()));
+            return _gson.toJson(_dao.getDishesBy(_restaurantDao.findRestaurantBy(restaurantID).getRestaurantName()));
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
@@ -29,7 +29,7 @@ public class DishServiceImpl implements DishService{
     @Override
     public String getDishesFor(String restaurantName) {
         try {
-            return _gson.toJson(_dao.findDishesBy(restaurantName));
+            return _gson.toJson(_dao.getDishesBy(restaurantName));
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
@@ -38,7 +38,7 @@ public class DishServiceImpl implements DishService{
     @Override
     public String getDish(long dishID) {
         try {
-            return _gson.toJson(_dao.findDish(dishID));
+            return _gson.toJson(_dao.getDishByDishID(dishID));
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }

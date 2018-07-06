@@ -1,7 +1,8 @@
 package com.sfu.cmpt470.pojo;
 
 import com.google.gson.annotations.SerializedName;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import java.util.Objects;
 
 public class OrderDetail {
     @SerializedName(value="order_detail_id")
@@ -10,11 +11,8 @@ public class OrderDetail {
     @SerializedName(value = "order_id")
     private long _orderID;
 
-    @SerializedName(value = "dish_id")
-    private long _dishID;
-
-    @SerializedName(value = "dish_name")
-    private String _dishName;
+    @SerializedName(value = "dish_ver_id")
+    private long _dishVerID;
 
     @SerializedName(value = "status")
     private OrderDetailStatusTypeCode _status;
@@ -23,12 +21,11 @@ public class OrderDetail {
     private OrderDetail() {
     }
 
-    public OrderDetail(long orderDetailID,long order_id, long dish_id, String dish_name, OrderDetailStatusTypeCode status){
+    private OrderDetail(long orderDetailID,long order_id, long dishVerId, OrderDetailStatusTypeCode status){
         _orderDetailID = orderDetailID;
         _orderID = order_id;
-        _dishID = dish_id;
+        _dishVerID = dishVerId;
         _status = status;
-        _dishName = dish_name;
     }
 
     public void setOrderDetailID(long id){
@@ -43,8 +40,8 @@ public class OrderDetail {
         return _orderID;
     }
 
-    public long getDishId() {
-        return _dishID;
+    public long getDishVerId() {
+        return _dishVerID;
     }
 
     public OrderDetailStatusTypeCode getStatus() {
@@ -55,9 +52,6 @@ public class OrderDetail {
         _status = status;
     }
 
-    public String getDishName(){
-        return _dishName;
-    }
     public void setOrderID(long orderId) {
         _orderID = orderId;
     }
@@ -91,13 +85,8 @@ public class OrderDetail {
             return this;
         }
 
-        public OrderDetailBuilder setDishID(long dishID){
-            _dishID = dishID;
-            return this;
-        }
-
-        public OrderDetailBuilder setDishName(String dishName){
-            _dishName = dishName;
+        public OrderDetailBuilder setDishVerID(long dishVerID){
+            _dishID = dishVerID;
             return this;
         }
 
@@ -107,7 +96,25 @@ public class OrderDetail {
         }
 
         public OrderDetail build(){
-            return new OrderDetail(_orderDetailID,_orderID,_dishID,_dishName,_status);
+            return new OrderDetail(_orderDetailID, _orderID, _dishID, _status);
         }
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDetail that = (OrderDetail) o;
+        return _orderDetailID == that._orderDetailID &&
+                _orderID == that._orderID &&
+                _dishVerID == that._dishVerID &&
+                _status == that._status;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(_orderDetailID, _orderID, _dishVerID, _status);
     }
 }

@@ -17,13 +17,16 @@ import java.util.List;
 
 public class OrderDAO extends BaseDAO {
 
+    DishDAO _dishDAO;
+
     public OrderDAO(){
         super();
     }
     public OrderDAO(DatabaseConnector connector) throws SQLException, ClassNotFoundException {
         super(connector);
+        _dishDAO = new DishDAO(connector);
     }
-    public List<Order> getAllOrders(String restaurantName) throws IllegalArgumentException, SQLException {
+    public List<Order> getAllOrdersByRestaurantName(String restaurantName) throws IllegalArgumentException, SQLException {
         List<Order> orders;
             _db.supplyQuery(Query.getAllOrder());
             _db.setString(restaurantName,1);
@@ -37,8 +40,8 @@ public class OrderDAO extends BaseDAO {
             return orders;
     }
 
-    public Order findOrder(long orderID) throws SQLException {
-        _db.supplyQuery("SELECT order_order.order_id, order_order.restaurant_name, order_order.time, order_details.order_details_id,order_details.dish_id, order_details.dish_name, order_details.status " +
+    public Order getOrder(long orderID) throws SQLException {
+        _db.supplyQuery("SELECT order_order.order_id, order_order.restaurant_name, order_order.time, order_details.order_details_id,order_details.dish_ver_id, order_details.status " +
                 "FROM order_order LEFT OUTER JOIN order_details ON order_order.order_id = order_details.order_id " +
                 "WHERE order_order.order_id = ?");
         _db.setLong(orderID,1);
@@ -49,7 +52,7 @@ public class OrderDAO extends BaseDAO {
 
 
 
-    public void addOrder(Order newOrder) throws SQLException {
+    public long createOrder(Order newOrder) throws SQLException {
         ArrayList<String> verificationError = verifyNewOrder(newOrder);
         if(verificationError.isEmpty()){
             _db.supplyQuery(Query.insertOrder());
@@ -57,9 +60,10 @@ public class OrderDAO extends BaseDAO {
             _db.setString(newOrder.getRestaurantName(),2);
             _db.setString("new",3);
             _db.executeUpdate();
-            Long order_id = Iterables.getOnlyElement(_db.getInsertedKeys());
-            newOrder.setOrderID(findOrder(order_id).getOrderId());
+            Long orderID = Iterables.getOnlyElement(_db.getInsertedKeys());
+            newOrder.setOrderID(getOrder(orderID).getOrderId());
             createOrderDetails(newOrder);
+            return orderID;
         }
         else{
             throw new SQLException(verificationError.toString());
@@ -72,7 +76,7 @@ public class OrderDAO extends BaseDAO {
             orderDetail.setStatus(OrderDetailStatusTypeCode.NEW);
             _db.supplyQuery(Query.insertOrderDetail());
             _db.setLong(orderDetail.getOrderId(),1);
-            _db.setLong(orderDetail.getDishId(), 3);
+            _db.setLong(orderDetail.getDishVerId(), 3);
             _db.setString(orderDetail.getStatus().toString(), 2);
             _db.executeUpdate();
         }
@@ -89,8 +93,8 @@ public class OrderDAO extends BaseDAO {
             return error;
         }
         try {
-            _db.supplyQuery("SELECT dish.restaurant_name FROM dish JOIN restaurant ON dish.restaurant_name = restaurant.restaurant_name where dish.dish_id = ANY(?)");
-            _db.setArray(order.getOrderDetails().stream().map(OrderDetail::getDishId).toArray(), 1,"integer");
+            _db.supplyQuery("SELECT dish_ver.restaurant_name FROM dish_ver JOIN restaurant ON dish_ver.restaurant_name = restaurant.restaurant_name where dish_ver.dish_ver_id = ANY(?)");
+            _db.setArray(order.getOrderDetails().stream().map(OrderDetail::getDishVerId).toArray(), 1,"integer");
             String restaurantName = _db.queryOneRecord((rs, rowNum) -> rs.getString("restaurant_name"));
             if(!order.getRestaurantName().equals(restaurantName)){
                 error.add("message:restaurant name must match through the order");
@@ -104,7 +108,7 @@ public class OrderDAO extends BaseDAO {
 
     public void updateOrder(Order newOrder) throws SQLException {
         //only update status for now
-        Order order = findOrder(newOrder.getOrderId());
+        Order order = getOrder(newOrder.getOrderId());
         _db.supplyQuery("UPDATE order_order SET status = ? WHERE order_order.order_id = ?");
         _db.setString(newOrder.getOrderStatus(),1);
         _db.setLong(order.getOrderId(),2);

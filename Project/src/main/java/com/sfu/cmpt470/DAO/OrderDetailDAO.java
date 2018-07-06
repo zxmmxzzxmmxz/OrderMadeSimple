@@ -26,7 +26,7 @@ public class OrderDetailDAO extends BaseDAO {
             _db.setString(orderDetail.getStatus().toString(), 1);
             _db.setLong(orderDetail.getOrderDetailID(), 2);
             _db.executeUpdate();
-            Order order = new OrderDAO(_db).findOrder(orderDetail.getOrderId());
+            Order order = new OrderDAO(_db).getOrder(orderDetail.getOrderId());
             if (order.getOrderDetails().stream().allMatch(orderDetail1 -> orderDetail1.getStatus() == OrderDetailStatusTypeCode.DONE)) {
                 _db.supplyQuery("UPDATE order_order SET status = ? WHERE order_id = ?");
                 _db.setString("done", 1);

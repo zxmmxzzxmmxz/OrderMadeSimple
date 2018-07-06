@@ -32,7 +32,7 @@ public class OrderDetailDaoTest {
     public void verifyOrderDetail_orderDetailDoesnotExist_shouldReturnError() throws SQLException {
         doThrow(new SQLException("no record found!")).when(_dao._db).queryOneRecord(any(OrderDetailRowMapper.class));
 
-        OrderDetail orderDetail = OrderDetail.newBuilder().setOrderDetailID(-1).setDishName(DISH_NAME).build();
+        OrderDetail orderDetail = OrderDetail.newBuilder().setOrderDetailID(-1).build();
 
         String result = _dao.verifyOrderDetail(orderDetail);
 

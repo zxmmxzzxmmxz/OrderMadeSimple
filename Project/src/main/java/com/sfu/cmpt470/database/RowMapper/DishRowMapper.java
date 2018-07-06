@@ -8,13 +8,15 @@ import java.sql.SQLException;
 public class DishRowMapper implements RowMapper<Dish> {
     @Override
     public Dish mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Dish.DishBuilder dishBuilder = new Dish.DishBuilder();
-        return dishBuilder.setDishID(rs.getLong("dish_id"))
+        Dish.Builder builder = Dish.newBuilder();
+        builder.setDishID(rs.getLong("dish_id"))
+                .setDishVerID(rs.getLong("dish_ver_id"))
                 .setDishName(rs.getString("dish_name"))
-                .setRestaurant(rs.getString("restaurant_name"))
                 .setDescription(rs.getString("description"))
+                .setRestaurantName(rs.getString("restaurant_name"))
                 .setPrice(rs.getFloat("price"))
                 .setMenuFlag(rs.getString("menu_flag"))
-                .build();
+                .setVersionNumber(rs.getInt("version_number"));
+        return builder.build();
     }
 }

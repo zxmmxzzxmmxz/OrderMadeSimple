@@ -6,7 +6,7 @@ public class Query {
     }
 
     public static String findOrderDetails() {
-        return "SELECT order_details_id, order_id, dish_id, dish_name, status FROM order_details WHERE order_id = ?";
+        return "SELECT order_details_id, order_id, dish_ver_id, status FROM order_details WHERE order_id = ?";
     }
 
     public static String insertOrder(){
@@ -14,7 +14,7 @@ public class Query {
     }
 
     public static String insertOrderDetail() {
-        //order id, status, dish_id
-        return "INSERT INTO order_details (order_id, dish_id, dish_name, status) SELECT ?,dish_id,dish_name,? FROM dish where dish_id = ?;";
+        //order id, status, dish_ver_id
+        return "INSERT INTO order_details (order_id, dish_ver_id, status) SELECT ?,dish_ver_id,? FROM dish_ver where dish_ver_id = ?;";
     }
 }
