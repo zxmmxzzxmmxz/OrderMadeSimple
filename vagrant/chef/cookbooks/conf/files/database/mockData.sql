@@ -47,8 +47,8 @@ UPDATE dish SET dish_ver_id = 4 WHERE dish_id = 4;
 UPDATE dish SET dish_ver_id = 5 WHERE dish_id = 5;
 
 --orders
-INSERT INTO order_order (time,restaurant_name,status) values(TIMESTAMP '2004-10-19 10:23:54+02','joojak','new');
-INSERT INTO order_order (time,restaurant_name,status) values(TIMESTAMP '2018-11-12 10:23:54+02','joojak','new');
+INSERT INTO order_order (time,restaurant_name,status,table_number) values(TIMESTAMP '2004-10-19 10:23:54+02','joojak','new','3');
+INSERT INTO order_order (time,restaurant_name,status,table_number) values(TIMESTAMP '2018-11-12 10:23:54+02','joojak','done','1');
 
 --order order_details
 INSERT INTO order_details (order_id, dish_ver_id, status) values(1,1,'new');

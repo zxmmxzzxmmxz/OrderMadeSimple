@@ -60,18 +60,24 @@ public class OrderDetail {
         return new OrderDetailBuilder();
     }
 
+    public OrderDetailBuilder toBuilder(){
+        OrderDetailBuilder builder = newBuilder();
+        return builder.setOrderID(_orderID)
+                .setOrderDetailID(_orderDetailID)
+                .setStatus(_status)
+                .setDishVerID(_dishVerID);
+    }
+
     public static class OrderDetailBuilder{
         private long _orderDetailID;
         private long _orderID;
         private long _dishID;
-        private String _dishName;
         private OrderDetailStatusTypeCode _status;
 
         public OrderDetailBuilder(){
             _orderDetailID = -1;
             _orderID = -1;
             _dishID = -1;
-            _dishName = "";
             _status = OrderDetailStatusTypeCode.NEW;
         }
 

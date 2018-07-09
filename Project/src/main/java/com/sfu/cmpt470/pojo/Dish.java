@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Dish {
     @SerializedName(value="dish_id")
     private long _dishID;
+    @SerializedName(value="dish_ver_id")
     private long _dishVerID;
     @SerializedName(value="dish_name")
     private String _dishName;

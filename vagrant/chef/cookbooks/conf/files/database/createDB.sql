@@ -25,7 +25,8 @@ CREATE TABLE order_order(
 	order_id SERIAL UNIQUE PRIMARY KEY,
 	restaurant_name varchar(40) REFERENCES restaurant(restaurant_name),
 	time timestamp,
-	status varchar(30) NOT NULL
+	status varchar(30) NOT NULL,
+	table_number varchar(30)
 );
 
 CREATE TABLE order_details(

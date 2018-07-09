@@ -6,8 +6,11 @@ import com.sfu.cmpt470.DAO.RestaurantDAO;
 import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.pojo.Dish;
 import com.sfu.cmpt470.pojo.Error;
+import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import java.sql.SQLException;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class DishServiceImpl implements DishService{
     private DishDAO _dao;
@@ -36,7 +39,15 @@ public class DishServiceImpl implements DishService{
     }
 
     @Override
-    public String getDish(long dishID) {
+    public String getDish(long dishVerID) {
+        try {
+            return _gson.toJson(_dao.getDishByDishVerID(dishVerID));
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
+    }
+
+    public String getDishByID(long dishID){
         try {
             return _gson.toJson(_dao.getDishByDishID(dishID));
         } catch (SQLException e) {
@@ -44,14 +55,31 @@ public class DishServiceImpl implements DishService{
         }
     }
 
-    public String updateDish(String dishString) {
+    public String updateOrCreateDish(String dishString, CRUDMode mode) {
         Dish dish = _gson.fromJson(dishString, Dish.class);
         try {
-            _dao.updateDish(dish);
-            return "Dish Updated";
+            if(mode == CRUDMode.UPDATE){
+                _dao.updateDish(dish);
+                return "Dish Updated";
+            }
+            else if(mode == CRUDMode.CREATE){
+                _dao.createDish(dish);
+                return "Dish Created";
+            }
+            return "ONLY UPDATE OR CREATE SUPPORTED";
+
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
 
+    }
+
+    public String getDishesByDishVerID(String idsJson) {
+        ImmutableList<Long> dishes = ImmutableList.copyOf(_gson.fromJson(idsJson, Long[].class));
+        try {
+            return _gson.toJson(_dao.getDishesByVerIDs(dishes));
+        } catch (SQLException e) {
+            return _gson.toJson(new Error(e.toString()));
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.sfu.cmpt470.webapp;
 
+import com.sfu.cmpt470.Util.StringUtil;
 import com.sfu.cmpt470.annotation.Secured;
 import com.sfu.cmpt470.database.DatabaseConnector;
+import com.sfu.cmpt470.service.CRUDMode;
 import com.sfu.cmpt470.service.DishService;
 import com.sfu.cmpt470.service.DishServiceImpl;
 
@@ -11,20 +13,55 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@SuppressWarnings("Duplicates")
 @Path("/dish")
 public class DishWebAPI {
-    @SuppressWarnings("Duplicates")
-    @Path("/allDishesForRestaurantID/{restaurantID}")
+    @Path("/getDishesByRestaurant")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String getAllRestaurants(@Context HttpServletResponse response,
-                                    @PathParam("restaurantID") Long restaurantID ) {
-        DatabaseConnector con;
+    public String getDishes(@Context HttpServletResponse response,
+                            @QueryParam("restaurant_name") String restaurantName,
+                            @QueryParam("restaurant_id") Long restaurantID) {
+        if(restaurantID == null && StringUtil.isNullOrEmpty(restaurantName)){
+            return "";
+        }
+        if(restaurantID != null){
+            try {
+                DatabaseConnector con = new DatabaseConnector();
+                DishService dishService = new DishServiceImpl(con);
+                String result = dishService.getDishesFor(restaurantID);
+                con.disconnect();
+                return result;
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
+        else{
+            try {
+                DatabaseConnector con = new DatabaseConnector();
+                DishService dishService = new DishServiceImpl(con);
+                String result = dishService.getDishesFor(restaurantName);
+                con.disconnect();
+                return result;
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
+    }
+
+
+    @Path("/getDishByID")
+    @GET
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String getDishByID(@Context HttpServletResponse response,
+                           @QueryParam("dish_id") long dishID) {
         try {
-            con = new DatabaseConnector();
-            DishService dishService = new DishServiceImpl(con);
-            String result = dishService.getDishesFor(restaurantID);
+            DatabaseConnector con = new DatabaseConnector();
+            DishServiceImpl dishService = new DishServiceImpl(con);
+            String result = dishService.getDishByID(dishID);
             con.disconnect();
             return result;
         } catch (Exception e) {
@@ -32,17 +69,17 @@ public class DishWebAPI {
         }
     }
 
-    @SuppressWarnings("Duplicates")
-    @Path("/allDishesForRestaurantName/{restaurantName}")
+    @Path("/getDish")
     @GET
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String getAllRestaurants(@Context HttpServletResponse response,
-                                    @PathParam("restaurantName") String restaurantName ) {
+    public String getDish(@Context HttpServletResponse response,
+                          @QueryParam("dishVerID") long dishVerID) {
         try {
             DatabaseConnector con = new DatabaseConnector();
             DishService dishService = new DishServiceImpl(con);
-            String result = dishService.getDishesFor(restaurantName);
+            String result = dishService.getDish(dishVerID);
             con.disconnect();
             return result;
         } catch (Exception e) {
@@ -50,20 +87,20 @@ public class DishWebAPI {
         }
     }
 
-    @Path("/findDish/{dishID}")
+    @Path("/getDishes")
     @GET
     //@Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String findDish(@Context HttpServletResponse response,
-                                    @PathParam("dishID") long dishID ) {
+    public String getAllDishes(String dish) {
         try {
             DatabaseConnector con = new DatabaseConnector();
-            DishService dishService = new DishServiceImpl(con);
-            String result = dishService.getDish(dishID);
+            DishServiceImpl service = new DishServiceImpl(con);
+            String result = service.getDishesByDishVerID(dish);
             con.disconnect();
             return result;
         } catch (Exception e) {
+            e.printStackTrace();
             return e.getMessage();
         }
     }
@@ -72,11 +109,11 @@ public class DishWebAPI {
     @POST
     //@Secured
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response updateDish(String dish){
+    public Response updateDish(String dish) {
         try {
             DatabaseConnector con = new DatabaseConnector();
             DishServiceImpl service = new DishServiceImpl(con);
-            String result = service.updateDish(dish);
+            String result = service.updateOrCreateDish(dish, CRUDMode.UPDATE);
             con.disconnect();
             return Response.ok().entity(result).build();
         } catch (Exception e) {
@@ -85,5 +122,21 @@ public class DishWebAPI {
         }
     }
 
+    @Path("/createDish")
+    @POST
+    //@Secured
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response createDish(String dish) {
+        try {
+            DatabaseConnector con = new DatabaseConnector();
+            DishServiceImpl service = new DishServiceImpl(con);
+            String result = service.updateOrCreateDish(dish, CRUDMode.CREATE);
+            con.disconnect();
+            return Response.ok().entity(result).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity("Server can not process the request").build();
+        }
+    }
 
 }

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class OrderDAO extends BaseDAO {
 
@@ -45,7 +46,7 @@ public class OrderDAO extends BaseDAO {
                 "FROM order_order LEFT OUTER JOIN order_details ON order_order.order_id = order_details.order_id " +
                 "WHERE order_order.order_id = ?");
         _db.setLong(orderID,1);
-        Order order = _db.queryOneRecord(new OrderRowMapper());
+        Order order = _db.queryList(new OrderRowMapper()).get(0);
         order.setOrderDetails(_db.queryList(new OrderDetailRowMapper()));
         return order;
     }
@@ -95,8 +96,8 @@ public class OrderDAO extends BaseDAO {
         try {
             _db.supplyQuery("SELECT dish_ver.restaurant_name FROM dish_ver JOIN restaurant ON dish_ver.restaurant_name = restaurant.restaurant_name where dish_ver.dish_ver_id = ANY(?)");
             _db.setArray(order.getOrderDetails().stream().map(OrderDetail::getDishVerId).toArray(), 1,"integer");
-            String restaurantName = _db.queryOneRecord((rs, rowNum) -> rs.getString("restaurant_name"));
-            if(!order.getRestaurantName().equals(restaurantName)){
+            List<String> restaurantNames = _db.queryList((rs, rowNum) -> rs.getString("restaurant_name"));
+            if(!restaurantNames.stream().allMatch(s -> s.equals(order.getRestaurantName()))){
                 error.add("message:restaurant name must match through the order");
             }
         } catch (SQLException e) {

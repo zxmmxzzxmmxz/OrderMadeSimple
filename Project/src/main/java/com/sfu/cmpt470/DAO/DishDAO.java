@@ -8,6 +8,7 @@ import jersey.repackaged.com.google.common.collect.Iterables;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DishDAO extends BaseDAO {
 
@@ -45,12 +46,21 @@ public class DishDAO extends BaseDAO {
         return _db.queryOneRecord(new DishRowMapper());
     }
 
+    public ImmutableList<Dish> getDishesByVerIDs(List<Long> verIDs) throws SQLException {
+        _db.supplyQuery("SELECT dish_id, dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number " +
+                "FROM dish_ver " +
+                "WHERE dish_ver_id = ANY(?) ");
+        _db.setArray(verIDs.toArray(), 1,"integer");
+        return ImmutableList.copyOf(_db.queryList(new DishRowMapper()));
+    }
+
     public ImmutableList<Long> getDishIDsFor(String restaurantName) throws SQLException{
         _db.supplyQuery("SELECT dish.dish_id as dish_id " +
                 "FROM dish " +
                 "JOIN dish_ver ON dish.dish_ver_id = dish_ver.dish_ver_id " +
                 "JOIN restaurant ON restaurant.restaurant_name = dish_ver.restaurant_name " +
-                "WHERE dish_ver.restaurant_name = ?");
+                "WHERE dish_ver.restaurant_name = ? " +
+                "ORDER BY dish_id ASC");
         _db.setString(restaurantName, 1);
         ArrayList<Long> IDs = _db.queryList((rs, rowNum) -> rs.getLong("dish_id"));
         return ImmutableList.copyOf(IDs);
@@ -90,20 +100,9 @@ public class DishDAO extends BaseDAO {
         return Iterables.getOnlyElement(_db.getInsertedKeys());
     }
 
-    //TODO: update this method so that everytime when u update a dish, a new ver val is created and master record is updated with the new one
     public void updateDish(Dish dish) throws SQLException {
-//        _db.supplyQuery("UPDATE dish SET dish_name = ?, description = ?, restaurant_name = ?, price = ?, menu_flag = ? WHERE dish_id = ?");
-//        _db.setString(dish.getDishName(),1);
-//        _db.setString(dish.getDescription(),2);
-//        _db.setString(dish.getRestaurantName(),3);
-//        _db.setFloat(dish.getPrice(),4);
-//        _db.setString(dish.getMenuFlag(),5);
-//        _db.setLong(dish.getDishID(), 6);
-//        _db.executeUpdate();
 
-        //create new Verval with version number with one increment
-
-
+        Dish existingDish = getDishByDishID(dish.getDishID());
         _db.supplyQuery("INSERT INTO dish_ver " +
                 "(dish_id, dish_name, description, restaurant_name, price, menu_flag, version_number) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?)");
@@ -113,7 +112,7 @@ public class DishDAO extends BaseDAO {
         _db.setString(dish.getRestaurantName(), 4);
         _db.setFloat(dish.getPrice(), 5);
         _db.setString(dish.getMenuFlag(), 6);
-        _db.setInt(dish.getVersionNumber() + 1, 7);
+        _db.setInt(existingDish.getVersionNumber() + 1, 7);
         _db.executeUpdate();
         Long newVerValID = Iterables.getOnlyElement(_db.getInsertedKeys());
         _db.supplyQuery("UPDATE dish SET dish_ver_id = ? " +

@@ -77,4 +77,22 @@ public class OrderDaoIntTest {
         assert(createdOrder.equals(result));
 
     }
+
+    @Test
+    public void getOrder_multipleOrderDetails_shouldReturnOneOrder() throws SQLException {
+        Order order = new Order();
+        order.setRestaurantName(_restaurantName);
+        order.setTime(OffsetDateTime.now());
+        OrderDetail detail = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).build();
+        order.addOrderDetail(detail);
+        order.addOrderDetail(detail.toBuilder().build());
+
+        long orderID = _orderDao.createOrder(order);
+
+        Order createdOrder = _orderDao.getOrder(orderID);
+
+        Order result = Iterables.getOnlyElement(_orderDao.getAllOrdersByRestaurantName(_restaurantName));
+
+        assert(createdOrder.equals(result));
+    }
 }
