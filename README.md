@@ -1,8 +1,8 @@
 Objectives:
 * OrderMadeSimple is a web-app mainly focuses on providing a sales and intraction system for restaurant.
 
-Managers are able to manage food/ input order.
-
+Features:
+* Managers are able to manage food/ input order.
 * Customers can input order, check reservation, and restaurant information.
 * The input orders will put into a automatic queue in the kitchen. 
 * Chef in the kitchen can access the orders in the queue and modify the status of the orders.
