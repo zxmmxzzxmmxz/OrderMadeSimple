@@ -6,12 +6,14 @@ import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.service.CRUDMode;
 import com.sfu.cmpt470.service.DishService;
 import com.sfu.cmpt470.service.DishServiceImpl;
+import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @SuppressWarnings("Duplicates")
 @Path("/dish")
@@ -92,11 +94,11 @@ public class DishWebAPI {
     //@Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String getAllDishes(String dish) {
+    public String getAllDishes(@QueryParam("dish_ver_id")List<Long> dishVerIDs) {
         try {
             DatabaseConnector con = new DatabaseConnector();
             DishServiceImpl service = new DishServiceImpl(con);
-            String result = service.getDishesByDishVerID(dish);
+            String result = service.getDishesByDishVerID(dishVerIDs);
             con.disconnect();
             return result;
         } catch (Exception e) {

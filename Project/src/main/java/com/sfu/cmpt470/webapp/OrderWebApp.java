@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Path("/orders")
 public class OrderWebApp {
 
-    @Secured
+    //@Secured
     @Path("/allOrders/{restaurantName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -35,7 +35,7 @@ public class OrderWebApp {
     }
 
     @Path("/getOrder/{order_id}")
-    @Secured
+    //@Secured
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -71,7 +71,7 @@ public class OrderWebApp {
 
     @Path("/updateOrder")
     @POST
-    @Secured
+    //@Secured
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateOrder(String order) {
         try {

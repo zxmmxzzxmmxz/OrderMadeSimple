@@ -16,7 +16,8 @@ public class OrderDetailRowMapper implements RowMapper<OrderDetail> {
         builder.setOrderID(rs.getLong(ORDER_ID))
                 .setOrderDetailID(rs.getLong("order_details_id"))
                 .setDishVerID(rs.getLong("dish_ver_id"))
-                .setStatus(OrderDetailStatusTypeCode.of(rs.getString(STATUS)));
+                .setStatus(OrderDetailStatusTypeCode.of(rs.getString(STATUS)))
+                .setSpecialNote(rs.getString("special_note"));
         return builder.build();
     }
 }

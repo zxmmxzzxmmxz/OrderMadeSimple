@@ -13,6 +13,14 @@ public class OrderRowMapper implements RowMapper<Order>{
 
     @Override
     public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new Order(rs.getInt(ORDER_ID),rs.getString(RESTAURANT_NAME), rs.getObject(TIME,OffsetDateTime.class), rs.getString("status"));
+        Order.Builder builder = Order.newBuilder();
+        builder.set_order_id(rs.getLong(ORDER_ID))
+                .set_restaurantName(rs.getString(RESTAURANT_NAME))
+                .set_time(rs.getObject(TIME,OffsetDateTime.class))
+                .set_orderStatus(rs.getString("status"))
+                .set_includedInEodReport(rs.getBoolean("included_in_eod_report"))
+                .set_tableNumber(rs.getString("table_number"))
+                .setCreatedByUser(rs.getLong("created_by_user"));
+        return builder.build();
     }
 }

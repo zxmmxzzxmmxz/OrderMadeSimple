@@ -9,6 +9,7 @@ import com.sfu.cmpt470.pojo.Error;
 import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -74,10 +75,9 @@ public class DishServiceImpl implements DishService{
 
     }
 
-    public String getDishesByDishVerID(String idsJson) {
-        ImmutableList<Long> dishes = ImmutableList.copyOf(_gson.fromJson(idsJson, Long[].class));
+    public String getDishesByDishVerID(List<Long> ids) {
         try {
-            return _gson.toJson(_dao.getDishesByVerIDs(dishes));
+            return _gson.toJson(_dao.getDishesByVerIDs(ids));
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }

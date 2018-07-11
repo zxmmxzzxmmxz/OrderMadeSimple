@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class OrderDAO extends BaseDAO {
 
@@ -29,25 +28,47 @@ public class OrderDAO extends BaseDAO {
     }
     public List<Order> getAllOrdersByRestaurantName(String restaurantName) throws IllegalArgumentException, SQLException {
         List<Order> orders;
-            _db.supplyQuery(Query.getAllOrder());
+            _db.supplyQuery("SELECT order_order.order_id, " +
+                    "order_order.restaurant_name, " +
+                    "order_order.time, " +
+                    "order_order.status, " +
+                    "order_order.table_number, " +
+                    "order_order.included_in_eod_report, " +
+                    "order_order.created_by_user " +
+                    " FROM order_order WHERE order_order.restaurant_name = ?");
             _db.setString(restaurantName,1);
             orders = _db.queryList(new OrderRowMapper());
-            _db.supplyQuery(Query.findOrderDetails());
+            _db.supplyQuery("SELECT order_details.order_id," +
+                    "order_details.order_details_id," +
+                    "order_details.dish_ver_id," +
+                    "order_details.status, " +
+                    "order_details.special_note " +
+                    "FROM order_details WHERE order_id = ?");
             for (Order order : orders) {
                 _db.setLong(order.getOrderId(),1);
                 List<OrderDetail> orderDetails = _db.queryList(new OrderDetailRowMapper());
-                order.setOrderDetails(orderDetails);
+                order.addOrderDetails(orderDetails);
             }
             return orders;
     }
 
     public Order getOrder(long orderID) throws SQLException {
-        _db.supplyQuery("SELECT order_order.order_id, order_order.restaurant_name, order_order.time, order_details.order_details_id,order_details.dish_ver_id, order_details.status " +
+        _db.supplyQuery("SELECT order_order.order_id, " +
+                "order_order.restaurant_name, " +
+                "order_order.time, " +
+                "order_order.status, " +
+                "order_order.table_number, " +
+                "order_order.included_in_eod_report, " +
+                "order_order.created_by_user, " +
+                "order_details.order_details_id," +
+                "order_details.dish_ver_id, " +
+                "order_details.status," +
+                "order_details.special_note  " +
                 "FROM order_order LEFT OUTER JOIN order_details ON order_order.order_id = order_details.order_id " +
                 "WHERE order_order.order_id = ?");
         _db.setLong(orderID,1);
         Order order = _db.queryList(new OrderRowMapper()).get(0);
-        order.setOrderDetails(_db.queryList(new OrderDetailRowMapper()));
+        order = order.toBuilder().set_orderDetails(_db.queryList(new OrderDetailRowMapper())).build();
         return order;
     }
 
@@ -56,13 +77,16 @@ public class OrderDAO extends BaseDAO {
     public long createOrder(Order newOrder) throws SQLException {
         ArrayList<String> verificationError = verifyNewOrder(newOrder);
         if(verificationError.isEmpty()){
-            _db.supplyQuery(Query.insertOrder());
+            _db.supplyQuery("INSERT INTO order_order (time,restaurant_name,status, table_number, included_in_eod_report, created_by_user) VALUES(?,?,?,?,?,?)");
             _db.setTime(newOrder.getTime(),1);
             _db.setString(newOrder.getRestaurantName(),2);
-            _db.setString("new",3);
+            _db.setString(newOrder.getOrderStatus(),3);
+            _db.setString(newOrder.getTableNumber(), 4);
+            _db.setBoolean(newOrder.shouldIncludedInEodReport(), 5);
+            _db.setLong(newOrder.getCreatedByUser(), 6);
             _db.executeUpdate();
             Long orderID = Iterables.getOnlyElement(_db.getInsertedKeys());
-            newOrder.setOrderID(getOrder(orderID).getOrderId());
+            newOrder = newOrder.toBuilder().set_order_id(getOrder(orderID).getOrderId()).build();
             createOrderDetails(newOrder);
             return orderID;
         }
@@ -75,10 +99,11 @@ public class OrderDAO extends BaseDAO {
         List<OrderDetail> orderDetails = newOrder.getOrderDetails();
         for (OrderDetail orderDetail : orderDetails) {
             orderDetail.setStatus(OrderDetailStatusTypeCode.NEW);
-            _db.supplyQuery(Query.insertOrderDetail());
+            _db.supplyQuery("INSERT INTO order_details (order_id, dish_ver_id, status, special_note) SELECT ?,dish_ver_id,?,? FROM dish_ver where dish_ver_id = ?;");
             _db.setLong(orderDetail.getOrderId(),1);
-            _db.setLong(orderDetail.getDishVerId(), 3);
+            _db.setLong(orderDetail.getDishVerId(), 4);
             _db.setString(orderDetail.getStatus().toString(), 2);
+            _db.setString(orderDetail.getSpecialNote(), 3);
             _db.executeUpdate();
         }
     }

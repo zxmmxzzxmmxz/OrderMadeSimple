@@ -10,7 +10,7 @@ public class Query {
     }
 
     public static String insertOrder(){
-        return "INSERT INTO order_order (time,restaurant_name,status) VALUES(?,?,?)";
+        return "INSERT INTO order_order (time,restaurant_name,status, table_number, included_in_eod_report, created_by_user) VALUES(?,?,?,?,?,?)";
     }
 
     public static String insertOrderDetail() {

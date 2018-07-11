@@ -1,6 +1,20 @@
 CREATE TABLE restaurant (
 	restaurant_id SERIAL UNIQUE PRIMARY KEY,
-	restaurant_name varchar(40) NOT NULL UNIQUE
+	restaurant_name varchar(40) NOT NULL UNIQUE,
+	order_code varchar(10)
+);
+
+CREATE TABLE user_user(
+	user_id SERIAL UNIQUE PRIMARY KEY,
+	username varchar(30) NOT NULL,
+	password varchar(150) NOT NULL,
+	restaurant_id SERIAL NOT NULL
+);
+
+CREATE TABLE token(
+	token_id SERIAL UNIQUE PRIMARY KEY,
+	token varchar(150),
+	username varchar(30) NOT NULL
 );
 
 CREATE TABLE dish (
@@ -24,27 +38,18 @@ CREATE TABLE dish_ver(
 CREATE TABLE order_order(
 	order_id SERIAL UNIQUE PRIMARY KEY,
 	restaurant_name varchar(40) REFERENCES restaurant(restaurant_name),
-	time timestamp,
+	time TIMESTAMP WITH TIME ZONE,
 	status varchar(30) NOT NULL,
-	table_number varchar(30)
+	table_number varchar(30),
+	included_in_eod_report BOOLEAN DEFAULT TRUE,
+	created_by_user SERIAL
 );
 
 CREATE TABLE order_details(
 	order_details_id SERIAL UNIQUE PRIMARY KEY,
 	order_id SERIAL REFERENCES order_order(order_id),
 	dish_ver_id SERIAL REFERENCES dish_ver(dish_ver_id),
-	status varchar(30) NOT NULL
+	status varchar(30) NOT NULL,
+	special_note varchar(100)
 );
 
-CREATE TABLE user_user(
-	user_id SERIAL UNIQUE PRIMARY KEY,
-	username varchar(30) NOT NULL,
-	password varchar(150) NOT NULL,
-	restaurant_id SERIAL NOT NULL
-);
-
-CREATE TABLE token(
-	token_id SERIAL UNIQUE PRIMARY KEY,
-	token varchar(150),
-	username varchar(30) NOT NULL
-);

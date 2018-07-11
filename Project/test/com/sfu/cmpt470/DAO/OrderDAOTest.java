@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +39,10 @@ public class OrderDAOTest {
     private Object[] getOrderForVerification(){
         ArrayList<Object[]> result = new ArrayList<>();
 
-        Order emptyOrder = new Order();
-        //emptyOrder.setTime(OffsetDateTime.of(2018,5,2,11,1,1,0, ZoneOffset.ofHours(5)));
+        Order.Builder builder = Order.newBuilder();
+        builder.set_time(OffsetDateTime.of(2018,5,2,11,1,1,0, ZoneOffset.ofHours(5)));
 
-        result.add(new Object[]{emptyOrder, ImmutableList.of("message:restaurant name must exist\n")});
+        result.add(new Object[]{builder.build(), ImmutableList.of("message:restaurant name must exist\n")});
 
         return result.toArray();
     }

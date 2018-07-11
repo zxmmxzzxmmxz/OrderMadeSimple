@@ -1,5 +1,6 @@
 package com.sfu.cmpt470.DAO;
 
+import com.google.gson.Gson;
 import com.sfu.cmpt470.database.DatabaseConnector;
 import com.sfu.cmpt470.pojo.Dish;
 import com.sfu.cmpt470.pojo.Order;
@@ -12,6 +13,8 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.TimeZone;
 
 public class OrderDaoIntTest {
     private DishDAO _dishDao;
@@ -41,34 +44,52 @@ public class OrderDaoIntTest {
 
     @Test
     public void createOrder_newOrder_shouldCreateOrderAndOrderDetails() throws SQLException {
-        Order order = new Order();
-        order.setRestaurantName(_restaurantName);
-        order.setTime(OffsetDateTime.now());
-        OrderDetail detail = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).build();
+        Order.Builder builder = Order.newBuilder();
+        builder.set_restaurantName(_restaurantName);
+        OffsetDateTime time = OffsetDateTime.now(ZoneOffset.UTC);
+        builder.set_time(time);
+        builder.setCreatedByUser(1L);
+        builder.set_tableNumber("table 1");
+        builder.set_orderStatus("new");
+        builder.set_includedInEodReport(false);
+        OrderDetail detail = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).setSpecialNote("no spicy").build();
 
-        order.addOrderDetail(detail);
-        long orderID = _orderDao.createOrder(order);
+        builder.addOrderDetail(detail);
+        long orderID = _orderDao.createOrder(builder.build());
 
         Order createdOrder = _orderDao.getOrder(orderID);
 
         assert(orderID == createdOrder.getOrderId());
+        assert(time.withNano(0).equals(createdOrder.getTime()));
+        assert(1L == createdOrder.getCreatedByUser());
+        assert("table 1".equals(createdOrder.getTableNumber()));
+        assert("new").equals(createdOrder.getOrderStatus());
+        assert(!createdOrder.shouldIncludedInEodReport());
+
+
         assert(createdOrder.getOrderDetails().size() == 1);
         OrderDetail resultDetail = Iterables.getOnlyElement(createdOrder.getOrderDetails());
         assert(resultDetail.getStatus().equals(OrderDetailStatusTypeCode.NEW));
         assert(resultDetail.getOrderId() == orderID);
         assert(resultDetail.getOrderDetailID() >= 1);
         assert(resultDetail.getDishVerId() == _dish.getDishVerID());
+        assert(resultDetail.getSpecialNote().equals("no spicy"));
     }
 
     @Test
     public void getAllOrdersByRestaurantName_newOrder_shouldFetchCorrectOrder() throws SQLException {
-        Order order = new Order();
-        order.setRestaurantName(_restaurantName);
-        order.setTime(OffsetDateTime.now());
+        Order.Builder builder = Order.newBuilder();
+        builder.set_restaurantName(_restaurantName);
+        OffsetDateTime time = OffsetDateTime.now(ZoneOffset.UTC);
+        builder.set_time(time);
+        builder.setCreatedByUser(1L);
+        builder.set_tableNumber("table 1");
+        builder.set_orderStatus("new");
+        builder.set_includedInEodReport(false);
         OrderDetail detail = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).build();
 
-        order.addOrderDetail(detail);
-        long orderID = _orderDao.createOrder(order);
+        builder.addOrderDetail(detail);
+        long orderID = _orderDao.createOrder(builder.build());
 
         Order createdOrder = _orderDao.getOrder(orderID);
 
@@ -80,14 +101,21 @@ public class OrderDaoIntTest {
 
     @Test
     public void getOrder_multipleOrderDetails_shouldReturnOneOrder() throws SQLException {
-        Order order = new Order();
-        order.setRestaurantName(_restaurantName);
-        order.setTime(OffsetDateTime.now());
-        OrderDetail detail = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).build();
-        order.addOrderDetail(detail);
-        order.addOrderDetail(detail.toBuilder().build());
+        Order.Builder builder = Order.newBuilder();
+        builder.set_restaurantName(_restaurantName);
+        OffsetDateTime time = OffsetDateTime.now(ZoneOffset.UTC);
+        builder.set_time(time);
+        builder.setCreatedByUser(1L);
+        builder.set_tableNumber("table 1");
+        builder.set_orderStatus("new");
+        builder.set_includedInEodReport(false);
+        OrderDetail detail1 = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).build();
+        OrderDetail detail2 = OrderDetail.newBuilder().setDishVerID(_dish.getDishVerID()).setStatus(OrderDetailStatusTypeCode.NEW).build();
 
-        long orderID = _orderDao.createOrder(order);
+        builder.addOrderDetail(detail1);
+        builder.addOrderDetail(detail2);
+
+        long orderID = _orderDao.createOrder(builder.build());
 
         Order createdOrder = _orderDao.getOrder(orderID);
 

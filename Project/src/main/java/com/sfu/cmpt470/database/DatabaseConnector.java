@@ -105,4 +105,9 @@ public class DatabaseConnector {
     public void setFloat(float number, int index) throws SQLException {
         _pStatement.setFloat(index, number);
     }
+
+
+    public void setBoolean(boolean value, int index) throws SQLException {
+        _pStatement.setBoolean(index, value);
+    }
 }

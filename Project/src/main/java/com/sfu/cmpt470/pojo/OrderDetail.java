@@ -6,41 +6,45 @@ import java.util.Objects;
 
 public class OrderDetail {
     @SerializedName(value="order_detail_id")
-    private long _orderDetailID;
+    private Long _orderDetailID;
 
     @SerializedName(value = "order_id")
-    private long _orderID;
+    private Long _orderID;
 
     @SerializedName(value = "dish_ver_id")
-    private long _dishVerID;
+    private Long _dishVerID;
 
     @SerializedName(value = "status")
     private OrderDetailStatusTypeCode _status;
+
+    @SerializedName(value = "special_note")
+    private String _specialNote;
 
     //it must have something
     private OrderDetail() {
     }
 
-    private OrderDetail(long orderDetailID,long order_id, long dishVerId, OrderDetailStatusTypeCode status){
+    private OrderDetail(Long orderDetailID,Long order_id, Long dishVerId, OrderDetailStatusTypeCode status, String specialNote){
         _orderDetailID = orderDetailID;
         _orderID = order_id;
         _dishVerID = dishVerId;
         _status = status;
+        _specialNote = specialNote;
     }
 
-    public void setOrderDetailID(long id){
-        _orderDetailID = id;
+    public String getSpecialNote(){
+        return _specialNote;
     }
 
-    public long getOrderDetailID(){
+    public Long getOrderDetailID(){
         return _orderDetailID;
     }
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return _orderID;
     }
 
-    public long getDishVerId() {
+    public Long getDishVerId() {
         return _dishVerID;
     }
 
@@ -52,10 +56,6 @@ public class OrderDetail {
         _status = status;
     }
 
-    public void setOrderID(long orderId) {
-        _orderID = orderId;
-    }
-
     public static OrderDetailBuilder newBuilder(){
         return new OrderDetailBuilder();
     }
@@ -65,19 +65,22 @@ public class OrderDetail {
         return builder.setOrderID(_orderID)
                 .setOrderDetailID(_orderDetailID)
                 .setStatus(_status)
-                .setDishVerID(_dishVerID);
+                .setDishVerID(_dishVerID)
+                .setSpecialNote(_specialNote);
+    }
+
+    public void setOrderID(Long orderId) {
+        _orderID = orderId;
     }
 
     public static class OrderDetailBuilder{
-        private long _orderDetailID;
-        private long _orderID;
-        private long _dishID;
+        private Long _orderDetailID;
+        private Long _orderID;
+        private Long _dishID;
         private OrderDetailStatusTypeCode _status;
+        private String _specialNote;
 
-        public OrderDetailBuilder(){
-            _orderDetailID = -1;
-            _orderID = -1;
-            _dishID = -1;
+        OrderDetailBuilder(){
             _status = OrderDetailStatusTypeCode.NEW;
         }
 
@@ -101,8 +104,13 @@ public class OrderDetail {
             return this;
         }
 
+        public OrderDetailBuilder setSpecialNote(String specialNote){
+            _specialNote = specialNote;
+            return this;
+        }
+
         public OrderDetail build(){
-            return new OrderDetail(_orderDetailID, _orderID, _dishID, _status);
+            return new OrderDetail(_orderDetailID, _orderID, _dishID, _status, _specialNote);
         }
     }
 
@@ -112,15 +120,16 @@ public class OrderDetail {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetail that = (OrderDetail) o;
-        return _orderDetailID == that._orderDetailID &&
-                _orderID == that._orderID &&
-                _dishVerID == that._dishVerID &&
-                _status == that._status;
+        return Objects.equals(_orderDetailID, that._orderDetailID) &&
+                Objects.equals(_orderID, that._orderID) &&
+                Objects.equals(_dishVerID, that._dishVerID) &&
+                _status == that._status &&
+                Objects.equals(_specialNote, that._specialNote);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(_orderDetailID, _orderID, _dishVerID, _status);
+        return Objects.hash(_orderDetailID, _orderID, _dishVerID, _status, _specialNote);
     }
 }
