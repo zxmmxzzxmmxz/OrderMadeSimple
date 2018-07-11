@@ -41,7 +41,7 @@ public class OrderDAO extends BaseDAO {
             _db.supplyQuery("SELECT order_details.order_id," +
                     "order_details.order_details_id," +
                     "order_details.dish_ver_id," +
-                    "order_details.status, " +
+                    "order_details.order_detail_status, " +
                     "order_details.special_note " +
                     "FROM order_details WHERE order_id = ?");
             for (Order order : orders) {
@@ -60,9 +60,10 @@ public class OrderDAO extends BaseDAO {
                 "order_order.table_number, " +
                 "order_order.included_in_eod_report, " +
                 "order_order.created_by_user, " +
+                "order_details.order_id, " +
                 "order_details.order_details_id," +
                 "order_details.dish_ver_id, " +
-                "order_details.status," +
+                "order_details.order_detail_status," +
                 "order_details.special_note  " +
                 "FROM order_order LEFT OUTER JOIN order_details ON order_order.order_id = order_details.order_id " +
                 "WHERE order_order.order_id = ?");
@@ -99,7 +100,7 @@ public class OrderDAO extends BaseDAO {
         List<OrderDetail> orderDetails = newOrder.getOrderDetails();
         for (OrderDetail orderDetail : orderDetails) {
             orderDetail.setStatus(OrderDetailStatusTypeCode.NEW);
-            _db.supplyQuery("INSERT INTO order_details (order_id, dish_ver_id, status, special_note) SELECT ?,dish_ver_id,?,? FROM dish_ver where dish_ver_id = ?;");
+            _db.supplyQuery("INSERT INTO order_details (order_id, dish_ver_id, order_detail_status, special_note) SELECT ?,dish_ver_id,?,? FROM dish_ver where dish_ver_id = ?;");
             _db.setLong(orderDetail.getOrderId(),1);
             _db.setLong(orderDetail.getDishVerId(), 4);
             _db.setString(orderDetail.getStatus().toString(), 2);

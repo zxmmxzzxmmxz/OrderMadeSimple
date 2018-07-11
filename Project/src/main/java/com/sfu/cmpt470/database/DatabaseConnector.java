@@ -61,8 +61,13 @@ public class DatabaseConnector {
     }
 
 
-    public void setLong(long number, int index) throws SQLException {
-        _pStatement.setLong(index, number);
+    public void setLong(Long number, int index) throws SQLException {
+        if(number == null){
+            _pStatement.setNull(index, Types.INTEGER);
+        }
+        else{
+            _pStatement.setLong(index, number);
+        }
     }
 
     public void disconnect() throws SQLException {

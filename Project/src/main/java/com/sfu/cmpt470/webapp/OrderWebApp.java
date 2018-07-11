@@ -85,5 +85,4 @@ public class OrderWebApp {
             return Response.status(500).entity("Server can not process the request").build();
         }
     }
-
 }

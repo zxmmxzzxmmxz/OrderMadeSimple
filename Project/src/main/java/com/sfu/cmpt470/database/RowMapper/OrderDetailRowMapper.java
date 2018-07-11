@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class OrderDetailRowMapper implements RowMapper<OrderDetail> {
     private static final String ORDER_ID = "order_id";
-    private static final String STATUS = "status";
+    private static final String STATUS = "order_detail_status";
 
 
     public OrderDetail mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -22,7 +22,7 @@ public class OrderDetailDAO extends BaseDAO {
     public String updateOrderDetailStatus(OrderDetail orderDetail) throws SQLException, ClassNotFoundException {
         String error = verifyOrderDetail(orderDetail);
         if (StringUtil.isNullOrEmpty(error)) {
-            _db.supplyQuery("UPDATE order_details SET status = ? WHERE order_details_id = ?");
+            _db.supplyQuery("UPDATE order_details SET order_detail_status = ? WHERE order_details_id = ?");
             _db.setString(orderDetail.getStatus().toString(), 1);
             _db.setLong(orderDetail.getOrderDetailID(), 2);
             _db.executeUpdate();

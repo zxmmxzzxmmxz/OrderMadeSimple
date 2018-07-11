@@ -26,6 +26,7 @@ public class OrderServiceImpl implements OrderService{
         List<Order> orders;
         try {
             orders = getAllOrders(restaurantName).stream().filter(order -> !order.getOrderStatus().equals("done")).collect(Collectors.toList());
+            orders = orders.stream().filter(order -> !order.getOrderDetails().isEmpty()).collect(Collectors.toList());
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
         }
