@@ -13,7 +13,10 @@ import com.sfu.cmpt470.pojo.SessionToken;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
 import java.util.Objects;
+
+import static java.sql.Types.TIME;
 
 public class LoginDAO extends BaseDAO{
 
@@ -41,6 +44,7 @@ public class LoginDAO extends BaseDAO{
                     .withIssuer("auth0")
                     .withClaim("username",userName)
                     .sign(algorithm);
+            createToken(userName, token);
         } catch (JWTCreationException | UnsupportedEncodingException exception){
             throw new LoginException("Internal Server Error");
         } catch (SQLException e) {
@@ -50,6 +54,14 @@ public class LoginDAO extends BaseDAO{
         SessionToken sessionToken = new SessionToken(token);
         sessionToken.setUserName(userName);
         return sessionToken;
+    }
+
+    private void createToken(String userName, String tokenString) throws SQLException {
+        _db.supplyQuery("INSERT INTO token (token, username, expire_time) VALUES(?,?,?)");
+        _db.setString(tokenString, 1);
+        _db.setString(userName, 2);
+        _db.setTime(OffsetDateTime.now().plusDays(1), 3);
+        _db.executeUpdate();
     }
 
     public void validateToken(String sessionToken) throws JWTVerificationException, UnsupportedEncodingException, SQLException {
@@ -64,6 +76,13 @@ public class LoginDAO extends BaseDAO{
         _db.setString(username,1);
         _db.queryOneRecord((rs, rowNum) -> rs.getLong("restaurant_id"));
 
+        _db.supplyQuery("SELECT expire_time FROM token WHERE username = ? AND token = ?");
+        _db.setString(username, 1);
+        _db.setString(sessionToken, 2);
+        OffsetDateTime expireTime = _db.queryOneRecord((rs, rowNum) -> rs.getObject("expire_time", OffsetDateTime.class));
+        if(expireTime.isBefore(OffsetDateTime.now())){
+            throw new JWTVerificationException("token expired");
+        }
     }
 
     public static void main(String[] args){

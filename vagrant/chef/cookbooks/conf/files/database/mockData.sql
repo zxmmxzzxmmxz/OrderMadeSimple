@@ -55,8 +55,8 @@ INSERT INTO order_order (time,restaurant_name,status,table_number) values(TIMEST
 INSERT INTO order_order (time,restaurant_name,status,table_number) values(TIMESTAMP '2018-11-12 10:23:54+02','joojak','new','1');
 
 --order order_details
-INSERT INTO order_details (order_id, dish_ver_id, status, special_note) values(1,1,'new', 'no spicy');
-INSERT INTO order_details (order_id, dish_ver_id, status) values(2,2,'new');
-INSERT INTO order_details (order_id, dish_ver_id, status) values(1,4,'done');
-INSERT INTO order_details (order_id, dish_ver_id, status) values(1,3,'in progress');
+INSERT INTO order_details (order_id, dish_ver_id, order_detail_status, special_note) values(1,1,'new', 'no spicy');
+INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(2,2,'new');
+INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,4,'done');
+INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,3,'in progress');
 
