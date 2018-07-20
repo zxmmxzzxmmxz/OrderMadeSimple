@@ -1,7 +1,7 @@
 createDishes = function(dishes){
     let container = $("#dish-container");
     container.empty();
-    let flow = new ContainerFlow(5, "menu", container);
+    let flow = new ContainerFlow(6, "menu", container, 2);
     for (let dish of dishes){
         let card = createDishCard(dish);
         flow.insert(card);

@@ -44,7 +44,7 @@ addOrders = function(orders){
 };
 
 loadOrders = function(){
-    something(sessionStorage.restaurant_name, sessionStorage.token, addOrders, function(msg){
+    loadAllOpenOrdersForRestaurant(sessionStorage.restaurant_name, sessionStorage.token, addOrders, function(msg){
         sessionStorage.message = msg;
     });
 };
