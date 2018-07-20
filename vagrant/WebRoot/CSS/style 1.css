@@ -1,0 +1,28 @@
+h1 {
+	color: #F5FFFA;
+	padding-left: 10px;
+	background-color: #FFA500;
+	margin-left: -10px;
+	margin-right: -10px;
+	margin-bottom: -10px;
+	border-bottom: 5px solid black;
+}
+
+ul#menu li {
+	display: inline;
+	font-size: 130%;
+	margin-right: 30px;
+	
+}
+
+ul#menu li a{
+	color: #FFA500;
+	text-decoration:none;
+}
+
+#orders{
+	border: 1px solid #808080;
+	border-radius: 5px;
+}
+
+

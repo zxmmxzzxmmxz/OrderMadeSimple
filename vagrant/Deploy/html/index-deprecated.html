@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample Menu Page</title>
+<link rel="stylesheet" title="Q1" href="../CSS/style1.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../scripts/main-reprecated.js"></script>
+</head>
+<body>
+
+<div class="navbar">
+	<a href="index.html">Home</a>
+	<a href="ModifyMenu.html">Menu</a>
+	<a href="ViewOrders.html">Orders</a>
+</div>
+
+<h1 id="restaurant_name"></h1>
+
+<div id="main">
+<h2>Now serving:</h2>
+<button id="refresh_status">refresh</button>
+<div id="orders"></div>
+
+</div>
+
+<br>
+
+<h2>Place order</h2>
+<div id="dish_panel"></div>
+<div id="order_list"></div>
+
+<input id="submit" type="button" name="submit" value="submit">
+<input id="clear_order_list" type="button" name="clear_order_list" value = "clear">
+
+<div class= "modal">
+	<div class="wp-content">
+		<input type="number" id="number_of_order" value = "1">
+		<button id = comfirm_dish>ok</button>
+		<button id = close> close</button> 
+	</div>
+</div>
+
+</body>
+</html>
