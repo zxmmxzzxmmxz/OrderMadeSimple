@@ -63,6 +63,7 @@ public class RestaruantInfoDAO {
 
     public void closeConn(){
         em.close();
+        emf.close();
     }
 
 
