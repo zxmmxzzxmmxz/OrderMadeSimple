@@ -60,3 +60,29 @@ INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(2,
 INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,4,'done');
 INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,3,'in progress');
 
+--reserve mock data
+INSERT INTO restaurant(restaurant_name, order_code) values('szechuan Restaurant', 'sd3j423k');
+INSERT INTO restaurant(restaurant_name, order_code) values('Uil''s Restaurant', 's33j32gf');
+
+INSERT INTO restaurant_info(restaurant_id, phone, address) values(
+	(SELECT restaurant_id FROM restaurant WHERE restaurant_name ='Uil''s Restaurant'), 
+	'(604) 538-9373', 
+	'15023 Marine Dr, White Rock, BC V4B 1C3'
+);
+INSERT INTO restaurant_hour(restaurant_id, open_day, open_hr, close_hr) values(
+	(select restaurant_id from restaurant.restaurant where restaurant_name ='Uil''s Restaurant'), 
+	'Sunday', 
+	11,
+	21
+);
+
+INSERT INTO restaurant_hour(open_day, restaurant_id, open_hr, close_hr)
+values
+('Monday', 2, '11:30', '21:00'),
+('Tuesday', 2, 'close', 'close'),
+('Wednesday', 2, '11:30', '21:00'),
+('Thursday', 2, '11:30', '21:00'),
+('Friday', 2, '11:30', '23:00'),
+('Saturday', 2, '10:30', '23:00'),
+('Sunday', 2, '10:30', '22:00');
+	

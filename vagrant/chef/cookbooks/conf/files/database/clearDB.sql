@@ -5,3 +5,5 @@ DROP TABLE dish;
 DROP TABLE restaurant;
 DROP TABLE token;
 DROP TABLE user_user;
+DROP TABLE restaurant_info;
+DROP TABLE restaurant_hour;

@@ -4,6 +4,20 @@ CREATE TABLE restaurant (
 	order_code varchar(10)
 );
 
+CREATE TABLE restaurant_info (
+	restaurant_id integer PRIMARY KEY REFERENCES restaurant(restaurant_id),
+	phone varchar(20), 
+	address varchar(50) 
+);
+
+CREATE TABLE restaurant_hour (
+	open_day varchar(20), 
+	restaurant_id integer REFERENCES restaurant(restaurant_id),
+	open_hr varchar(20),
+	close_hr varchar(20),
+	PRIMARY KEY(open_day, restaurant_id)
+);
+
 CREATE TABLE user_user(
 	user_id SERIAL UNIQUE PRIMARY KEY,
 	username varchar(30) NOT NULL,
