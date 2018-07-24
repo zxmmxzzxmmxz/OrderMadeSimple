@@ -5,9 +5,10 @@ Project.iml
 # Created by hqiu
 
 # preserve the intellij setting
-.idea/
+*   .idea/*
 *.iml
 out/
+
 
 ### Maven template
 target/
