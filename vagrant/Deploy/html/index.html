@@ -7,6 +7,7 @@
     <title>Orders</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/order-style.css" />
+    <link rel="stylesheet" href="../CSS/reserve.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../scripts/baseLoad.js"></script>
@@ -15,6 +16,7 @@
     <script src="../scripts/ContainerFlow.js"></script>
     <script src="../scripts/orderElementCreation.js"></script>
     <script src="../scripts/index.js"></script>
+    <script src="../scripts/reserve.js"></script>
 </head>
 <body>
 
@@ -68,5 +70,131 @@
     </div>
 </div>
 
+<!---------------------------
+  start of reserve section
+---------------------------->
+
+<div class="reserve-main-content" >
+    <div class="gap">
+        
+    </div>
+
+    <div class="poster">
+
+        <div class="wrapper">
+            <img class="myimg" src="../resource/vege.jpg" />
+            <img class="myimg" src="../resource/black-vege.jpg" />
+            <img class="myimg" src="../resource/grill.jpg" />
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+     <!-- background screen -->
+    <div id="overlay"></div>
+    <div id="helper"></div>
+
+    <!-- restaurant button section -->
+    <section class="reservation">
+        <!-- restaurant information section -->
+        <div class="function">
+            <div class="info">
+                <label><img src="../resource/info.PNG" /></label>
+                <label>Restaurant Infomation</label>
+            </div>
+            
+
+            <!-- restaurant popup page -->
+            <div id="currentRes">
+                <span class="close">×</span>
+                <div id="resInfo">
+                    <h2>Uli’s Restaurant</h2>
+
+                    <div id="openInfo">
+                        <table id="hours">
+                            <tr>
+                                <th>Opening hours:</th>
+                            </tr>
+                        </table>
+
+                        <div id="contact">
+                            <p class="subtitle">Address:</p>
+                            <p id="addr">                           
+                            </p>
+                            <p class="subtitle">Phone Number:</p>
+                            <p id="tel">                              
+                            </p>
+                        </div>
+                    </div>
+                    <div id="addressMap">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2616.425884364089!
+                        2d-122.80820648412642!3d49.02150649716128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485c39d61ef5913%3A0x3e5b2d2998e89619!2sUli&#39;
+                        s+Restaurant!5e0!3m2!1sen!2sca!4v1531805657961" width="380" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+             
+        </div>
+
+        <!-- reservation section -->
+        <div class="function">
+            <div class="res">
+                <label><img src="../resource/reserve.PNG" /></label>
+                <label>Reservation</label>
+            </div>
+            <!-- reservation popup page -->
+            <div id="booking">
+                <span>×</span>
+                
+                <div>
+                    <h3>Daily Reservation</h3>
+                    <label class="reserve-info" for="fname">First Name</label>
+                    <input type="text" id="fname" name="firstname" placeholder="First name..">
+
+                    <label class="reserve-info" for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lastname" placeholder="Last name..">
+
+                    <label class="reserve-info" for="tel">Phone Number</label>
+                    <input type="text" id="tel" name="phone" placeholder="Phone number..">
+
+                    <label for="time">Time</label>
+                    <select id="time" name="time">
+                      <option value="one">11:00 am ~ 12:30 am</option>
+                      <option value="two">12:00 am ~ 13:30 pm</option>
+                      <option value="three">17:00 pm ~ 18:30 pm</option>
+                      <option value="three">18:30 pm ~ 20:00 pm</option>
+                      <option value="three">20:00 pm ~ 22:00 pm</option>
+                    </select>
+
+                    <label class="reserve-info" for="seats">Seats available</label>
+                    <select id="seats" name="seats">
+                      <option value="three">03</option>
+                      <option value="three">05</option>
+                      <option value="three">10</option>
+                      <option value="three">15</option>
+                      <option value="three">20</option>
+                    </select>
+
+                    
+
+                    <div id="sub">
+                        <input type="submit" value="Submit">
+                        <input type="button" value="Cancel">
+                    </div>
+                    
+              </div>  
+            </div>
+        </div>
+
+        <div class="function">
+             <div class="more">
+                <label>Coming soon...</label>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    &copy; Team semi-colon 2018. All rights reserved.
+</footer>
 </body>
 </html>

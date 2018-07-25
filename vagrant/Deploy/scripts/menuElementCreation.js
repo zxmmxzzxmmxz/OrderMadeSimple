@@ -3,7 +3,7 @@ createDishCard = function(dish){
     this.prefix = "modify-dish-";
     let card = document.createElement("div");
     card.classList.add("card");
-    //card.setAttribute("style","width: 18rem;");
+    card.setAttribute("style","width: 18rem;");
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 

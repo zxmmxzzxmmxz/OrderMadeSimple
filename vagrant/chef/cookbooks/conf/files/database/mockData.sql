@@ -70,7 +70,7 @@ INSERT INTO restaurant_info(restaurant_id, phone, address) values(
 	'15023 Marine Dr, White Rock, BC V4B 1C3'
 );
 INSERT INTO restaurant_hour(restaurant_id, open_day, open_hr, close_hr) values(
-	(select restaurant_id from restaurant.restaurant where restaurant_name ='Uil''s Restaurant'), 
+	(select restaurant_id from restaurant where restaurant_name ='Uil''s Restaurant'), 
 	'Sunday', 
 	11,
 	21

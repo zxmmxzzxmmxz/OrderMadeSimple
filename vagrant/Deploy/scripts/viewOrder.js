@@ -11,22 +11,14 @@ newAddOrders = function(orders){
 
     getDishes(Array.from(setOfDishesVerIDs), sessionStorage.token, function(foundDishes){
         for (let order of orders){
-            flow.insert(getOrderList(order, foundDishes, sessionStorage.token, function (msg) {
-                loadOrdersInPage();
-            },function (msg) {
-
-            }));
+            flow.insert(getOrderList(order, foundDishes));
         }
         flow.finish();
     });
 };
 
-loadOrdersInPage = function(){
+$(function () {
     loadAllOpenOrdersForRestaurant(sessionStorage.restaurant_name, sessionStorage.token, newAddOrders, function(msg){
         sessionStorage.message = msg;
     });
-};
-
-$(function () {
-    loadOrdersInPage();
 });

@@ -1,4 +1,5 @@
-$(function() {$('#submit').on('click',function (){
+$(function() {$('#submit').on('click',function (e){
+    console.log("login btn click");
     $.ajax({
         type: 'POST',
         url: NEED_PROJECT+'/rest/auth/login',
@@ -15,4 +16,5 @@ $(function() {$('#submit').on('click',function (){
             error_element.attr("hidden",false)
         }
     });
+    e.preventDefault();
 })});

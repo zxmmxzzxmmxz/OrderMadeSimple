@@ -1,3 +1,11 @@
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
 /* Full-width input fields */
 input[type=text], input[type=password] {
     width: 100%;

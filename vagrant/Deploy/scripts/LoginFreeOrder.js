@@ -54,14 +54,7 @@ installAddDishButton = function(){
         sessionStorage.detailTag = (detailTag + 1).toString();
         order.orderDetails.push(newDetail);
         sessionStorage.order = order.toJson();
-        $("#number-of-details").html("("+order.orderDetails.length+")");
-        clearAddDishModalAndClose();
     })
-};
-
-clearAddDishModalAndClose = function(){
-  $("#special-note").val("");
-  $("#add-dish-close").trigger("click");
 };
 
 dumpOrderToModal = function(){
@@ -98,7 +91,6 @@ deleteDetail = function(detailTag) {
     let order = new Order(JSON.parse(sessionStorage.order));
     order.orderDetails = order.orderDetails.filter(detail => detail.tag !== detailTag);
     sessionStorage.order = order.toJson();
-    $("#number-of-details").html("("+order.orderDetails.length+")");
 };
 
 installViewOrderButton = function(){
@@ -107,35 +99,12 @@ installViewOrderButton = function(){
     $("#view-order").on("click",dumpOrderToModal);
 };
 
-createFreshOrder = function(){
-    let order = new Order();
-    order.restaurant_name = "joojak";
-    order.order_status = "new";
-    sessionStorage.order = order.toJson();
-};
-
-installSubmitOrderButton = function(){
-    $("#submit-order").on("click", function () {
-        let order = new Order(JSON.parse(sessionStorage.order));
-        submitOrder(order, "",
-            function (msg) {
-                alert("Order Submitted!");
-                createFreshOrder();
-                $("#order-list").empty();
-                $("#number-of-details").html("(0)");
-                $("#submit-order-cancel").trigger("click");
-            },
-            function (msg) {
-                alert(msg);
-            });
-    });
-};
-
 
 $(function(){
    loadAllDishes();
    installAddDishButton();
    installViewOrderButton();
-    createFreshOrder();
-   installSubmitOrderButton();
+   let order = new Order();
+    order.order_status = "new";
+   sessionStorage.order = order.toJson();
 });
