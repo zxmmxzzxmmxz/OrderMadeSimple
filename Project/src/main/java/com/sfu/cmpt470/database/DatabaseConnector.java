@@ -115,4 +115,20 @@ public class DatabaseConnector {
     public void setBoolean(boolean value, int index) throws SQLException {
         _pStatement.setBoolean(index, value);
     }
+
+    public String queryReport() throws SQLException {
+        ResultSet rs = _pStatement.executeQuery();
+        StringBuffer xmlArray = new StringBuffer("<Root>");
+        while (rs.next()) {
+            int rows = rs.getMetaData().getColumnCount();
+            xmlArray.append("<result ");
+            for (int i=0; i<rows; i++){
+                xmlArray.append(" " + rs.getMetaData().getColumnLabel(i + 1)
+                        .toLowerCase() + "='" + rs.getObject(i + 1) + "'");
+            }
+            xmlArray.append("</>");
+        }
+        xmlArray.append("</Root>");
+        return xmlArray.toString();
+    }
 }
