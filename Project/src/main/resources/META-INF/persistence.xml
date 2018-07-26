@@ -12,9 +12,9 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL93Dialect"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5400/cmpt470"/>
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="1127"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/projectdb"/>
+            <property name="javax.persistence.jdbc.user" value="projectuser"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="show_sql" value="true"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
         </properties>

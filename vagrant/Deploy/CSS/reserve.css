@@ -247,7 +247,7 @@
 }
 
 
-.reservation .function #booking span{
+.reservation .function #booking #bookingClose{
 	float: right;
 	margin-right: 20px;
 	font-size: 1.5em;
@@ -256,7 +256,23 @@
 	cursor: pointer;
 }
 
-.reservation .function #booking span:hover{
+.reservation .function #booking #returnMsg{
+	text-align: center;
+	font-size: 1.5em;
+	margin: 0 auto;
+	visibility: hidden;
+}
+
+.reservation .function #booking #postForReserve{
+	height: 200px;
+	visibility: hidden;
+}
+
+.reservation .function #booking #postForReserve.visible{
+	height: auto;
+}
+
+.reservation .function #booking #bookingClose:hover{
 	opacity: 1;
 }
 

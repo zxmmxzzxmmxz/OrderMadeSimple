@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Orders</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/bootstrapmin.css" />
     <link rel="stylesheet" href="../CSS/order-style.css" />
     <link rel="stylesheet" href="../CSS/reserve.css" />
 
@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#" id="restaurant_name"></a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -35,13 +35,14 @@
     </ul>
 </nav>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Home</li>
-    </ol>
-</nav>
+<!--<nav aria-label="breadcrumb">-->
+    <!--<ol class="breadcrumb">-->
+        <!--<li class="breadcrumb-item active" aria-current="page">Home</li>-->
+    <!--</ol>-->
+<!--</nav>-->
 
-<div class="container-fluid">
+
+<div class="container">
     <div class="row">
         <div class="col">
             <h2 class="mb-1">Now serving:</h2>
@@ -51,7 +52,8 @@
         </div>
     </div>
 </div>
-<div class="container-fluid" id="order-list">
+
+<div class="container" id="order-list">
 
 </div>
 
@@ -98,7 +100,7 @@
         <!-- restaurant information section -->
         <div class="function">
             <div class="info">
-                <label><img src="../resource/info.PNG" /></label>
+                <label><img src="../resource/info.png" /></label>
                 <label>Restaurant Infomation</label>
             </div>
             
@@ -143,35 +145,38 @@
             </div>
             <!-- reservation popup page -->
             <div id="booking">
-                <span>×</span>
+                <span id="bookingClose">×</span>
                 
-                <div>
+                <div id="postForReserve">
                     <h3>Daily Reservation</h3>
-                    <label class="reserve-info" for="fname">First Name</label>
+                    <label class="reserve-info" for="fname">First Name </label>
+                    <span id="fname-err" style="display: inline; color:red; margin-left: 5px;"></span>
                     <input type="text" id="fname" name="firstname" placeholder="First name..">
 
                     <label class="reserve-info" for="lname">Last Name</label>
+                    <span id="lname-err" style="display: inline; color:red; margin-left: 5px;"></span>
                     <input type="text" id="lname" name="lastname" placeholder="Last name..">
 
-                    <label class="reserve-info" for="tel">Phone Number</label>
-                    <input type="text" id="tel" name="phone" placeholder="Phone number..">
+                    <label class="reserve-info" for="pnumber">Phone Number</label>
+                    <span id="pnumber-err" style="display: inline; color:red; margin-left: 5px;"></span>
+                    <input type="text" id="pnumber" name="phone" placeholder="Phone number..">
 
                     <label for="time">Time</label>
                     <select id="time" name="time">
-                      <option value="one">11:00 am ~ 12:30 am</option>
-                      <option value="two">12:00 am ~ 13:30 pm</option>
-                      <option value="three">17:00 pm ~ 18:30 pm</option>
-                      <option value="three">18:30 pm ~ 20:00 pm</option>
-                      <option value="three">20:00 pm ~ 22:00 pm</option>
+                      <option>11:00 am ~ 12:30 am</option>
+                      <option>12:00 am ~ 13:30 pm</option>
+                      <option>17:00 pm ~ 18:30 pm</option>
+                      <option>18:30 pm ~ 20:00 pm</option>
+                      <option>20:00 pm ~ 22:00 pm</option>
                     </select>
 
                     <label class="reserve-info" for="seats">Seats available</label>
                     <select id="seats" name="seats">
-                      <option value="three">03</option>
-                      <option value="three">05</option>
-                      <option value="three">10</option>
-                      <option value="three">15</option>
-                      <option value="three">20</option>
+                      <option>3</option>
+                      <option>5</option>
+                      <option>10</option>
+                      <option>15</option>
+                      <option>20</option>
                     </select>
 
                     
@@ -179,9 +184,13 @@
                     <div id="sub">
                         <input type="submit" value="Submit">
                         <input type="button" value="Cancel">
-                    </div>
+                    </div>  
+                </div>
+
+                <div id="returnMsg">
+                    <p></p>
                     
-              </div>  
+                </div>  
             </div>
         </div>
 
