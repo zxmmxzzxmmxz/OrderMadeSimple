@@ -28,7 +28,7 @@ public class OrderDAO extends BaseDAO {
     }
     public List<Order> getAllOrdersByRestaurantName(String restaurantName) throws IllegalArgumentException, SQLException {
         List<Order> orders;
-            _db.supplyQuery("SELECT order_order.order_id, " +
+        _db.supplyQuery("SELECT order_order.order_id, " +
                     "order_order.restaurant_name, " +
                     "order_order.time, " +
                     "order_order.status, " +

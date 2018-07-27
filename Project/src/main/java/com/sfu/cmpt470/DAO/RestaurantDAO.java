@@ -24,6 +24,13 @@ public class RestaurantDAO extends BaseDAO {
         return restaurants;
     }
 
+    public long findRestaurantIdByUsername(String username) throws SQLException {
+        _db.supplyQuery("SELECT restaurant.restaurant_id, restaurant.restaurant_name FROM restaurant JOIN user_user ON user_user.restaurant_id = restaurant.restaurant_id WHERE user_user.username = ?");
+        _db.setString(username,1);
+        long id = _db.queryOneRecord(new RestaurantRowMapper()).getRestaurantId();
+        return id;
+    }
+
     public String findRestaurantByUsername(String username) throws SQLException {
         _db.supplyQuery("SELECT restaurant.restaurant_id, restaurant.restaurant_name FROM restaurant JOIN user_user ON user_user.restaurant_id = restaurant.restaurant_id WHERE user_user.username = ?");
         _db.setString(username,1);
