@@ -13,6 +13,15 @@ public class ReportMapper {
         return xml;
     }
 
+    public String getOrdersReport() throws SQLException, ClassNotFoundException {
+        DatabaseConnector con = new DatabaseConnector();
+        String query = String.format("select * from order_order");
+        con.supplyQuery(query);
+        String xml = con.queryReport();
+        con.disconnect();
+        return xml;
+    }
+
 
 }
 

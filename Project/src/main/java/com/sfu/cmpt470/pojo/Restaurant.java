@@ -21,5 +21,8 @@ public class Restaurant {
     public String getRestaurantName() {
         return _restaurantName;
     }
+    public long getRestaurantId() {
+        return _restaurantID;
+    }
 
 }
