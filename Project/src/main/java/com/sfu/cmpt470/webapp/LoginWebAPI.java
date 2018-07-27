@@ -24,9 +24,12 @@ public class LoginWebAPI {
         try {
             DatabaseConnector con = new DatabaseConnector();
             String token = new LoginDAO(con).login(username, StringUtil.SHA1Hash(password)).getToken();
+            long restaurantId = new RestaurantDAO(con).findRestaurantIdByUsername(username);
             String restaurantByUsername = new RestaurantDAO(con).findRestaurantByUsername(username);
             con.disconnect();
             return Response.ok().entity("{\"token\":\""+ token +"\"" +
+                    "," +
+                    "\"restaurant_id\":\""+ restaurantId +"\"" +
                     "," +
                     "\"restaurant_name\":\""+ restaurantByUsername +"\"}").build();
         } catch (SQLException | ClassNotFoundException e) {
