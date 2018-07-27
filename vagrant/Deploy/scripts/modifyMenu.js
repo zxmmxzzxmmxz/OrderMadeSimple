@@ -6,6 +6,7 @@ createDishes = function(dishes){
         let card = createDishCard(dish);
         flow.insert(card);
     }
+
     let newDishButton = document.createElement("button");
     newDishButton.innerHTML = "New Dish";
     newDishButton.setAttribute("type","button");
@@ -14,7 +15,9 @@ createDishes = function(dishes){
     newDishButton.setAttribute("data-target","#dishModificationModal");
     newDishButton.classList.add("btn");
     newDishButton.classList.add("btn-primary");
-    flow.insert(newDishButton);
+    $('#new-dish-btn').append(newDishButton);
+
+    //flow.insert(newDishButton);
     flow.finish();
     $("#main").prepend(container);
     for (let dish of dishes){
@@ -40,6 +43,20 @@ addModifyEventHandler = function(buttonID){
         updateButton.data("mode","update");
         let button = event.target;
         let dishID = button.dataset.dishId;
+
+        getDishes([dishID], sessionStorage.token, function(foundDishes){
+            for (let dish of foundDishes){
+                console.log(dish);
+                $("#dish-id").val(dish.dish_id);
+                $("#dish-name").val(dish.dish_name);
+                $("#dish-description").val(dish.description);
+                $("#restaurant-name").val(dish.restaurant_name);
+                $("#price").val(dish.price);
+                $("#menu-flag").val(dish.menu_flag);
+            }
+        });
+
+        /*
         getDishByID(dishID,sessionStorage.token,function(dish){
             $("#dish-id").val(dish.dish_id);
             $("#dish-name").val(dish.dish_name);
@@ -50,6 +67,7 @@ addModifyEventHandler = function(buttonID){
         },function(msg){
             sessionStorage.msg = msg;
         });
+        */
     });
 };
 

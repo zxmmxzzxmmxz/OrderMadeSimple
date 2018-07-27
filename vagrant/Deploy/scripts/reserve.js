@@ -8,17 +8,20 @@ $(function(){
 	var $addr = $('#addr');
 	var $phone = $("#tel");
 
-	$('.info').on('click', function(){
-		if($('#currentRes').hasClass('visible')){
-			$('#currentRes').removeClass('visible');
-		}else{
-			$('#currentRes').addClass('visible');
-			$('#helper').addClass('visible');
-		}	
-	});
+	$('.info').click(function () {
+		console.log('info click');
+        //var position = $('.info').position();
+        //$('#currentRes').css({top: position.top, left: position.left});
+        $('#currentRes').toggle();
+    });
+
+	$('#currentRes .close').click(function () {
+        console.log("close");
+        $('#currentRes').hide();
+    });
 
 	$('.close').on('click', function(){
-		$('#currentRes').removeClass('visible');
+        $('#currentRes').removeClass('visible');
 		$('#helper').removeClass('visible');
 	});
 
@@ -34,7 +37,9 @@ $(function(){
 		success: function(response){
 			var business = response.hours;
 			var contact = response.contact;
-			
+
+			console.log('ssss');
+
 			$.each(business, function(i, info){
 				$row = $('<tr>' + 
 				'<td>' + info.Day + ':</td>' +
@@ -52,10 +57,11 @@ $(function(){
 	$('.res').click(function(){
 		if($('#booking').hasClass('visible')){
 			$('#booking').removeClass('visible');
-		}else{
+        }else{
 			$('#booking').addClass('visible');
 			$('#postForReserve').addClass('visible');
 			$('#overlay').addClass('visible');
+            //$('#booking').css({top:'10px',left:'10px'});
 		}
 	});
 
@@ -132,13 +138,13 @@ $(function(){
 		})
 		.done(function(){
 			$('#postForReserve.visible').removeClass('visible');
-			$('#returnMsg').append('<img src="../resource/check.PNG">');
+			$('#returnMsg').append('<img src="../resource/check.png">');
 			$('#returnMsg p').html(msg);
 			$('#returnMsg').addClass('visible');
 		})
 		.fail(function(){
 			$('#postForReserve.visible').removeClass('visible');
-			$('#returnMsg').append('<img src="../resource/error.PNG">');
+			$('#returnMsg').append('<img src="../resource/error.png">');
 			$('#returnMsg p').html(msg + ': reservation is failed.');
 			$('#returnMsg').addClass('visible');
 		});

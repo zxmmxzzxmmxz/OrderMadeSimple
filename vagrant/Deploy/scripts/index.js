@@ -1,55 +1,60 @@
+var timer;
+
 addOrders = function(orders){
+
     $("#order-list").empty();
-    let colIndex = 0;
-    let rowIndex = 0;
+    console.log(orders);
+
+    let container = $("#order-list");
+    let flow = new ContainerFlow(5, "order-new-", container, 2);
+    let setOfDishesVerIDs = new Set();
     for (let order of orders){
-        if(colIndex === 0){
-            rowIndex += 1;
-            $("#order-list").append(createOrderListRow(rowIndex));
-        }
-        $("#order-list-row-"+rowIndex).append(createOrderListCol(order.order_id));
-        $('#order-list-col-'+order.order_id).append(createOrderList(order));
-        let details = order.orderDetails;
-
-        for (let detail of details) {
+        for (let detail of order.orderDetails){
             $("#order-id-" + detail.order_id).append(createDetailItem(detail));
-            getDish(
-                detail.dish_ver_id,
-                sessionStorage.token,
-                function (dish) {
-                    let detailelement = $("#detail-id-"+detail.order_detail_id);
-                    detailelement.append(createDishName(dish));
-                    detailelement.append(createDishDescription(dish));
-                }, function (dish) {
-                    let detailelement = $("#detail-id-"+detail.order_detail_id);
-                    detailelement.append(createDishName(dish));
-                    detailelement.append(createDishDescription(dish));
-                });
-        }
-        colIndex += 1;
-        if(colIndex === 4){
-            colIndex = 0;
+            setOfDishesVerIDs.add(detail.dish_ver_id);
         }
     }
 
-    while(colIndex !== 0){
-        let el = document.createElement("div");
-        el.classList.add('col');
-        $("#order-list-row-"+rowIndex).append(el);
-        colIndex += 1;
-        if(colIndex === 4){
-            colIndex = 0;
+    getDishes(Array.from(setOfDishesVerIDs), sessionStorage.token, function(foundDishes){
+        console.log(foundDishes);
+        for (let order of orders){
+            flow.insert(getOrderList(order, foundDishes));
         }
-    }
+        flow.finish();
+    });
+
 };
 
 loadOrders = function(){
     loadAllOpenOrdersForRestaurant(sessionStorage.restaurant_name, sessionStorage.token, addOrders, function(msg){
+        if(msg.indexOf("FATAL") >= 0){
+            console.log("loadOrder done msg:" + msg);
+            $('#errormsg').html("<div class='alert alert-danger' role='alert'>"+msg+"</div>");
+            clearTimeout(timer);
+            $('#refresh_status').html('');
+        }
         sessionStorage.message = msg;
     });
 };
 
 $(function () {
-    $('#refresh_status').on('click',loadOrders);
+
+    //$('#refresh_status').on('click',loadOrders);
+
+    $('.carousel').carousel();
+
+    var timerCount = 10;
+    timer = setInterval(function() {
+        $('#refresh_status').html('refresh in '+timerCount+'s');
+        timerCount--;
+        if(timerCount==0){
+            // reload;
+            timerCount=10;
+            $('#refresh_status').html('refreshing...');
+            loadOrders();
+        }
+        console.log(2);
+    }, 1000);
+
     loadOrders();
 });
