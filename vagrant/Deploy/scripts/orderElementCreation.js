@@ -7,8 +7,11 @@ getOrderList = function(order, dishes){
         let detailEl = createDetailItem(detail);
         list.appendChild(detailEl);
         let foundDish = dishes.filter(dish => dish.dish_ver_id === detail.dish_ver_id)[0];
-        detailEl.appendChild(createDishName(foundDish));
-        detailEl.appendChild(createDishDescription(foundDish));
+        if(foundDish)
+        {
+            detailEl.appendChild(createDishName(foundDish));
+            detailEl.appendChild(createDishDescription(foundDish));
+        }
     }
 
     return list;
@@ -50,8 +53,16 @@ createDetailItem = function(detail){
 };
 
 createDishName = function(dish){
+    if(dish == undefined)
+        return "";
     let item = document.createElement("h5");
-    item.innerHTML = dish.dish_name;
+    if(dish && typeof dish.dish_name == "undefined")
+    {
+        item.innerHTML = "untitled dish";
+    }
+    else{
+        item.innerHTML = dish.dish_name;
+    }
     item.classList.add("mb-1");
     return item;
 };

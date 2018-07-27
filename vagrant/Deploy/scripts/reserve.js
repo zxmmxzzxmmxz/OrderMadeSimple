@@ -1,17 +1,22 @@
 $(function(){
 	// unsured url, replce later
 	var url = 'http://localhost:8080/rest/restaurant/';
-	var getUrl = 'info/2';
+	var getUrl = 'info/'+sessionStorage.restaurant_id;
 	var postUrl = 'reserve'; 
 
 	var $hours = $('#hours');
 	var $addr = $('#addr');
 	var $phone = $("#tel");
 
+	console.log(sessionStorage.restaurant_name);
+
+	$('#restaurant_name').html(sessionStorage.restaurant_name);
+
 	$('.info').click(function () {
 		console.log('info click');
         //var position = $('.info').position();
         //$('#currentRes').css({top: position.top, left: position.left});
+        $('#resInfo .name').html(sessionStorage.restaurant_name);
         $('#currentRes').toggle();
     });
 
@@ -38,9 +43,9 @@ $(function(){
 			var business = response.hours;
 			var contact = response.contact;
 
-			console.log('ssss');
+			console.log('finish loading restaurant');
 
-			$.each(business, function(i, info){
+            $.each(business, function(i, info){
 				$row = $('<tr>' + 
 				'<td>' + info.Day + ':</td>' +
 				'<td>' + info.OpenHr +' - ' + info.CloseHr +'</td>' +
@@ -49,7 +54,7 @@ $(function(){
 			});
 
 			$addr.append('<p>' + contact.Address + '</p');
-			$phone.append('<p>' + contact.Phone + '</p')
+			$phone.append('<p>' + contact.Phone + '</p');
 		}
 
 	});

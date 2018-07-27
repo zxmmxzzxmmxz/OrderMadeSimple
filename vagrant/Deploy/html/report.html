@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Orders</title>
+    <title>Report</title>
     <link rel="stylesheet" href="../CSS/bootstrapmin.css" />
     <link rel="stylesheet" href="../CSS/order-style.css" />
     <link rel="stylesheet" href="../CSS/reserve.css" />
@@ -14,9 +14,10 @@
     <script src="../scripts/baseLoad.js"></script>
     <script src="../scripts/orderAPI.js"></script>
     <script src="../scripts/dishAPI.js"></script>
+    <script src="../scripts/restaurantAPI.js"></script>
     <script src="../scripts/ContainerFlow.js"></script>
     <script src="../scripts/orderElementCreation.js"></script>
-    <script src="../scripts/viewOrder.js"></script>
+    <script src="../scripts/report.js"></script>
 </head>
 <body>
 
@@ -34,23 +35,47 @@
         </li>
     </ul>
 </nav>
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">View Orders</li>
+        <li class="breadcrumb-item" aria-current="page"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Report</li>
     </ol>
 </nav>
 
 <div class="main-content">
 
-<div class="container" id="order-list">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="errormsg"></div>
+            <div class="col" id="report_container">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td>OrderID</td>
+                        <td>Order Status</td>
+                        <td>Restaurant</td>
+                        <td></td>
+                        <td>Dishes</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 
-</div>
 
-<footer class="text-center">
-    &copy; Team semi-colon 2018. All rights reserved.
-</footer>
+
+    <footer class="text-center">
+        &copy; Team semi-colon 2018. All rights reserved.
+    </footer>
 
 </body>
 </html>

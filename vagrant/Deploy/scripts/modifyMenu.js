@@ -3,38 +3,18 @@ createDishes = function(dishes){
     container.empty();
     let flow = new ContainerFlow(6, "menu", container, 2);
     for (let dish of dishes){
+        console.log(dish);
         let card = createDishCard(dish);
         flow.insert(card);
     }
-
-    let newDishButton = document.createElement("button");
-    newDishButton.innerHTML = "New Dish";
-    newDishButton.setAttribute("type","button");
-    newDishButton.setAttribute("id","create-dish");
-    newDishButton.setAttribute("data-toggle","modal");
-    newDishButton.setAttribute("data-target","#dishModificationModal");
-    newDishButton.classList.add("btn");
-    newDishButton.classList.add("btn-primary");
-    $('#new-dish-btn').append(newDishButton);
-
-    //flow.insert(newDishButton);
     flow.finish();
     $("#main").prepend(container);
     for (let dish of dishes){
         addModifyEventHandler("modify-dish-" + dish.dish_id);
     }
-    addAddButtonEventHandler();
     $("#restaurant_name").val(sessionStorage.restaurant_name);
 };
 
-addAddButtonEventHandler = function(){
-    $("#create-dish").on('click', function(){
-        clearModal();
-        let updateButton = $("#update-dish");
-        updateButton.html("Add Dish");
-        updateButton.data("mode","create");
-    })
-};
 
 addModifyEventHandler = function(buttonID){
     $('#'+buttonID).on('click', function (event) {
@@ -42,9 +22,9 @@ addModifyEventHandler = function(buttonID){
         updateButton.html("Update Dish");
         updateButton.data("mode","update");
         let button = event.target;
-        let dishID = button.dataset.dishId;
+        let dishVerId = button.dataset.dishVerId;
 
-        getDishes([dishID], sessionStorage.token, function(foundDishes){
+        getDishes([dishVerId], sessionStorage.token, function(foundDishes){
             for (let dish of foundDishes){
                 console.log(dish);
                 $("#dish-id").val(dish.dish_id);
@@ -56,18 +36,6 @@ addModifyEventHandler = function(buttonID){
             }
         });
 
-        /*
-        getDishByID(dishID,sessionStorage.token,function(dish){
-            $("#dish-id").val(dish.dish_id);
-            $("#dish-name").val(dish.dish_name);
-            $("#dish-description").val(dish.description);
-            $("#restaurant-name").val(dish.restaurant_name);
-            $("#price").val(dish.price);
-            $("#menu-flag").val(dish.menu_flag);
-        },function(msg){
-            sessionStorage.msg = msg;
-        });
-        */
     });
 };
 
@@ -116,8 +84,28 @@ clearModal = function(){
     $("#menu-flag").val("");
 };
 
+function addNewButton()
+{
+    let newDishButton = document.createElement("button");
+    newDishButton.innerHTML = "New Dish";
+    newDishButton.setAttribute("type","button");
+    newDishButton.setAttribute("id","create-dish");
+    newDishButton.setAttribute("data-toggle","modal");
+    newDishButton.setAttribute("data-target","#dishModificationModal");
+    newDishButton.classList.add("btn");
+    newDishButton.classList.add("btn-primary");
+    $('#new-dish-btn').html(newDishButton);
+
+    $("#create-dish").on('click', function(){
+        clearModal();
+        let updateButton = $("#update-dish");
+        updateButton.html("Add Dish");
+        updateButton.data("mode","create");
+    });
+}
+
 $(function () {
+    addNewButton();
     loadDishes();
     installModalConfirmButtonHandler();
-
 });

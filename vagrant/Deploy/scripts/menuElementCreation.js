@@ -30,6 +30,7 @@ createDishCard = function(dish){
     modifyButton.setAttribute("data-toggle","modal");
     modifyButton.setAttribute("data-target","#dishModificationModal");
     modifyButton.setAttribute("data-dish-id",dish.dish_id);
+    modifyButton.setAttribute("data-dish-ver-id",dish.dish_ver_id);
     modifyButton.classList.add("btn");
     modifyButton.classList.add("btn-primary");
 

@@ -1,21 +1,35 @@
-
-
-.reserve-main-content{
-	top: 500px;
-	height: 680px;
-	width: 100%;
-	box-sizing: border-box;
+body{
 	background-color: #ff9933;
-	margin-top: 300px;
-	z-index: 100;
 }
 
-.reserve-main-content .gap{
-	height: 20px;
+.breadcrumb{
+	margin-bottom: 0px !important;
+	border-radius: 0 !important;
+}
+
+#new-dish-btn{
+	padding: 0 0 30px 20px;
+}
+
+.reserve-main-content{
+	width: 100% !important;
+	margin-top: 0px;
+	padding-top: 20px;
+}
+
+#refresh_status{
+	font-size: 13pt !important;
+}
+
+.main-content{
+	background-color: white !important;
+	padding-top: 30px;
+	padding-bottom: 40px;
+	min-height: 500px;
 }
 
 .poster{
-	overflow: hidden;
+	display: none;
 	white-space: nowrap;
 	background-color: black;
 	box-sizing: border-box;
@@ -83,67 +97,76 @@
 }
 
 .reservation{
-	display: table;
-	text-align: center;
-	border-collapse: separate;
-	border-spacing: 50px;
- 	margin-top: 30px;
  	width: 80%;
- 	margin: 0 auto;
- 	padding-left: 20px;
- 	padding-right: 20px;
+ 	margin: 30px auto;
  	box-sizing: border-box;
  	z-index: 101;
  }
 
 .reservation .function{
-	display: table-cell;
-	border: 3px solid #fff5e6;
+	display: block;
+	border: 1px solid #fff5e6;
 	border-radius: 10px;
-	width: 25%;
+	width: 100%;
 	height: 120px;
 	vertical-align: middle;
 	text-align: center;
+	cursor: pointer;
+	padding-top: 20px;
 }
 
-.reservation .function .info, .res, .more{
+.reservation .function:hover{
+	border: 1px solid #fff;
+}
+
+.reservation .more_function:hover
+{
+	border: 1px solid #fff5e6 !important;
+	cursor: default !important;
+}
+
+.reservation .function .info,
+.reservation .function .res,
+.reservation .function .more
+{
 	color: #fff5e6;
 	font-size: 20px;
 	text-decoration: none;
 }
 
-.reservation .function .info label, .res label{
-	display: block;
+.reservation .function .info h2,
+.reservation .function .res h2,
+.reservation .function .more h2
+{
+	font-size: 15pt;
+	font-weight: 100;
 }
 
-.function:hover{
-	border: 3px solid rgba(255,245,230, 0.6);
-}
-
-.reservation .function .info:hover, .res:hover {
-	opacity: 0.6;
+.reservation .function:hover .info h2,
+.reservation .function:hover .res h2
+{
+	font-weight: 500 !important;
 }
 
 .reservation .function #currentRes{
- 	width: 800px;
- 	height: 500px;
- 	position: absolute;
+ 	width: 650px;
+ 	height: 420px;
+ 	position: relative;
  	background-color: #ffffff; 
  	border-radius: 5px;
- 	z-index: 105;
- 	top: 498px;
- 	left: 500px;
+ 	z-index: 1000000;
  	border: 1px solid #e6e6e6;
  	box-shadow: 5px 3px 2px rgba(0, 0, 0, 0.2);
- 	visibility: hidden;
- 	/*transition: 0.4s;*/
+ 	display: none;
+	top: -534px;
+	left: -80px;
  }
 
- @media (max-width: 1500px){
- 	.reservation .function #currentRes{
- 		left: 100px;
- 	}	
- }
+ /*@media (max-width: 1500px){*/
+ 	/*.reservation .function #currentRes{*/
+ 		/*left: 100px;*/
+ 	/*}	*/
+ /*}*/
 
 .reservation .function #currentRes::after {
     content: "";
@@ -165,44 +188,44 @@
 }
 
 
-.reservation .function #currentRes .close{
+#currentRes .close{
 	margin-top: 20px;
 	margin-right: 20px;
 }
 
-.reservation .function #currentRes #resInfo h2{
+#resInfo h2{
 	border-bottom: 1px solid #e6e6e6;
 	margin-bottom: 2px;
 }
 
-.reservation .function #currentRes #resInfo #openInfo{
+#openInfo{
 	/*border: 1px solid #e6e6e6;*/
-	width: 360px;
+	width: 323px;
 	height: 300px;
 	float: left;
 	/*display: inline;*/
 	margin: 0 auto;
+	font-size: 11pt;
 }
 
-.reservation .function #currentRes #resInfo #openInfo #contact{
+#openInfo #contact{
 	margin-top: 50px;
-
 }
 
-.reservation .function #currentRes #resInfo #openInfo p{
+#openInfo p{
 	margin-bottom: 2px;
 }
 
-.reservation .function #currentRes #resInfo #openInfo .subtitle{
+#openInfo .subtitle{
 	font-weight: bold;
 }
 
-.reservation .function #currentRes #resInfo #openInfo table{
+#openInfo table{
 	width: 360px;
 	margin-top: 5px;	
 }
 
-.reservation .function #currentRes #resInfo #openInfo table tr{
+#openInfo table tr{
 	width: 70px;
 	border-collapse: collapse;
 }
@@ -223,9 +246,9 @@
 .reservation .function #booking{
  	width: 800px;
  	height: 550px;
- 	position: absolute;
- 	top: 45%;
- 	left: 30%;
+ 	position: fixed;
+ 	top: 10px;
+ 	left: 19%;
  	background-color: #ffffff; 
  	border-radius: 5px;
  	z-index: 105;
@@ -235,11 +258,11 @@
  	visibility: hidden;
 }
 
-@media (max-width: 1400px){
-	.reservation .function #booking{
-		top: 60%;
-	}
-}
+/*@media (max-width: 1400px){*/
+	/*.reservation .function #booking{*/
+		/*top: 60%;*/
+	/*}*/
+/*}*/
 
 .reservation .function #booking h3{
 	text-align: center;
@@ -347,9 +370,9 @@
 
 footer{
 	background-color: #ff9933;
-	border-top: 4px solid #fff5e6;
-	padding-right: 10px;
+	border-top: 4px solid #ff9933;
 	color: #fff5e6;
+	font-weight: 100;
 }
 
 

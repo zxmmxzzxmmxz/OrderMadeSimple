@@ -56,5 +56,9 @@ $(function () {
         console.log(2);
     }, 1000);
 
+    $('.more').click(function () {
+       window.location.href = "report.html";
+    });
+
     loadOrders();
 });

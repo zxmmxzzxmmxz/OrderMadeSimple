@@ -7,6 +7,7 @@ $(function() {$('#submit').on('click',function (e){
         success: function(token){
             sessionStorage.token = token.token;
             sessionStorage.restaurant_name = token.restaurant_name;
+            sessionStorage.restaurant_id = token.restaurant_id;
             window.location.href = "index.html";
         },
         error:function(jqXHR, textStatus, errorThrown){
