@@ -17,9 +17,7 @@ ContainerFlow = class {
             this.rowIndex += 1;
         }
         let col = document.createElement("div");
-        //col.classList.add("col-md-"+this.size);
-        col.classList.add("col");
-        col.classList.add("col-padding");
+        col.classList.add("col-md-"+this.size);
         col.setAttribute("id",this.idPrefix+"-col-"+this.colIndex);
         col.append(element);
         this.currentRow.append(col);

@@ -3,7 +3,7 @@ createDishCard = function(dish){
     this.prefix = "modify-dish-";
     let card = document.createElement("div");
     card.classList.add("card");
-    //card.setAttribute("style","width: 18rem;");
+    card.setAttribute("style","width: 18rem;");
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
@@ -30,6 +30,7 @@ createDishCard = function(dish){
     modifyButton.setAttribute("data-toggle","modal");
     modifyButton.setAttribute("data-target","#dishModificationModal");
     modifyButton.setAttribute("data-dish-id",dish.dish_id);
+    modifyButton.setAttribute("data-dish-ver-id",dish.dish_ver_id);
     modifyButton.classList.add("btn");
     modifyButton.classList.add("btn-primary");
 
