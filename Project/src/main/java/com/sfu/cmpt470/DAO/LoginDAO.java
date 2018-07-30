@@ -13,7 +13,9 @@ import com.sfu.cmpt470.pojo.SessionToken;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 import static java.sql.Types.TIME;
@@ -39,7 +41,7 @@ public class LoginDAO extends BaseDAO{
             if(!Objects.equals(password,hashedPassword)){
                 throw new LoginException("password or username is incorrect!");
             }
-            Algorithm algorithm = Algorithm.HMAC256("orderit");
+            Algorithm algorithm = Algorithm.HMAC256("OrderMadeSimple");
             token = JWT.create()
                     .withIssuer("auth0")
                     .withClaim("username",userName)
@@ -66,7 +68,7 @@ public class LoginDAO extends BaseDAO{
 
     public void validateToken(String sessionToken) throws JWTVerificationException, UnsupportedEncodingException, SQLException {
         //validate to the db to see if token is a valid one
-            Algorithm algorithm = Algorithm.HMAC256("orderit");
+            Algorithm algorithm = Algorithm.HMAC256("OrderMadeSimple");
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("auth0")
                     .build(); //Reusable verifier instance
@@ -76,7 +78,7 @@ public class LoginDAO extends BaseDAO{
         _db.setString(username,1);
         _db.queryOneRecord((rs, rowNum) -> rs.getLong("restaurant_id"));
 
-        _db.supplyQuery("SELECT expire_time FROM token WHERE username = ? AND token = ?");
+        _db.supplyQuery("SELECT expire_time FROM token WHERE username = ? AND token = ? ORDER BY expire_time DESC LIMIT 1");
         _db.setString(username, 1);
         _db.setString(sessionToken, 2);
         OffsetDateTime expireTime = _db.queryOneRecord((rs, rowNum) -> rs.getObject("expire_time", OffsetDateTime.class));

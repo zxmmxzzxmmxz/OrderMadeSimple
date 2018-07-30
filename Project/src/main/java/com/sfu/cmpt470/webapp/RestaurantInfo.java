@@ -7,9 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by Administrator on 7/17/2018.
- */
+
 
 @Path("/restaurant")
 public class RestaurantInfo {

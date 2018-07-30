@@ -1,6 +1,6 @@
 --restaurant
-INSERT INTO restaurant VALUES (DEFAULT,'joojak');
-INSERT INTO restaurant VALUES (DEFAULT,'szechuan restaurant');
+INSERT INTO restaurant VALUES (DEFAULT,'joojak', 'sd3j4252k');
+INSERT INTO restaurant VALUES (DEFAULT,'szechuan restaurant', 'sd3j423k');
 
 --dishes
 INSERT INTO dish (dish_ver_id) 
@@ -61,8 +61,6 @@ INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,
 INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,3,'in progress');
 
 --reserve mock data
-INSERT INTO restaurant(restaurant_name, order_code) values('joojak', 'sd3j4252k');
-INSERT INTO restaurant(restaurant_name, order_code) values('szechuan Restaurant', 'sd3j423k');
 INSERT INTO restaurant(restaurant_name, order_code) values('Uil''s Restaurant', 's33j32gf');
 
 INSERT INTO restaurant_info(restaurant_id, phone, address) values(

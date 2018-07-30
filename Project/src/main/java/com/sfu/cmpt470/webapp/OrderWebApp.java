@@ -15,6 +15,26 @@ import javax.ws.rs.core.Response;
 public class OrderWebApp {
 
     //@Secured
+    @Path("/allOpenOrders/{restaurantName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String getAllOpenOrders(@Context HttpServletResponse response,
+                               @PathParam("restaurantName")String restaurantName) {
+        try {
+            DatabaseConnector con = new DatabaseConnector();
+            OrderService orderService = new OrderServiceImpl(con);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+
+            String result = orderService.getAllOpenOrders(restaurantName);
+            con.disconnect();
+            return result;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    //@Secured
     @Path("/allOrders/{restaurantName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,7 +46,7 @@ public class OrderWebApp {
             OrderService orderService = new OrderServiceImpl(con);
             response.setHeader("Access-Control-Allow-Origin", "*");
 
-            String result = orderService.getAllOpenOrders(restaurantName);
+            String result = orderService.getAllOrders(restaurantName);
             con.disconnect();
             return result;
         } catch (Exception e) {

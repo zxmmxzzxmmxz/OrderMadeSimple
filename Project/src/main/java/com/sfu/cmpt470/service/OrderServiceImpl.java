@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService{
         //in progress or new
         List<Order> orders;
         try {
-            orders = getAllOrders(restaurantName).stream().filter(order -> !order.getOrderStatus().equals("done")).collect(Collectors.toList());
+            orders = getAllOrdersInList(restaurantName).stream().filter(order -> !order.getOrderStatus().equals("done")).collect(Collectors.toList());
             orders = orders.stream().filter(order -> !order.getOrderDetails().isEmpty()).collect(Collectors.toList());
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));
@@ -34,8 +34,12 @@ public class OrderServiceImpl implements OrderService{
         return _gson.toJson(orders);
     }
 
-    private List<Order> getAllOrders(String restaurantName) throws SQLException {
+    private List<Order> getAllOrdersInList(String restaurantName) throws SQLException {
         return _dao.getAllOrdersByRestaurantName(restaurantName);
+    }
+
+    public String getAllOrders(String restaurantName) throws SQLException {
+        return _gson.toJson(_dao.getAllOrdersByRestaurantName(restaurantName));
     }
 
     public String findOrder(long order_id){
