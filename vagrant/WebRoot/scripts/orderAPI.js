@@ -1,4 +1,4 @@
-mock_order = '{"order_id":1,"restaurant_name":"joojak","time":"Tue, 19 Oct 2004 17:23:54 GMT","orderDetails":[{"order_detail_id":1,"order_id":1,"dish_ver_id":1,"status":"new"},{"order_detail_id":3,"order_id":1,"dish_ver_id":4,"status":"new"},{"order_detail_id":4,"order_id":1,"dish_ver_id":3,"status":"new"}],"order_status":"new","table_number":"3","included_in_eod_report":true,"created_by_user":1}'
+//mock_order = '{"order_id":1,"restaurant_name":"joojak","time":"Tue, 19 Oct 2004 17:23:54 GMT","orderDetails":[{"order_detail_id":1,"order_id":1,"dish_ver_id":1,"status":"new"},{"order_detail_id":3,"order_id":1,"dish_ver_id":4,"status":"new"},{"order_detail_id":4,"order_id":1,"dish_ver_id":3,"status":"new"}],"order_status":"new","table_number":"3","included_in_eod_report":true,"created_by_user":1}'
 
 OrderDetail = class {
     constructor(fromJson){
@@ -69,6 +69,27 @@ Order = class {
 loadAllOpenOrdersForRestaurant = function(restaurant_name, token, successCallBack, errorCallBack){
     $.ajax({
         type: 'GET',
+        url: NEED_PROJECT+'/rest/orders/allOpenOrders/'+restaurant_name,
+        crossDomain: true,
+        headers: {
+            'Authorization':'cmpt470 '+ token
+        },
+        success: function(orders){
+            let result = [];
+            $.each(orders, function(i, order){
+                result.push(new Order(order));
+            });
+            successCallBack(result);
+        },
+        error:function (jqXHR, textStatus, errorThrown) {
+            errorCallBack(jqXHR.responseText)
+        }
+    })
+};
+
+loadAllOrdersForRestaurant = function(restaurant_name, token, successCallBack, errorCallBack){
+    $.ajax({
+        type: 'GET',
         url: NEED_PROJECT+'/rest/orders/allOrders/'+restaurant_name,
         crossDomain: true,
         headers: {
@@ -99,7 +120,46 @@ getOrderByOrderID = function(orderID, token, successCallBack, errorCallBack){
             successCallBack(new Order(order));
         },
         error:function (jqXHR, textStatus, errorThrown) {
-            errorCallBack(jqXHR.responseText)
+            errorCallBack(jqXHR.responseText);
         }
     })
+};
+
+submitOrder = function(order, orderToken, successCallBack, errorCallBack){
+    $.ajax({
+        type: 'POST',
+        url: NEED_PROJECT+'/rest/orders/add',
+        dataType: 'text',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'cmpt470 '+ orderToken
+        },
+        data: order.toJson(),
+        success: function(msg){
+            successCallBack(msg);
+        },
+        error:function (jqXHR, textStatus, errorThrown) {
+            errorCallBack(jqXHR.responseText);
+        }
+    });
+};
+
+updateOrderDetail = function(orderDetail,token,successCallBack, errorCallBack){
+    $.ajax({
+        type: 'POST',
+        url: NEED_PROJECT+'/rest/orderDetail/updateOrderDetail',
+        dataType: 'text',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'cmpt470 '+ token
+        },
+        data: orderDetail.toJson(),
+        success: function(msg){
+            successCallBack(msg);
+        },
+        error:function (jqXHR, textStatus, errorThrown) {
+            errorCallBack(jqXHR.responseText);
+        }
+    });
 };

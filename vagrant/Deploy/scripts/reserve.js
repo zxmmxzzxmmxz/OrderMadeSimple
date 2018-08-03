@@ -1,38 +1,36 @@
 $(function(){
 	// unsured url, replce later
-	var url = 'http://localhost:8080/rest/restaurant/';
-	var getUrl = 'info/'+sessionStorage.restaurant_id;
+	var url = NEED_PROJECT+'/rest/restaurant/';
+	//var restName = "Uli's Restaurant";
+	var getUrl = "info/Uli's Restaurant";
 	var postUrl = 'reserve'; 
 
 	var $hours = $('#hours');
 	var $addr = $('#addr');
 	var $phone = $("#tel");
 
-	console.log(sessionStorage.restaurant_name);
+	var isClicked = false;
 
-	$('#restaurant_name').html(sessionStorage.restaurant_name);
-
-	$('.info').click(function () {
-		console.log('info click');
-        //var position = $('.info').position();
-        //$('#currentRes').css({top: position.top, left: position.left});
-        $('#resInfo .name').html(sessionStorage.restaurant_name);
-        $('#currentRes').toggle();
-    });
-
-	$('#currentRes .close').click(function () {
-        console.log("close");
-        $('#currentRes').hide();
-    });
+	$('.info').on('click', function(){
+		if($('#currentRes').hasClass('visible')){
+			$('#currentRes').removeClass('visible');
+		}else{
+			$('#currentRes').addClass('visible');
+			$('#helper').addClass('visible');
+		}	
+	});
 
 	$('.close').on('click', function(){
-        $('#currentRes').removeClass('visible');
+		$('#currentRes').removeClass('visible');
 		$('#helper').removeClass('visible');
 	});
 
 	$('#overlay').click(function(){
 		$('#booking').removeClass('visible');
 		$('#overlay').removeClass('visible');
+		$('#returnMsg').empty().removeClass('visible');
+		// remove picture
+		$('.showPic').remove();
 		$('#postForReserve').removeClass('visible');
 	});
 
@@ -42,10 +40,8 @@ $(function(){
 		success: function(response){
 			var business = response.hours;
 			var contact = response.contact;
-
-			console.log('finish loading restaurant');
-
-            $.each(business, function(i, info){
+			
+			$.each(business, function(i, info){
 				$row = $('<tr>' + 
 				'<td>' + info.Day + ':</td>' +
 				'<td>' + info.OpenHr +' - ' + info.CloseHr +'</td>' +
@@ -54,20 +50,54 @@ $(function(){
 			});
 
 			$addr.append('<p>' + contact.Address + '</p');
-			$phone.append('<p>' + contact.Phone + '</p');
+			$phone.append('<p>' + contact.Phone + '</p')
+		},
+		error: function(xhr, res, text){
+				console.log(res);
+				msg = res;
 		}
 
 	});
 
+	/*------------------
+	 reservation button
+	------------------*/
 	$('.res').click(function(){
 		if($('#booking').hasClass('visible')){
 			$('#booking').removeClass('visible');
-        }else{
+
+		}else{
+			$('#postForReserve #time').val($('#postForReserve #time option[disabled]').val());
+			$('#postForReserve #seats').empty();
 			$('#booking').addClass('visible');
 			$('#postForReserve').addClass('visible');
 			$('#overlay').addClass('visible');
-            //$('#booking').css({top:'10px',left:'10px'});
 		}
+	});
+
+	/*------------------
+	get available seats
+	------------------*/
+	$('#time').change(function(){
+		var time = this.value;
+		$('#seats').empty();
+		$.ajax({
+			type: 'get',
+			url: url + time,
+			success: function(seats){
+				$('#seats').append('<option disabled selected value> -- select an option -- </option>');
+				console.log(seats);
+				var arr = seats.seatList;
+				for(i=0; i< arr.length; i++){
+					$('#seats').append('<option>' + arr[i] + '</option>');
+					console.log(arr[i]);
+				}
+			},
+			error: function(xhr, res, text){
+				console.log(res);
+				msg = res;
+			}
+		})
 	});
 
 	$('#helper').click(function(){
@@ -81,7 +111,9 @@ $(function(){
 	$('#booking span').on('click', function(){
 		$('#booking').removeClass('visible');
 		$('#overlay').removeClass('visible');
-		$('#returnMsg').removeClass('visible');
+		$('#returnMsg').empty().removeClass('visible');
+		// remove picture
+		$('.showPic').remove();
 		$('#postForReserve').removeClass('visible');
 	});
 
@@ -91,6 +123,9 @@ $(function(){
 		$('#postForReserve').removeClass('visible');
 	});
 
+	/*------------------
+	   book for seats
+	------------------*/
 	$('#sub input[type=submit]').click(function(){
 		var msg = null;
 
@@ -119,11 +154,15 @@ $(function(){
 		}
 
 		var reservation = {
-			fname: $('#fname').val(),
-			lname: $('#lname').val(),
-			phone: $('#pnumber').val(),
-			time: $('#time').val(),
-			seats: $('#seats').val()
+			customer:{
+				fname: $('#fname').val(),
+				lname: $('#lname').val(),
+				phone: $('#pnumber').val(),	
+			},
+			table:{
+				time: $('#time').val(),
+				seats: $('#seats').val()	
+			}
 		}
 		$.ajax({
 			type: 'post',
@@ -143,16 +182,30 @@ $(function(){
 		})
 		.done(function(){
 			$('#postForReserve.visible').removeClass('visible');
-			$('#returnMsg').append('<img src="../resource/check.png">');
-			$('#returnMsg p').html(msg);
+			$('#returnMsg').append('<img class="showPic" src="../resource/check.PNG">');
+			$('#returnMsg').append('<p>' + msg + '</p>');
 			$('#returnMsg').addClass('visible');
+			// setTimeout(function(){
+			// 	if(!$('#returnMsg').has('p')){
+			// 		$('#returnMsg').empty().removeClass('visible');
+			// 		return;
+			// 	}
+			// 	$('#postForReserve.visible').removeClass('visible');
+			// 	$('#booking').removeClass('visible');
+			// 	$('#overlay').removeClass('visible');
+			// 	$('#returnMsg').empty().removeClass('visible');
+			// }, 2000);
+			
+			
 		})
 		.fail(function(){
 			$('#postForReserve.visible').removeClass('visible');
-			$('#returnMsg').append('<img src="../resource/error.png">');
-			$('#returnMsg p').html(msg + ': reservation is failed.');
+			$('#returnMsg').append('<img class="showPic" src="../resource/error.PNG">');	
+			$('#returnMsg').append('<p>' + msg + ': reservation is failed.</p>');
 			$('#returnMsg').addClass('visible');
 		});
 	})
 
+
 });
+

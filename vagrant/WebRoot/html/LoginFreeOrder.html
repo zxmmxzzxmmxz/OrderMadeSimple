@@ -20,21 +20,6 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href="#" id="restaurant_name"></a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="ModifyMenu.html">Menu</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="ViewOrders.html">Orders</a>
-        </li>
-    </ul>
-</nav>
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Make an Order</li>
@@ -47,16 +32,12 @@
 
 <div id="view-order-button-container" class="container-fluid">
     <div class="row">
-        <div class="col">
-            <button class="btn btn-primary" id="view-order">
-                Your Order <span class="badge badge-secondary badge-pill">(1)</span>
+        <div class="col col-padding">
+            <button class="btn btn-primary col-padding" id="view-order">
+                Your Order <span class="badge badge-secondary badge-pill" id="number-of-details">(0)</span>
             </button>
         </div>
     </div>
-</div>
-
-<div id="order-container" class="container-fluid">
-
 </div>
 
 <div class="modal fade" id="newOrderDetailModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -77,7 +58,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-dish-close">Close</button>
                 <button type="button" class="btn btn-primary" id="add-dish">Add Dish</button>
             </div>
         </div>
@@ -102,8 +83,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Submit Order</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="submit-order-cancel">Close</button>
+                <button type="button" class="btn btn-primary" id="submit-order">Submit Order</button>
             </div>
         </div>
     </div>

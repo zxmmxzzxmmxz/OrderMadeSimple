@@ -1,8 +1,10 @@
 package com.sfu.cmpt470.service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.sfu.cmpt470.DAO.RestaurantDAO;
 import com.sfu.cmpt470.database.DatabaseConnector;
+import com.sfu.cmpt470.pojo.Customer;
 import com.sfu.cmpt470.pojo.Error;
 
 import java.sql.SQLException;

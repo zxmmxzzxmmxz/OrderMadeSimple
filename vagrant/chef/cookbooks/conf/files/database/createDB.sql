@@ -68,3 +68,27 @@ CREATE TABLE order_details(
 	special_note varchar(100)
 );
 
+CREATE TABLE customer(
+	cid SERIAL PRIMARY KEY,
+	fname varchar(50) NOT NULL,
+	lname varchar(50) NOT NULL,
+	phone varchar(20) NOT NULL
+);
+
+CREATE TABLE dining_table(
+	tid SERIAL PRIMARY KEY,
+	seats integer
+);
+
+CREATE TABLE duration(
+	tid integer REFERENCES dining_table(tid),
+	booking varchar(60),
+	isBooked BOOLEAN,
+	PRIMARY KEY(tid, booking)
+);
+
+CREATE TABLE reserve(
+	cid integer REFERENCES customer(cid),
+	tid integer REFERENCES dining_table(tid)
+);
+

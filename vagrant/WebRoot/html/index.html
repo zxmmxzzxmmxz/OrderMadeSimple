@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Orders</title>
-    <link rel="stylesheet" href="../CSS/bootstrapmin.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/order-style.css" />
     <link rel="stylesheet" href="../CSS/reserve.css" />
 
-    <script src="../scripts/jquery.min.js"></script>
-    <script src="../scripts/bootstrapmin.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../scripts/baseLoad.js"></script>
     <script src="../scripts/orderAPI.js"></script>
     <script src="../scripts/dishAPI.js"></script>
@@ -42,217 +41,160 @@
     </ol>
 </nav>
 
-<div class="main-content">
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h2 class="mb-1">Now serving: <span id="refresh_status">refresh in 10s</span></h2>
-                <div id="errormsg"></div>
-            </div>
-            <div class="col">
-
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-1">Now serving:</h2>
+        </div>
+        <div class="col">
+            <button id="refresh_status">refresh</button>
         </div>
     </div>
-
-    <div class="container" id="order-list">
-
-    </div>
-
-
-    <div class="container">
-        <h2 class="mb-1">Place order</h2>
-        <div id="dish_panel"></div>
-        <div id="order_list"></div>
-
-        <input id="submit" type="button" name="submit" value="submit">
-        <input id="clear_order_list" type="button" name="clear_order_list" value = "clear">
-
-        <div class= "modal">
-            <div class="wp-content">
-                <input type="number" id="number_of_order" value = "1">
-                <button id = comfirm_dish>ok</button>
-                <button id = close> close</button>
-            </div>
-        </div>
-    </div>
+</div>
+<div class="container-fluid" id="order-list">
 
 </div>
 
 
-
+<div class= "modal">
+    <div class="wp-content">
+        <input type="number" id="number_of_order" value = "1">
+        <button id = comfirm_dish>ok</button>
+        <button id = close> close</button>
+    </div>
+</div>
 
 <!---------------------------
   start of reserve section
 ---------------------------->
 
-<div class="container-fluid reserve-main-content" >
+<div class="reserve-main-content" >
+    <div class="gap">
+        
+    </div>
 
+    <div class="poster">
 
-    <!--<div class="row poster">-->
-    <!--<div class="wrapper">-->
-    <!--<img class="myimg" src="../resource/vege.jpg" />-->
-    <!--<img class="myimg" src="../resource/black-vege.jpg" />-->
-    <!--<img class="myimg" src="../resource/grill.jpg" />-->
-    <!--</div>-->
-    <!--<a class="prev" onclick="plusSlides(-1)">&#10094;</a>-->
-    <!--<a class="next" onclick="plusSlides(1)">&#10095;</a>-->
-    <!--</div>-->
-
-    <!-- background screen -->
+        <div class="wrapper">
+            <img class="myimg" src="../resource/vege.jpg" />
+            <img class="myimg" src="../resource/black-vege.jpg" />
+            <img class="myimg" src="../resource/grill.jpg" />
+        </div>
+    </div>
+     <!-- background screen -->
     <div id="overlay"></div>
     <div id="helper"></div>
 
     <!-- restaurant button section -->
     <section class="reservation">
         <!-- restaurant information section -->
-        <div class="row">
-            <div class="col-md-4">
-                <!-- info function div -->
+        <div class="function">
+            <div class="info">
+                <label><img src="../resource/info.png" /></label>
+                <label>Restaurant Infomation</label>
+            </div>
+            
 
-                <div class="function">
-                    <div class="info">
-                        <img src="../resource/info.png" />
-                        <h2>Restaurant Information</h2>
+            <!-- restaurant popup page -->
+            <div id="currentRes">
+                <span class="close">×</span>
+                <div id="resInfo">
+                    <h2>Uli’s Restaurant</h2>
+
+                    <div id="openInfo">
+                        <table id="hours">
+                            <tr>
+                                <th>Opening hours:</th>
+                            </tr>
+                        </table>
+
+                        <div id="contact">
+                            <p class="subtitle">Address:</p>
+                            <p id="addr">                           
+                            </p>
+                            <p class="subtitle">Phone Number:</p>
+                            <p id="tel">                              
+                            </p>
+                        </div>
                     </div>
-
-                    <!-- restaurant popup page -->
-                    <div id="currentRes">
-                        <span class="close">×</span>
-                        <div id="resInfo">
-                            <h2 class="name"></h2>
-                            <div id="openInfo">
-                                <table id="hours">
-                                    <tr>
-                                        <th>Opening hours:</th>
-                                    </tr>
-                                </table>
-
-                                <div id="contact">
-                                    <p class="subtitle">Address:</p>
-                                    <p id="addr">
-                                    </p>
-                                    <p class="subtitle">Phone Number:</p>
-                                    <p id="tel">
-                                    </p>
-                                </div>
-                            </div>
-                            <div id="addressMap">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2616.425884364089!
+                    <div id="addressMap">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2616.425884364089!
                         2d-122.80820648412642!3d49.02150649716128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485c39d61ef5913%3A0x3e5b2d2998e89619!2sUli&#39;
-                        s+Restaurant!5e0!3m2!1sen!2sca!4v1531805657961" width="300" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
-                            </div>
-                        </div>
+                        s+Restaurant!5e0!3m2!1sen!2sca!4v1531805657961" width="380" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
-
                 </div>
-                <!-- end of info function div -->
             </div>
-            <div class="col-md-4">
-                <!-- res function div -->
-                <div class="function">
-                    <div class="res">
-                        <img src="../resource/reserve.png" />
-                        <h2>Reservation</h2>
-                    </div>
+             
+        </div>
 
-                    <!-- reservation popup page -->
-                    <div id="booking">
-                        <span id="bookingClose">×</span>
-
-                        <div id="postForReserve">
-                            <h3>Daily Reservation</h3>
-                            <label class="reserve-info" for="fname">First Name </label>
-                            <span id="fname-err" style="display: inline; color:red; margin-left: 5px;"></span>
-                            <input type="text" id="fname" name="firstname" placeholder="First name..">
-
-                            <label class="reserve-info" for="lname">Last Name</label>
-                            <span id="lname-err" style="display: inline; color:red; margin-left: 5px;"></span>
-                            <input type="text" id="lname" name="lastname" placeholder="Last name..">
-
-                            <label class="reserve-info" for="pnumber">Phone Number</label>
-                            <span id="pnumber-err" style="display: inline; color:red; margin-left: 5px;"></span>
-                            <input type="text" id="pnumber" name="phone" placeholder="Phone number..">
-
-                            <label for="time">Time</label>
-                            <select id="time" name="time">
-                                <option>11:00 am ~ 12:30 am</option>
-                                <option>12:00 am ~ 13:30 pm</option>
-                                <option>17:00 pm ~ 18:30 pm</option>
-                                <option>18:30 pm ~ 20:00 pm</option>
-                                <option>20:00 pm ~ 22:00 pm</option>
-                            </select>
-
-                            <label class="reserve-info" for="seats">Seats available</label>
-                            <select id="seats" name="seats">
-                                <option>3</option>
-                                <option>5</option>
-                                <option>10</option>
-                                <option>15</option>
-                                <option>20</option>
-                            </select>
-
-
-
-                            <div id="sub">
-                                <input type="submit" value="Submit">
-                                <input type="button" value="Cancel">
-                            </div>
-                        </div>
-
-                        <div id="returnMsg">
-                            <p></p>
-                        </div>
-                    </div>
-                    <!-- end of reservation popup page -->
-
-                </div>
-                <!-- end of res function div -->
+        <!-- reservation section -->
+        <div class="function">
+            <div class="res">
+                <label><img src="../resource/reserve.png" /></label>
+                <label>Reservation</label>
             </div>
-            <div class="col-md-4">
-                <!-- reservation section -->
-                <div class="function">
-                    <div class="more">
-                        <img src="../resource/reserve.png" />
-                        <h2>View Report</h2>
-                    </div>
+            <!-- reservation popup page -->
+            <div id="booking">
+                <span id="bookingClose">×</span>
+                
+                <div id="postForReserve">
+                    <h3>Daily Reservation</h3>
+                    <label class="reserve-info" for="fname">First Name </label>
+                    <span id="fname-err" style="display: inline; color:red; margin-left: 5px;"></span>
+                    <input type="text" id="fname" name="firstname" placeholder="First name..">
+
+                    <label class="reserve-info" for="lname">Last Name</label>
+                    <span id="lname-err" style="display: inline; color:red; margin-left: 5px;"></span>
+                    <input type="text" id="lname" name="lastname" placeholder="Last name..">
+
+                    <label class="reserve-info" for="pnumber">Phone Number</label>
+                    <span id="pnumber-err" style="display: inline; color:red; margin-left: 5px;"></span>
+                    <input type="text" id="pnumber" name="phone" placeholder="Phone number..">
+
+                    <label for="time">Time</label>
+                    <select id="time" name="time">
+                        <option disabled selected value> -- select an option -- </option>
+                        <option>11:00 am ~ 12:30 pm</option>
+                        <option>12:00 am ~ 13:30 pm</option>
+                        <option>17:00 pm ~ 18:30 pm</option>
+                        <option>18:30 pm ~ 20:00 pm</option>
+                    </select>
+
+                    <label class="reserve-info" for="seats">Seats available</label>
+                    <select id="seats" name="seats">
+                        
+                    </select>
+
+                    <div id="sub">
+                        <input type="submit" value="Submit">
+                        <input type="button" value="Cancel">
+                    </div>  
                 </div>
-                <!-- end of more_function div -->
+
+                <div id="returnMsg"></div>  
             </div>
         </div>
+        <!-- end of reservation popup page -->
+
+
+            <!-- reservation section -->
+        
+
+
+        <div class="function">
+            <!-- reservation section -->
+            
+                <div class="more">
+                    <label><img src="../resource/reserve.png" /></label>
+                    <label>View Report</label>
+                </div>
+            <!-- end of more_function div -->
+        </div>
     </section>
-    <!-- end of restaurant section -->
+</div>
 
-
-    <!--<div id="carouselSlidesOnly" class="carousel slide" data-ride="carousel">-->
-        <!--<div class="carousel-inner">-->
-            <!--<div class="carousel-item active">-->
-                <!--<img class="d-block w-100" src="../resource/vege.jpg" alt="First slide">-->
-            <!--</div>-->
-            <!--<div class="carousel-item">-->
-                <!--<img class="d-block w-100" src="../resource/black-vege.jpg" alt="Second slide">-->
-            <!--</div>-->
-            <!--<div class="carousel-item">-->
-                <!--<img class="d-block w-100" src="../resource/grill.jpg" alt="Third slide">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">-->
-            <!--<span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-            <!--<span class="sr-only">Previous</span>-->
-        <!--</a>-->
-        <!--<a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">-->
-            <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-            <!--<span class="sr-only">Next</span>-->
-        <!--</a>-->
-    <!--</div>-->
-
-
-
-    <footer class="text-center">
-        &copy; Team semi-colon 2018. All rights reserved.
-    </footer>
-
+<footer>
+    &copy; Team semi-colon 2018. All rights reserved.
+</footer>
 </body>
 </html>

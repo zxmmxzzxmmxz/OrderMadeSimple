@@ -41,7 +41,7 @@ $(function () {
 
     //$('#refresh_status').on('click',loadOrders);
 
-    $('.carousel').carousel();
+    //$('.carousel').carousel();
 
     var timerCount = 10;
     timer = setInterval(function() {

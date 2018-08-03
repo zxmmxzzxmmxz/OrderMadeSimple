@@ -66,7 +66,7 @@ $(function () {
     //http://localhost:8080/rest/restaurant/info/2
     console.log(sessionStorage);
 
-    loadAllOpenOrdersForRestaurant(sessionStorage.restaurant_name, sessionStorage.token, loopOrders, function(msg){
+    loadAllOrdersForRestaurant(sessionStorage.restaurant_name, sessionStorage.token, loopOrders, function(msg){
         if(msg.indexOf("FATAL") >= 0){
             console.log("loadOrder done msg:" + msg);
             $('#errormsg').html("<div class='alert alert-danger' role='alert'>"+msg+"</div>");

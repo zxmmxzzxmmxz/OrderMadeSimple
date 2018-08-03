@@ -12,13 +12,13 @@ import javax.ws.rs.core.Response;
 @Path("/restaurant")
 public class RestaurantInfo {
     //option1: rest/info?restaurant_id={restId}
-    @Path("/info/{restaurant_id}")
+    @Path("/info/{restaurant_name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response openInfo(@PathParam("restaurant_id") int restaurantID){
+    public Response openInfo(@PathParam("restaurant_name") String name){
         try{
             RestInfoService ri = new RestInfoServiceImpl();
-            String result = ri.getAllInformation(restaurantID);
+            String result = ri.getAllInformation(name);
             return Response.ok().entity(result).build();
         }catch (Exception e){
             e.printStackTrace();
@@ -33,8 +33,14 @@ public class RestaurantInfo {
     public Response reserveTable(String reservation){
         try{
             if(reservation != null){
-                System.out.println(reservation);
-                return Response.ok("Your reservation is booked.").build();
+                //
+                RestInfoService ris = new RestInfoServiceImpl();
+                boolean res = ris.storeReservation(reservation);
+                if(res){
+                    return Response.ok("Your reservation is booked.").build();
+                }else{
+                    return Response.status(400).entity("Server can not post request").build();
+                }
             }else{
                 throw new NullPointerException();
             }
@@ -47,5 +53,19 @@ public class RestaurantInfo {
             return Response.status(400).entity("Server can not post request").build();
         }
     }
+
+    @Path("/{time}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllTimes(@PathParam("time") String time){
+        try{
+            String result = new RestInfoServiceImpl().getSeats(time);
+            return Response.ok().entity(result).build();
+        }catch(Exception e){
+            e.printStackTrace();
+            return Response.status(400).entity("Server can not post request").build();
+        }
+    }
+
 
 }

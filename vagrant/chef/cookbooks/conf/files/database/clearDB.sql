@@ -7,3 +7,8 @@ DROP TABLE user_user;
 DROP TABLE restaurant_info;
 DROP TABLE restaurant_hour;
 DROP TABLE restaurant;
+
+DROP TABLE reserve;
+DROP TABLE duration;
+DROP TABLE dining_table;
+DROP TABLE customer;
