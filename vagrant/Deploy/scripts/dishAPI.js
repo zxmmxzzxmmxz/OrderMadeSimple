@@ -25,19 +25,18 @@ Dish = class {
 getDish = function(dishVerID, token, successCallback, errorCallback){
     $.ajax({
         type: 'GET',
-        url: NEED_PROJECT+'/rest/dish/getDish',
+        url: NEED_PROJECT+'/rest/dish/findDish/'+dishVerID,
         headers: {
             'Authorization':'cmpt470 '+ token
         },
-        data:{'dishVerID':dishVerID},
         success: function(dish){
             successCallback(new Dish(dish));
         },
         error:function(jqXHR, textStatus, errorThrown){
             //errorCallback(jqXHR.responseText);
-            //let dishes = JSON.parse('{"dish_id":4,"dish_ver_id":4,"dish_name":"beef","description":"description beef","restaurant_name":"joojak","price":5.0,"menu_flag":"lunch special4","_versionNumber":1}')
-            errorCallback(jqXHR.responseText);
-            //errorCallback(dishes);
+            let dishes = JSON.parse('{"dish_id":4,"dish_ver_id":4,"dish_name":"beef","description":"description beef","restaurant_name":"joojak","price":5.0,"menu_flag":"lunch special4","_versionNumber":1}')
+            //errorCallback(jqXHR.responseText);
+            errorCallback(dishes);
         }
     });
 };
@@ -63,18 +62,13 @@ getDishByID = function(dishID, token, successCallback, errorCallback){
 };
 
 getDishes = function(dishVerIDs, token, successCallback, errorCallback){
-    let dishIDParams = "";
-    let prefix = "dish_ver_id=";
-    for(let each of dishVerIDs){
-        dishIDParams += prefix + each + "&";
-    }
     $.ajax({
         type: 'GET',
         url: NEED_PROJECT+'/rest/dish/getDishes/',
         headers: {
             'Authorization':'cmpt470 '+ token
         },
-        data:dishIDParams,
+        data:JSON.stringify(dishVerIDs),
         success: function(dishes){
             //dishes = JSON.parse('[{"dish_id":4,"dish_ver_id":4,"dish_name":"beef","description":"description beef","restaurant_name":"joojak","price":5.0,"menu_flag":"lunch special4","_versionNumber":1}]')
             let result = [];

@@ -6,6 +6,7 @@
 	background-color: #ff9933;
 	margin-top: 300px;
 	z-index: 100;
+<<<<<<< Updated upstream
 }
 
 .reserve-main-content .gap{
@@ -28,6 +29,12 @@
 	border-radius: 5px;
 	-webkit-box-shadow: inset 0 0 1px rgba(0,0,0,.3);
 	background-color: #333333;
+=======
+}
+
+.reserve-main-content .gap{
+	height: 20px;
+>>>>>>> Stashed changes
 }
 
 .poster{
@@ -130,12 +137,21 @@
 
 .reservation .function .info label, .res label{
 	display: block;
+<<<<<<< Updated upstream
 }
 
 .function:hover{
 	border: 3px solid rgba(255,245,230, 0.6);
 }
 
+=======
+}
+
+.function:hover{
+	border: 3px solid rgba(255,245,230, 0.6);
+}
+
+>>>>>>> Stashed changes
 .reservation .function .info:hover, .res:hover {
 	opacity: 0.6;
 }

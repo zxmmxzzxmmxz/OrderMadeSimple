@@ -1,18 +1,38 @@
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
 
-	root /vagrant/WebRoot/;
+        root /vagrant/WebRoot/;
 
-	index login.html;
+        index login.html;
 
-	server_name _;
+        server_name www.ordermadesimple.com;
 
-	location / {
-		try_files $uri $uri/ =404;
-	}
+        location / {
+                try_files $uri $uri/ =404;
+        }
 
-	location /project/rest {
+        location /project/rest {
         proxy_pass http://127.0.0.1:8080;
     }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/www.ordermadesimple.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.ordermadesimple.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = www.ordermadesimple.com) {
+        return 301 https://$host:5555/html/login.html;
+    } # managed by Certbot
+
+
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        server_name www.ordermadesimple.com;
+    return 404; # managed by Certbot
+
+
 }

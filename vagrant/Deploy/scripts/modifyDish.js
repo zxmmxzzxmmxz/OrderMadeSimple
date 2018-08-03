@@ -52,9 +52,3 @@ $(function() {$('#dish-update').submit(function (e){
         }
     });
 })});
-
-$(function(){
-    $('#restaurant_name').html(sessionStorage.restaurant_name);
-});
-
-

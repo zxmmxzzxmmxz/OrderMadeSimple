@@ -4,23 +4,20 @@
     <meta charset="UTF-8">
     <title>Menu Modification</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../CSS/bootstrapmin.css" />
-    <link rel="stylesheet" href="../CSS/order-style.css" />
-    <link rel="stylesheet" href="../CSS/reserve.css" />
-
-    <script src="../scripts/jquery.min.js"></script>
-    <script src="../scripts/bootstrapmin.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../scripts/baseLoad.js"></script>
     <script src="../scripts/orderAPI.js"></script>
     <script src="../scripts/dishAPI.js"></script>
-    <script src="../scripts/ContainerFlow.js"></script>
     <script src="../scripts/menuElementCreation.js"></script>
     <script src="../scripts/modifyMenu.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
     <a class="navbar-brand" href="#" id="restaurant_name"></a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -32,27 +29,17 @@
         <li class="nav-item">
             <a class="nav-link" href="ViewOrders.html">Orders</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="LoginFreeOrder.html">Create Order</a>
-        </li>
     </ul>
 </nav>
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">View Menu</li>
     </ol>
 </nav>
-
-<div class="main-content">
-
-<div id="new-dish-btn" class="container">
+<div id="dish-container" class="container-fluid">
 
 </div>
 
-<div id="dish-container" class="container">
-
-</div>
 
 <div class="modal fade" id="dishModificationModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -68,16 +55,16 @@
                     <input type="hidden" name="dish-id" id="dish-id"/>
                     <input type="hidden" id="restaurant-name" name="restaurant-name"/>
                     <div class="form-group">
-                        <label for="dish-name">Dish Name:</label><input class="form-control margin-bottom" type="text" id="dish-name" name="dish-name"/>
+                        <label for="dish-name">Dish Name:</label><input type="text" id="dish-name" name="dish-name"/>
                     </div>
                     <div class="form-group">
-                        <label for="dish-description">Dish Description:</label><input class="form-control margin-bottom" type="text" id="dish-description" name="dish-description"/>
+                        <label for="dish-description">Dish Description:</label><input type="text" id="dish-description" name="dish-description"/>
                     </div>
                     <div class="form-group">
-                        <label for="price">Price:</label><input class="form-control margin-bottom" type="number" step="0.01" id="price" name="price">
+                        <label for="price">Price:</label><input type="number" step="0.01" id="price" name="price">
                     </div>
                     <div class="form-group">
-                        <label for="menu-flag">Menu Flag</label><input class="form-control margin-bottom" type="text" id="menu-flag" name="menu-flag"/>
+                        <label for="menu-flag">Menu Flag</label><input type="text" id="menu-flag" name="menu-flag"/>
                     </div>
                 </form>
             </div>
@@ -88,12 +75,6 @@
         </div>
     </div>
 </div>
-
-</div>
-
-<footer class="text-center">
-    &copy; Team semi-colon 2018. All rights reserved.
-</footer>
 
 </body>
 </html>

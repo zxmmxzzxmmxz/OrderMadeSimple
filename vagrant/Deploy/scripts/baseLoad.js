@@ -1,5 +1,5 @@
- NEED_PROJECT = "/project";
-//NEED_PROJECT = "";
+ //NEED_PROJECT = "/project";
+NEED_PROJECT = "";
 $(function () {
 
     $("#message").html(sessionStorage.message);
