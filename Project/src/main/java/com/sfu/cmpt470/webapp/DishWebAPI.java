@@ -91,7 +91,7 @@ public class DishWebAPI {
 
     @Path("/getDishes")
     @GET
-    //@Secured
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String getAllDishes(@QueryParam("dish_ver_id")List<Long> dishVerIDs) {
@@ -109,7 +109,7 @@ public class DishWebAPI {
 
     @Path("/updateDish")
     @POST
-    //@Secured
+    @Secured
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response updateDish(String dish) {
         try {
@@ -126,7 +126,7 @@ public class DishWebAPI {
 
     @Path("/createDish")
     @POST
-    //@Secured
+    @Secured
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response createDish(String dish) {
         try {
@@ -142,7 +142,7 @@ public class DishWebAPI {
     }
     @Path("/deleteDish")
     @POST
-    //@Secured
+    @Secured
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response deleteDish(String dish) {
         try {

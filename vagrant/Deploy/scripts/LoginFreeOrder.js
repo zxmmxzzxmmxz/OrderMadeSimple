@@ -2,7 +2,7 @@ createDishCube = function(dish){
     let el = document.createElement("button");
     el.innerHTML = dish.dish_name+" ";
     el.classList.add("btn");
-    el.classList.add("btn-primary");
+    el.classList.add("btn-light");
     el.classList.add(".btn-block");
     el.setAttribute("id","dish_"+dish.dish_ver_id);
     el.setAttribute("data-toggle","modal");
@@ -11,11 +11,13 @@ createDishCube = function(dish){
     description.classList.add("badge");
     description.classList.add("badge-info");
     description.innerHTML = dish.description;
+    el.appendChild(document.createElement("br"));
     el.appendChild(description);
     let price = document.createElement("span");
     price.classList.add("badge");
     price.classList.add("badge-secondary");
     price.innerHTML = "$ " + String(dish.price.toFixed(2));
+    el.appendChild(document.createElement("br"));
     el.appendChild(price);
 
     el.addEventListener("click",function () {
@@ -149,7 +151,7 @@ installSubmitOrderButton = function(){
 loadTableSelectionButton = function(){
     $("#table-number-submit").on("click", function () {
 
-        if($("#table-number").val().length != 1){
+        if($("#table-number").val().length !== 1){
             // You cannot choose more than 1 table
             alert("You cannot choose more than 1 table")
         }

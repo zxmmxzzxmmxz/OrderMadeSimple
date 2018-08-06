@@ -2,7 +2,7 @@ createDishCube = function(dish){
     let el = document.createElement("button");
     el.innerHTML = dish.dish_name+" ";
     el.classList.add("btn");
-    el.classList.add("btn-primary");
+    el.classList.add("btn-light");
     el.classList.add(".btn-block");
     el.setAttribute("id","dish_"+dish.dish_ver_id);
     el.setAttribute("data-toggle","modal");
@@ -11,7 +11,15 @@ createDishCube = function(dish){
     description.classList.add("badge");
     description.classList.add("badge-info");
     description.innerHTML = dish.description;
+    el.appendChild(document.createElement("br"));
     el.appendChild(description);
+    let price = document.createElement("span");
+    price.classList.add("badge");
+    price.classList.add("badge-secondary");
+    price.innerHTML = "$ " + String(dish.price.toFixed(2));
+    el.appendChild(document.createElement("br"));
+    el.appendChild(price);
+
     el.addEventListener("click",function () {
         $("#dish-ver-id").val(dish.dish_ver_id);
     });
@@ -65,6 +73,7 @@ clearAddDishModalAndClose = function(){
 };
 
 dumpOrderToModal = function(){
+    var total_price = 0.0;
     let modal = $("#order-list");
     modal.empty();
     let order = new Order(JSON.parse(sessionStorage.order));
@@ -77,6 +86,9 @@ dumpOrderToModal = function(){
         dish_name.innerHTML = foundDish.dish_name;
         let special_note = document.createElement("p");
         special_note.innerHTML = detail.special_note;
+        let dish_price = document.createElement("p");
+        dish_price.innerHTML = "$ " + foundDish.price;
+        total_price += foundDish.price;
         let deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Delete";
         deleteButton.classList.add("btn");
@@ -88,10 +100,14 @@ dumpOrderToModal = function(){
 
         dishElement.appendChild(dish_name);
         dishElement.appendChild(special_note);
+        dishElement.appendChild(dish_price);
         dishElement.appendChild(deleteButton);
         modal.append(dishElement);
         modal.addClass("scrollable w-100");
     }
+    let total_price_label = document.createElement("h5");
+    total_price_label.innerHTML = "Total Price: $ " + String(total_price.toFixed(2));
+    modal.append(total_price_label)
 };
 
 deleteDetail = function(detailTag) {
@@ -111,6 +127,7 @@ createFreshOrder = function(){
     let order = new Order();
     order.restaurant_name = "joojak";
     order.order_status = "new";
+    order.table_number = $("#table-number").val()[0];
     sessionStorage.order = order.toJson();
 };
 
@@ -131,11 +148,36 @@ installSubmitOrderButton = function(){
     });
 };
 
+loadTableSelectionButton = function(){
+    $("#table-number-submit").on("click", function () {
+
+        if($("#table-number").val().length !== 1){
+            // You cannot choose more than 1 table
+            alert("You cannot choose more than 1 table")
+        }
+        else{
+            if(confirm("Are you sure")) {
+                createFreshOrder();
+                $("#order-list").empty();
+                $("#number-of-details").html("(0)");
+                $("#table-number-card").hide();
+                $("#table-label").html("<h5>Table #" + $("#table-number").val() + "</h5>").show();
+                $("#view-order-button-container").show();
+
+                loadAllDishes();
+                installAddDishButton();
+                installViewOrderButton();
+                installSubmitOrderButton();
+            }
+        }
+
+    });
+}
+
 
 $(function(){
-   loadAllDishes();
-   installAddDishButton();
-   installViewOrderButton();
-    createFreshOrder();
-   installSubmitOrderButton();
+    $("#table-label").hide();
+    $("#view-order-button-container").hide();
+   loadTableSelectionButton();
+
 });

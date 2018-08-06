@@ -24,6 +24,8 @@ addModifyEventHandler = function(buttonID){
         let button = event.target;
         let dishVerId = button.dataset.dishVerId;
 
+        $("#delete-dish").show();
+
         getDishes([dishVerId], sessionStorage.token, function(foundDishes){
             for (let dish of foundDishes){
                 console.log(dish);
@@ -40,7 +42,7 @@ addModifyEventHandler = function(buttonID){
 };
 
 installModalConfirmButtonHandler = function(){
-    $('#update-dish').on('click', function (event) {
+    $('#update-dish').on('click', function () {
         let dishJson = {
             "dish_name":$("#dish-name").val(),
             "description":$("#dish-description").val(),
@@ -55,7 +57,7 @@ installModalConfirmButtonHandler = function(){
         }
         let dish = new Dish(dishJson);
         let mode = $("#update-dish").data("mode");
-        updateOrCreateDish(dish,mode, function () {
+        updateOrCreateDish(dish,mode,sessionStorage.token, function () {
             $("#main").empty();
             clearModal();
             $("#close-modal").trigger("click");
@@ -68,6 +70,36 @@ installModalConfirmButtonHandler = function(){
         });
 
     });
+};
+
+installModalDeleteButtonHandler = function() {
+    $("#delete-dish").on('click', function(){
+        let dishJson = {
+            "dish_name":$("#dish-name").val(),
+            "description":$("#dish-description").val(),
+            "restaurant_name":$("#restaurant_name").val(),
+            "price":$("#price").val(),
+            "menu_flag":$("#menu-flag").val()
+        };
+        let dishIDField = $("#dish-id");
+        if(dishIDField.val() !== ''){
+            let idObj = {"dish_id":dishIDField.val()};
+            dishJson = $.extend(dishJson,idObj);
+        }
+        let dish = new Dish(dishJson);
+        let mode = 'delete';
+        updateOrCreateDish(dish,mode,sessionStorage.token, function () {
+            $("#main").empty();
+            clearModal();
+            $("#close-modal").trigger("click");
+            loadDishes();
+        }, function(){
+            $("#main").empty();
+            clearModal();
+            $("#close-modal").trigger("click");
+            loadDishes();
+        });
+    })
 };
 
 loadDishes = function() {
@@ -98,6 +130,7 @@ function addNewButton()
 
     $("#create-dish").on('click', function(){
         clearModal();
+        $("#delete-dish").hide();
         let updateButton = $("#update-dish");
         updateButton.html("Add Dish");
         updateButton.data("mode","create");
@@ -108,4 +141,5 @@ $(function () {
     addNewButton();
     loadDishes();
     installModalConfirmButtonHandler();
+    installModalDeleteButtonHandler();
 });

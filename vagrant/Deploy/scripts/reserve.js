@@ -2,7 +2,7 @@ $(function(){
 	// unsured url, replce later
 	var url = NEED_PROJECT+'/rest/restaurant/';
 	//var restName = "Uli's Restaurant";
-	var getUrl = "info/Uli's Restaurant";
+	var getUrl = "info/"+sessionStorage.restaurant_name;
 	var postUrl = 'reserve'; 
 
 	var $hours = $('#hours');
@@ -182,7 +182,7 @@ $(function(){
 		})
 		.done(function(){
 			$('#postForReserve.visible').removeClass('visible');
-			$('#returnMsg').append('<img class="showPic" src="../resource/check.PNG">');
+			$('#returnMsg').append('<img class="showPic" src="../resource/check.png">');
 			$('#returnMsg').append('<p>' + msg + '</p>');
 			$('#returnMsg').addClass('visible');
 			// setTimeout(function(){
@@ -200,7 +200,7 @@ $(function(){
 		})
 		.fail(function(){
 			$('#postForReserve.visible').removeClass('visible');
-			$('#returnMsg').append('<img class="showPic" src="../resource/error.PNG">');	
+			$('#returnMsg').append('<img class="showPic" src="../resource/error.png">');
 			$('#returnMsg').append('<p>' + msg + ': reservation is failed.</p>');
 			$('#returnMsg').addClass('visible');
 		});

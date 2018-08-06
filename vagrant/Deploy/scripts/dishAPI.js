@@ -117,7 +117,7 @@ getDishesByRestaurant = function(restaurant_name, token, successCallback, errorC
     });
 };
 
-updateOrCreateDish = function(dish, mode, callback, errorCallBack){
+updateOrCreateDish = function(dish, mode,token, callback, errorCallBack){
     let url;
     if(mode === 'update'){
         url = NEED_PROJECT+'/rest/dish/updateDish'
@@ -131,6 +131,9 @@ updateOrCreateDish = function(dish, mode, callback, errorCallBack){
     $.ajax({
         type: 'POST',
         url: url,
+        headers: {
+            'Authorization':'cmpt470 '+ token
+        },
         dataType:'text',
         data:dish.toJson(),
         success: function(message){

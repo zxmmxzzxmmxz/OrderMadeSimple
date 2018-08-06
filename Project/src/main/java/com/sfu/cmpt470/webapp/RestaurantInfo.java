@@ -14,6 +14,7 @@ public class RestaurantInfo {
     //option1: rest/info?restaurant_id={restId}
     @Path("/info/{restaurant_name}")
     @GET
+
     @Produces(MediaType.APPLICATION_JSON)
     public Response openInfo(@PathParam("restaurant_name") String name){
         try{

@@ -55,7 +55,7 @@ public class DishDAO extends BaseDAO {
     public ImmutableList<Dish> getDishesByVerIDs(List<Long> verIDs) throws SQLException {
         _db.supplyQuery("SELECT dish_ver.dish_id, dish_ver.dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number, deleted  " +
                 "FROM dish_ver " +
-                "JOIN dish ON dish_ver.dish_ver_id = dish.dish_ver_id " +
+                "JOIN dish ON dish_ver.dish_id = dish.dish_id " +
                 "WHERE dish_ver.dish_ver_id = ANY(?) ");
         _db.setArray(verIDs.toArray(), 1,"integer");
         return ImmutableList.copyOf(_db.queryList(new DishRowMapper()));

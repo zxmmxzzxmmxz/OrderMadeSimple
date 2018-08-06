@@ -57,7 +57,7 @@ installModalConfirmButtonHandler = function(){
         }
         let dish = new Dish(dishJson);
         let mode = $("#update-dish").data("mode");
-        updateOrCreateDish(dish,mode, function () {
+        updateOrCreateDish(dish,mode,sessionStorage.token, function () {
             $("#main").empty();
             clearModal();
             $("#close-modal").trigger("click");
@@ -88,7 +88,7 @@ installModalDeleteButtonHandler = function() {
         }
         let dish = new Dish(dishJson);
         let mode = 'delete';
-        updateOrCreateDish(dish,mode, function () {
+        updateOrCreateDish(dish,mode,sessionStorage.token, function () {
             $("#main").empty();
             clearModal();
             $("#close-modal").trigger("click");
@@ -100,7 +100,7 @@ installModalDeleteButtonHandler = function() {
             loadDishes();
         });
     })
-}
+};
 
 loadDishes = function() {
     getDishesByRestaurant(sessionStorage.restaurant_name,sessionStorage.token,createDishes,function(msg){

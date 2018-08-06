@@ -1,6 +1,5 @@
 --restaurant
 INSERT INTO restaurant VALUES (DEFAULT,'joojak', 'sd3j4252k');
-INSERT INTO restaurant VALUES (DEFAULT,'szechuan restaurant', 'sd3j423k');
 
 --dishes
 INSERT INTO dish (dish_ver_id) 
@@ -30,19 +29,19 @@ INSERT INTO user_user (username,password,restaurant_id) values('joojak', '5baa61
 
 --dish_ver
 INSERT INTO dish_ver (version_number, dish_id, dish_name, description, restaurant_name, price, menu_flag) 
-	SELECT 1, 1,'pork','description of pork','szechuan restaurant',13.99,'lunch special1';
+	SELECT 1, 1,'pork burger','Authentic Xi An flavoured pork burger','joojak',5.5,'all-day';
 
 INSERT INTO dish_ver (version_number, dish_id, dish_name, description, restaurant_name, price, menu_flag) 
-	SELECT 1, 2,'fish','description of fish','szechuan restaurant',12.99,'lunch special2';
+	SELECT 1, 2,'lamb burger','cumin lamb burger with green pepper in it, a bit spicy','joojak',5.95,'all-day';
 
 INSERT INTO dish_ver (version_number, dish_id, dish_name, description, restaurant_name, price, menu_flag) 
-	SELECT 1, 3,'chicken','description of chicken','szechuan restaurant',11,'lunch special3';
+	SELECT 1, 3,'lamb soup with pita bread','special lamb soup with shredded pita bread inside, with sides of sweet&sour garlic and pepper','joojak',12.99,'all-day';
 
 INSERT INTO dish_ver (version_number, dish_id, dish_name, description, restaurant_name, price, menu_flag) 
-	SELECT 1, 4,'beef','description beef','joojak',5,'lunch special4';
+	SELECT 1, 4,'cold noodle','home-made cold chewy noodle, with gluten inside, best for summer','joojak',8.5,'all-day';
 
 INSERT INTO dish_ver (version_number, dish_id, dish_name, description, restaurant_name, price, menu_flag) 
-	SELECT 1, 5,'stuff','description stuff','joojak',10,'lunch special5';
+	SELECT 1, 5,'cold noodle with sesame paste','same cold noodle, but with sasame paste','joojak',8.95,'all-day';
 
 UPDATE dish SET dish_ver_id = 1 WHERE dish_id = 1;
 UPDATE dish SET dish_ver_id = 2 WHERE dish_id = 2;
@@ -55,7 +54,7 @@ INSERT INTO order_order (time,restaurant_name,status,table_number) values(TIMEST
 INSERT INTO order_order (time,restaurant_name,status,table_number) values(TIMESTAMP '2018-11-12 10:23:54+02','joojak','new','1');
 
 --order order_details
-INSERT INTO order_details (order_id, dish_ver_id, order_detail_status, special_note) values(1,1,'new', 'no spicy');
+INSERT INTO order_details (order_id, dish_ver_id, order_detail_status, special_note) values(1,4,'new', 'no spicy');
 INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(2,2,'new');
 INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,4,'done');
 INSERT INTO order_details (order_id, dish_ver_id, order_detail_status) values(1,3,'in progress');
@@ -92,6 +91,16 @@ values
 ('Friday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='Uli''s Restaurant'), '11:30', '23:00'),
 ('Saturday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='Uli''s Restaurant'), '10:30', '23:00'),
 ('Sunday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='Uli''s Restaurant'), '10:30', '22:00');
+
+INSERT INTO restaurant_hour(open_day, restaurant_id, open_hr, close_hr)
+values
+('Monday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), 'clsoe', 'close'),
+('Tuesday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), '17:00', '22:00'),
+('Wednesday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), '12:00', '22:00'),
+('Thursday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), '12:00', '22:00'),
+('Friday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), '12:00', '22:00'),
+('Saturday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), '12:00', '22:00'),
+('Sunday', (SELECT restaurant_id FROM restaurant WHERE restaurant_name ='joojak'), '12:00', '22:00');
 	
 --mock existing tables from Uli's Restaurant
 INSERT INTO dining_table(seats) VALUES

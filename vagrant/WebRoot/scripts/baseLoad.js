@@ -1,4 +1,4 @@
- NEED_PROJECT = "/project";
+NEED_PROJECT = "/project";
 //NEED_PROJECT = "";
 $(function () {
 
