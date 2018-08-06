@@ -140,5 +140,22 @@ public class DishWebAPI {
             return Response.status(500).entity("Server can not process the request").build();
         }
     }
+    @Path("/deleteDish")
+    @POST
+    //@Secured
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response deleteDish(String dish) {
+        try {
+            DatabaseConnector con = new DatabaseConnector();
+            DishServiceImpl service = new DishServiceImpl(con);
+            String result = service.updateOrCreateDish(dish, CRUDMode.DELETE);
+            con.disconnect();
+            return Response.ok().entity(result).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity("Server can not process the request").build();
+        }
+    }
+
 
 }

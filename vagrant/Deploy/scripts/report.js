@@ -14,7 +14,9 @@ function createOrderReportItem(order)
 
 getReportOrderList = function(order, dishes){
     var htmlAll = "";
+    var total_price = 0.0;
     for (let detail of order.orderDetails){
+
         let dish = dishes.filter(dish => dish.dish_ver_id === detail.dish_ver_id)[0];
         if(dish)
         {
@@ -28,9 +30,20 @@ getReportOrderList = function(order, dishes){
                 "    <h6 class=\"card-title text-right\">$"+dish.price+"</h6>\n" +
                 "  </div>\n" +
                 "</div>";
+            total_price += parseFloat(dish.price);
+            console.log(typeof(dish.price));
+            console.log(total_price);
             htmlAll += item;
         }
+
     }
+    var total_price_item =  "<div class=\"card\" style=\"width: 18rem;\">\n" +
+        "  <div class=\"card-body\">\n" +
+        "  <h5 class=\"card-title\">"+"Total Price:"+"</h5>\n" +
+        "  <h6 class=\"card-title text-right\">$"+total_price.toFixed(2)+"</h6>\n" +
+        "  </div>\n" +
+        "</div>";
+    htmlAll += total_price_item
     return htmlAll;
 };
 

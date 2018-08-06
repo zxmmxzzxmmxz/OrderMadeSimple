@@ -24,32 +24,39 @@ public class DishDAO extends BaseDAO {
         ImmutableList<Long> disheIDs = getDishIDsFor(restaurantName);
         ImmutableList.Builder<Dish> result = ImmutableList.builder();
         for (Long disheID : disheIDs) {
-            result.add(getDishByDishID(disheID));
+            Dish foundDish = getDishByDishID(disheID);
+            if(!foundDish.isDeleted()){
+                result.add(foundDish);
+            }
         }
+
         return result.build();
     }
 
     public Dish getDishByDishID(long dishID) throws SQLException {
-        _db.supplyQuery("SELECT dish_id, dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number " +
+        _db.supplyQuery("SELECT dish_ver.dish_id, dish_ver.dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number, deleted  " +
                 "FROM dish_ver " +
-                "WHERE dish_id = ? " +
+                "JOIN dish ON dish_ver.dish_ver_id = dish.dish_ver_id " +
+                "WHERE dish_ver.dish_id = ? " +
                 "ORDER BY version_number DESC LIMIT 1");
         _db.setLong(dishID, 1);
         return _db.queryOneRecord(new DishRowMapper());
     }
 
     public Dish getDishByDishVerID(long dishVerID) throws SQLException {
-        _db.supplyQuery("SELECT dish_id, dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number " +
+        _db.supplyQuery("SELECT dish_ver.dish_id, dish_ver.dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number, deleted " +
                 "FROM dish_ver " +
-                "WHERE dish_ver_id = ? ");
+        "JOIN dish ON dish_ver.dish_ver_id = dish.dish_ver_id " +
+                "WHERE dish_ver.dish_ver_id = ? ");
         _db.setLong(dishVerID, 1);
         return _db.queryOneRecord(new DishRowMapper());
     }
 
     public ImmutableList<Dish> getDishesByVerIDs(List<Long> verIDs) throws SQLException {
-        _db.supplyQuery("SELECT dish_id, dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number " +
+        _db.supplyQuery("SELECT dish_ver.dish_id, dish_ver.dish_ver_id, dish_name, description, restaurant_name, price, menu_flag, version_number, deleted  " +
                 "FROM dish_ver " +
-                "WHERE dish_ver_id = ANY(?) ");
+                "JOIN dish ON dish_ver.dish_ver_id = dish.dish_ver_id " +
+                "WHERE dish_ver.dish_ver_id = ANY(?) ");
         _db.setArray(verIDs.toArray(), 1,"integer");
         return ImmutableList.copyOf(_db.queryList(new DishRowMapper()));
     }
@@ -121,4 +128,12 @@ public class DishDAO extends BaseDAO {
         _db.setLong(dish.getDishID(), 2);
         _db.executeUpdate();
       }
+
+    public void deleteDish(Dish dish) throws SQLException {
+        _db.supplyQuery("UPDATE dish SET deleted = true WHERE dish_id = ?");
+        _db.setLong(dish.getDishID(), 1);
+        _db.executeUpdate();
+    }
 }
+
+

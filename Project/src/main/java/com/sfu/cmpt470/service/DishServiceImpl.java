@@ -67,7 +67,12 @@ public class DishServiceImpl implements DishService{
                 _dao.createDish(dish);
                 return "Dish Created";
             }
-            return "ONLY UPDATE OR CREATE SUPPORTED";
+            else if(mode == CRUDMode.DELETE){
+                _dao.deleteDish(dish);
+                return "Dish Deleted";
+            }
+            return "ONLY UPDATE OR CREATE OR DELETE SUPPORTED";
+
 
         } catch (SQLException e) {
             return _gson.toJson(new Error(e.toString()));

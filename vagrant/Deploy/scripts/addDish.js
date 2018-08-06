@@ -22,3 +22,7 @@ $(function() {$('#dish-add').submit(function (e){
         }
     });
 })});
+
+$(function(){
+    $('#restaurant_name').html(sessionStorage.restaurant_name);
+});

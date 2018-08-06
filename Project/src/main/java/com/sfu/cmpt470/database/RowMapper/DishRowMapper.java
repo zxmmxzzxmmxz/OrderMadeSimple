@@ -16,7 +16,8 @@ public class DishRowMapper implements RowMapper<Dish> {
                 .setRestaurantName(rs.getString("restaurant_name"))
                 .setPrice(rs.getFloat("price"))
                 .setMenuFlag(rs.getString("menu_flag"))
-                .setVersionNumber(rs.getInt("version_number"));
+                .setVersionNumber(rs.getInt("version_number"))
+                .setIsDeleted(rs.getBoolean("deleted"));;
         return builder.build();
     }
 }

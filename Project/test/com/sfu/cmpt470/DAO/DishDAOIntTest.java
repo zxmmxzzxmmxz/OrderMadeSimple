@@ -110,4 +110,17 @@ public class DishDAOIntTest {
         assert(result.getPrice() == NEW_PRICE);
         assert(result.getMenuFlag().equals(NEW_MENU_FLAG));
     }
+
+    @Test
+    public void deleteDish_validDish_dishShouldBeDeleted() throws SQLException {
+        Dish dish = getNewDish(_restaurantName);
+        Long dishID = _dishDao.createDish(dish);
+        Dish createdDish = _dishDao.getDishByDishID(dishID);
+
+        _dishDao.deleteDish(createdDish);
+
+        Dish deletedDish = _dishDao.getDishByDishID(dishID);
+        assert(deletedDish.isDeleted());
+    }
+
 }

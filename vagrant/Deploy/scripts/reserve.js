@@ -83,11 +83,7 @@ $(function(){
 		$('#seats').empty();
 		$.ajax({
 			type: 'get',
-<<<<<<< Updated upstream
 			url: url + time,
-=======
-			url: 'http://localhost:1234/rest/restaurant/' + time,
->>>>>>> Stashed changes
 			success: function(seats){
 				$('#seats').append('<option disabled selected value> -- select an option -- </option>');
 				console.log(seats);

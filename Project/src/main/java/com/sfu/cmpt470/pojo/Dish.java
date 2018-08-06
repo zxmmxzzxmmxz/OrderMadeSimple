@@ -17,9 +17,10 @@ public class Dish {
     private float _price;
     @SerializedName(value="menu_flag")
     private String _menuFlag;
+    private boolean _deleted;
     private int _versionNumber;
 
-    private Dish(long dishID, long dishVerID, String dishName, String description, String restaurantName, float price, String menuFlag, int versionNumber) {
+    private Dish(long dishID, long dishVerID, String dishName, String description, String restaurantName, float price, String menuFlag, int versionNumber, boolean isDeleted) {
         _dishID = dishID;
         _dishVerID = dishVerID;
         _dishName = dishName;
@@ -28,10 +29,15 @@ public class Dish {
         _price = price;
         _menuFlag = menuFlag;
         _versionNumber = versionNumber;
+        _deleted = isDeleted;
     }
 
     public long getDishVerID() {
         return _dishVerID;
+    }
+
+    public boolean isDeleted() {
+        return _deleted;
     }
 
     public float getPrice() {
@@ -71,7 +77,8 @@ public class Dish {
                 .setMenuFlag(_menuFlag)
                 .setPrice(_price)
                 .setRestaurantName(_restaurantName)
-                .setVersionNumber(_versionNumber);
+                .setVersionNumber(_versionNumber)
+                .setIsDeleted(_deleted);;
         return builder;
     }
 
@@ -89,9 +96,10 @@ public class Dish {
         private float _price;
         private String _menuFlag;
         private int _versionNumber;
+        private boolean _deleted;
 
         private Builder() {
-
+            _deleted = false;
         }
 
         public Builder setDishVerID(long _dishVerID) {
@@ -129,12 +137,28 @@ public class Dish {
             return this;
         }
 
-        public void setVersionNumber(int _versionNumber) {
+        public Builder setVersionNumber(int _versionNumber) {
             this._versionNumber = _versionNumber;
+            return this;
         }
 
+
         public Dish build() {
-            return new Dish(_dishID, _dishVerID, _dishName, _description, _restaurantName, _price, _menuFlag, _versionNumber);
+            return new Dish(_dishID,
+                    _dishVerID,
+                    _dishName,
+                    _description,
+                    _restaurantName,
+                    _price,
+                    _menuFlag,
+                    _versionNumber,
+                    _deleted);
         }
+
+        public Builder setIsDeleted(boolean isDeleted) {
+            _deleted = isDeleted;
+            return this;
+        }
+
     }
 }

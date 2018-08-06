@@ -1,4 +1,4 @@
-$(function() {$('#submit').on('click',function (){
+$(function() {$('#submit').on('click',function (e){
     $.ajax({
         type: 'POST',
         url: NEED_PROJECT+'/rest/auth/login',
@@ -7,7 +7,8 @@ $(function() {$('#submit').on('click',function (){
         success: function(token){
             sessionStorage.token = token.token;
             sessionStorage.restaurant_name = token.restaurant_name;
-            window.location.href = "index-deprecated.html";
+            sessionStorage.restaurant_id = token.restaurant_id;
+            window.location.href = "index.html";
         },
         error:function(jqXHR, textStatus, errorThrown){
             var error_element =  $("#error_message")
@@ -15,4 +16,5 @@ $(function() {$('#submit').on('click',function (){
             error_element.attr("hidden",false)
         }
     });
+    e.preventDefault();
 })});

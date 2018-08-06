@@ -6,35 +6,10 @@
 	background-color: #ff9933;
 	margin-top: 300px;
 	z-index: 100;
-<<<<<<< Updated upstream
 }
 
 .reserve-main-content .gap{
 	height: 20px;
-}
-
-.poster .wrapper{
-	overflow: auto;
-	white-space: nowrap;
-	background-color: #0d0d0d;
-	box-sizing: border-box;
-}
-
-.poster .wrapper:ebkit-scrollbar{
-	width: 10px;
-	z-index: 110;
-}
-
-.poster .wrapper:ebkit-scrollbar-thumb:hover{
-	border-radius: 5px;
-	-webkit-box-shadow: inset 0 0 1px rgba(0,0,0,.3);
-	background-color: #333333;
-=======
-}
-
-.reserve-main-content .gap{
-	height: 20px;
->>>>>>> Stashed changes
 }
 
 .poster{
@@ -135,23 +110,14 @@
 	text-decoration: none;
 }
 
-.reservation .function .info label, .res label{
+.reservation .function .info label, .res label, .more label{
 	display: block;
-<<<<<<< Updated upstream
 }
 
 .function:hover{
 	border: 3px solid rgba(255,245,230, 0.6);
 }
 
-=======
-}
-
-.function:hover{
-	border: 3px solid rgba(255,245,230, 0.6);
-}
-
->>>>>>> Stashed changes
 .reservation .function .info:hover, .res:hover {
 	opacity: 0.6;
 }
@@ -163,8 +129,8 @@
  	background-color: #ffffff; 
  	border-radius: 5px;
  	z-index: 105;
- 	top: 498px;
- 	left: 300px;
+ 	top: 835px;
+ 	left: 200px;
  	border: 1px solid #e6e6e6;
  	box-shadow: 5px 3px 2px rgba(0, 0, 0, 0.2);
  	visibility: hidden;
@@ -173,7 +139,8 @@
 
  @media (max-width: 1500px){
  	.reservation .function #currentRes{
- 		left: 50px;
+ 		left: 30px;
+ 		top: 860px;
  	}	
  }
 
@@ -256,7 +223,7 @@
  	width: 800px;
  	height: 550px;
  	position: absolute;
- 	top: 45%;
+ 	top: 70%;
  	left: 30%;
  	background-color: #ffffff; 
  	border-radius: 5px;
@@ -302,6 +269,7 @@
 
 .reservation .function #booking #postForReserve.visible{
 	height: auto;
+	
 }
 
 .reservation .function #booking #bookingClose:hover{
