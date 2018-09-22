@@ -1,21 +1,33 @@
 Deployment Details:
 
-Under perfect conditions, only "vagrant up" is needed under vagrant folder.
+"vagrant up" is the only command to launch the application.
+The command must run under a folder called "vagrant" under the project root folder.
 ..............................................................................................................................................................
 
-Following two things are NOT NEEDED if you cloned exactly the project-submission tag
-	Couple cases that might need some twicks so that things will work properly.
-		1.cannot find page, typically 404 error, you need to grab the corresponding frontend project at git@csil-git1.cs.surrey.sfu.ca:hqiu/frontend.git under the same parent folder of the project. And execute ./copyToProject.sh to copy /HTML /CSS and /scripts to project WEBROOT folder.
 
-		2.404 not found when loading something in the page. Direct to vagrant -> WebRoot -> scripts -> baseLoad.js and uncomment line " NEED_PROJECT = "/project";" and comment out line 'NEED_PROJECT = ""; and repeat step 1
+Under extreme circumstances, following two actions might help 
+(should never happen if the project was cloned with "project-submission" tag):
+	Case1:
+		cannot find page, typically 404 error.
+	Solution:
+		i.clone the corresponding frontend project found at "git@csil-git1.cs.surrey.sfu.ca:hqiu/frontend.git" under the same parent folder of the project. 
+		ii. Execute "./copyToProject.sh" in terminal/bash to copy /HTML /CSS and /scripts foldeers to project WEBROOT folder.
+	Case2:
+		404 not found when loading something in the page. 
+	Solution:
+		i.Direct to vagrant -> WebRoot -> scripts -> baseLoad.js
+		ii.uncomment line " NEED_PROJECT = "/project"
+		iii.comment out line 'NEED_PROJECT = "" 
+		iv.repeat step 1
 
 
 ..............................................................................................................................................................
-How to test the website
-Find the website link at localhost:3333/html/login.html
-Activated account is "joojak" with password "password"
+How to test the website:
+
+	1.Find the website link at localhost:3333/html/login.html
+	2.Activated account is "joojak" with password "password"
 
 It comes with two default orders and a menu where you can modify its dishes and add more dish if needed
 Login is not required to submit an order.
-BUT ONLY logged in user can do other things such as view orders, complete orders and such.
+Only logged in user can do other things such as view orders, complete orders and etc.
 
